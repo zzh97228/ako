@@ -1,0 +1,21 @@
+{
+  "name": "@lagabu/grid",
+  "version": "0.1.0-alpha.1",
+  "main": "dist/grid.umd.bundle.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist",
+    "README.md",
+    "dist/index.d.ts"
+  ],
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org",
+    "access": "public"
+  },
+  "dependencies": {
+    "vue": "^3.0.2"
+  },
+  "peerDependencies": {
+    "vue": "^3.0.2"
+  }
+}

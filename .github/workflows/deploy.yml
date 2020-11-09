@@ -1,0 +1,35 @@
+name: CI
+
+on:
+  push:
+    branches: [ master ]
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - name: Checkout
+        uses: actions/checkout@v2
+        with: 
+          persist-credentials: false
+
+      - name: Install
+        run: yarn install
+
+      # - name: Build Doc
+      #   run: yarn build:doc
+
+      # - name: Install SSH Client
+      #   uses: webfactory/ssh-agent@v0.2.0 # This step installs the ssh client into the workflow run. There's many options available for this on the action marketplace.
+      #   with:
+      #     ssh-private-key: ${{ secrets.DEPLOY_KEY }}
+
+      # - name: Deploy Github Page
+      #   uses: JamesIves/github-pages-deploy-action@3.6.1
+      #   with:
+      #     BASE_BRANCH: master
+      #     BRANCH: gh-pages
+      #     FOLDER: docs/dist
+      #     SSH: true
