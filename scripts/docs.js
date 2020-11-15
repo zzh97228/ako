@@ -1,18 +1,15 @@
-const { createServer } = require('vitepress/dist/node/server');
-const { build } = require('vitepress/dist/node/build/build');
+const { createServer, build } = require('vitepress');
 const { resolve } = require('path');
 const shell = require('shelljs');
+const config = require('../vite.config');
 
 const docFolder = resolve(__dirname, '../docs');
 const distFolder = resolve(docFolder, 'dist');
 
-const options = {
-  root: docFolder,
-  port: 3001,
-  alias: {
-    '/src/': resolve(__dirname, '../src'),
-  },
-};
+const options = Object.assign({}, config, {
+  root: resolve(__dirname, '../docs'),
+  port: 3000
+})
 
 async function serve() {
   try {
@@ -31,7 +28,7 @@ async function builder() {
     shell.rm('-rf', distFolder);
     console.log('... building ...');
     await build(options);
-    shell.mv(resolve(docFolder, './.vitepress/dist'), distFolder);
+    shell.mv(resolve(docFolder, './.vitepress/dist/*'), distFolder);
     shell.cp(resolve(__dirname, '../.nojekyll'), distFolder);
   } catch (err) {
     console.error(err);
@@ -41,8 +38,8 @@ async function builder() {
 }
 
 (async function () {
-  const isDev = process.env.NODE_ENV === 'development';
-  if (isDev) {
+  const isProd = process.env.NODE_ENV === 'production';
+  if (!isProd) {
     await serve();
   } else {
     await builder();

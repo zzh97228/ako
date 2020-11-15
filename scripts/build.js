@@ -1,68 +1,28 @@
+const rollup = require('rollup');
 const shell = require('shelljs');
 const { resolve } = require('path');
-const ts = require('rollup-plugin-typescript2'),
-  { nodeResolve } = require('@rollup/plugin-node-resolve'),
-  postcss = require('rollup-plugin-postcss'),
-  cssnano = require('cssnano'),
-  autoprefixer = require('autoprefixer');
-
-const rollup = require('rollup');
-
-const FORMATS = ['es', 'umd', 'cjs'];
-
-function genRollupObj(packageFolder, pkg, format) {
-  const name = (String(pkg.name) || '').replace(/(@lagabu\/)/, '');
-  const external = [...Object.keys(pkg.dependencies || {}), ...Object.keys(pkg.peerDependencies || {})];
-  return {
-    input: {
-      input: resolve(packageFolder, 'src/index.ts'),
-      external,
-      plugins: [
-        nodeResolve(),
-        ts({
-          tsconfig: resolve(__dirname, '../tsconfig.json'),
-          tsconfigOverride: {
-            compilerOptions: {
-              declaration: format && format === 'es',
-              rootDir: resolve(__dirname, '../packages'),
-            },
-            exclude: ['**/node_modules', '**/__tests__', '**/dist'],
-          },
-        }),
-        postcss({
-          plugins: [
-            autoprefixer(),
-            cssnano({
-              preset: [
-                'default',
-                {
-                  discardDuplicates: true,
-                },
-              ],
-            }),
-          ],
-          extract: format === 'es' && pkg.name + '.min.css',
-          inject: false,
-        }),
-      ],
-    },
-    output: {
-      dir: resolve(packageFolder, 'dist'),
-      format,
-      globals: external.reduce((prev, next) => {
-        prev[next] = next;
-        return prev;
-      }, {}),
-      name,
-      entryFileNames: name + '.' + format + '.bundle.js',
-      extend: true,
-    },
-  };
-}
+const { FORMATS, genRollupObj } = require('../rollup.config');
 
 (async function () {
+  const pkgName = process.argv[2];
+  if (!pkgName) return console.warn('No Package Specified');
+  const pkgFolder = resolve(__dirname, '../packages/' + pkgName);
   try {
-    // TODO
+    console.log('... 🚀Start Building🚀 ...');
+    pkgName === 'ako-ui' && FORMATS.push('iife');
+    let isGlobal = false;
+    for (let f of FORMATS) {
+      console.log(`... Building ${f} ...`);
+      isGlobal = pkgName === 'ako-ui' && f === 'iife';
+      const { input, output } = genRollupObj(pkgFolder, require(resolve(pkgFolder, 'package.json')), f, isGlobal);
+      const bundle = await rollup.rollup(input);
+      await bundle.write(output);
+    }
+    console.log('... Moving Types ...');
+    shell.mv(resolve(pkgFolder, 'dist/' + pkgName + '/src/*'), resolve(pkgFolder, 'dist'));
+    pkgName === 'ako-ui' && shell.mv(resolve('../packages/global.d.ts'), resolve(pkgFolder, 'dist'));
+    shell.rm('-rf', resolve(pkgFolder, 'dist/' + pkgName));
+    console.log('... 🌟Complete🌟 ...');
   } catch (err) {
     console.error(err);
   } finally {

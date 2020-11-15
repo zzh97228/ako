@@ -1,46 +1,21 @@
 {
-  "name": "ako-ui",
-  "version": "0.1.0-alpha.0",
-  "description": "使用vue@3.0.0写的简单的组件库",
-  "main": "dist/ako-ui.umd.bundle.js",
-  "module": "dist/ako-ui.es.bundle.js",
-  "types": "dist/index.d.ts",
-  "files": [
-    "README.md",
-    "dist",
-    "dist/index.d.ts"
-  ],
-  "publishConfig": {
-    "registry": "https://registry.npmjs.org",
-    "access": "public"
-  },
+  "private": true,
+  "version": "1.0.0-alpha.0",
   "scripts": {
     "clean": "node ./scripts/clean.js",
     "test": "jest",
     "test:cov": "jest --coverage",
-    "dev": "vite serve -c vite.config.js",
-    "dev:docs": "cross-env NODE_ENV=development node ./scripts/docs.js",
     "build": "cross-env node ./scripts/build.js",
-    "build:docs": "cross-env NODE_ENV=production node ./scripts/docs.js --mode=build"
+    "dev": "vite -c vite.config.js",
+    "doc:dev": "cross-env node ./scripts/docs.js",
+    "doc:build": "cross-env NODE_ENV=production node ./scripts/docs.js"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/zzh97228/ako-ui.git"
-  },
-  "author": "lagabu",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/zzh97228/ako-ui/issues"
-  },
-  "homepage": "https://github.com/zzh97228/ako-ui#readme",
   "devDependencies": {
-    "@rollup/plugin-alias": "^3.1.1",
-    "@rollup/plugin-commonjs": "^16.0.0",
     "@rollup/plugin-node-resolve": "^10.0.0",
     "@types/jest": "^26.0.15",
-    "@vue/compiler-sfc": "^3.0.2",
-    "@vue/test-utils": "^2.0.0-beta.6",
-    "autoprefixer": "^10.0.1",
+    "@vue/compiler-sfc": "latest",
+    "@vue/test-utils": "next",
+    "autoprefixer": "9",
     "cross-env": "^7.0.2",
     "cssnano": "^4.1.10",
     "jest": "^26.6.3",
@@ -48,6 +23,7 @@
     "jest-css-modules": "^2.1.0",
     "jest-serializer-html": "^7.0.0",
     "less": "^3.12.2",
+    "postcss": "^8.1.0",
     "prettier": "^2.1.2",
     "rimraf": "^3.0.2",
     "rollup": "^2.33.1",
@@ -59,10 +35,10 @@
     "typescript": "^4.0.5",
     "vite": "^1.0.0-rc.9",
     "vitepress": "^0.7.3",
-    "vue": "^3.0.2",
-    "vue-router": "^4.0.0-rc.1"
+    "vue": "next",
+    "vue-router": "next"
   },
   "peerDependencies": {
-    "vue": "^3.0.2"
+    "vue": "next"
   }
 }

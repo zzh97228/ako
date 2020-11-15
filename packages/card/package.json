@@ -1,0 +1,24 @@
+{
+  "name": "@lagabu/card",
+  "main": "dist/card.umd.bundle.js",
+  "types": "dist/index.d.ts",
+  "module": "dist/card.es.bundle.js",
+  "files": [
+    "dist",
+    "README.md",
+    "dist/index.d.ts",
+    "tags.json",
+    "attributes.json"
+  ],
+  "dependencies": {
+    "@lagabu/shared": "latest",
+    "vue": "next"
+  },
+  "peerDependencies": {
+    "vue": "next"
+  },
+  "vetur": {
+    "tags": "tags.json",
+    "attributes": "attributes.json"
+  }
+}

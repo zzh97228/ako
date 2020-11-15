@@ -549,30 +549,10 @@
     "@nodelib/fs.scandir" "2.1.3"
     fastq "^1.6.0"
 
-"@rollup/plugin-alias@^3.1.1":
-  version "3.1.1"
-  resolved "https://registry.npm.taobao.org/@rollup/plugin-alias/download/@rollup/plugin-alias-3.1.1.tgz#bb96cf37fefeb0a953a6566c284855c7d1cd290c"
-  integrity sha1-u5bPN/7+sKlTplZsKEhVx9HNKQw=
-  dependencies:
-    slash "^3.0.0"
-
 "@rollup/plugin-commonjs@^15.1.0":
   version "15.1.0"
   resolved "https://registry.yarnpkg.com/@rollup/plugin-commonjs/-/plugin-commonjs-15.1.0.tgz#1e7d076c4f1b2abf7e65248570e555defc37c238"
   integrity sha512-xCQqz4z/o0h2syQ7d9LskIMvBSH4PX5PjYdpSSvgS+pQik3WahkQVNWg3D8XJeYjZoVWnIUQYDghuEMRGrmQYQ==
-  dependencies:
-    "@rollup/pluginutils" "^3.1.0"
-    commondir "^1.0.1"
-    estree-walker "^2.0.1"
-    glob "^7.1.6"
-    is-reference "^1.2.1"
-    magic-string "^0.25.7"
-    resolve "^1.17.0"
-
-"@rollup/plugin-commonjs@^16.0.0":
-  version "16.0.0"
-  resolved "https://registry.npm.taobao.org/@rollup/plugin-commonjs/download/@rollup/plugin-commonjs-16.0.0.tgz#169004d56cd0f0a1d0f35915d31a036b0efe281f"
-  integrity sha1-FpAE1WzQ8KHQ81kV0xoDaw7+KB8=
   dependencies:
     "@rollup/pluginutils" "^3.1.0"
     commondir "^1.0.1"
@@ -942,9 +922,9 @@
     "@vue/compiler-core" "3.0.2"
     "@vue/shared" "3.0.2"
 
-"@vue/compiler-sfc@^3.0.2":
+"@vue/compiler-sfc@^3.0.2", "@vue/compiler-sfc@latest":
   version "3.0.2"
-  resolved "https://registry.npm.taobao.org/@vue/compiler-sfc/download/@vue/compiler-sfc-3.0.2.tgz?cache=0&sync_timestamp=1603225504352&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2F%40vue%2Fcompiler-sfc%2Fdownload%2F%40vue%2Fcompiler-sfc-3.0.2.tgz#22c70fed72c347a4d5fa2db2e80594b3193dce57"
+  resolved "https://registry.npm.taobao.org/@vue/compiler-sfc/download/@vue/compiler-sfc-3.0.2.tgz#22c70fed72c347a4d5fa2db2e80594b3193dce57"
   integrity sha1-IscP7XLDR6TV+i2y6AWUsxk9zlc=
   dependencies:
     "@babel/parser" "^7.12.0"
@@ -1009,10 +989,10 @@
   resolved "https://registry.npm.taobao.org/@vue/shared/download/@vue/shared-3.0.2.tgz#419bd85a2ebdbd4f42963e98c5a1b103452176d9"
   integrity sha1-QZvYWi69vU9Clj6YxaGxA0Uhdtk=
 
-"@vue/test-utils@^2.0.0-beta.6":
-  version "2.0.0-beta.6"
-  resolved "https://registry.npm.taobao.org/@vue/test-utils/download/@vue/test-utils-2.0.0-beta.6.tgz?cache=0&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2F%40vue%2Ftest-utils%2Fdownload%2F%40vue%2Ftest-utils-2.0.0-beta.6.tgz#2f7a653b0025cd4236968269c5972e807fa1fb2c"
-  integrity sha1-L3plOwAlzUI2loJpxZcugH+h+yw=
+"@vue/test-utils@next":
+  version "2.0.0-beta.8"
+  resolved "https://registry.npm.taobao.org/@vue/test-utils/download/@vue/test-utils-2.0.0-beta.8.tgz?cache=0&sync_timestamp=1604191273243&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2F%40vue%2Ftest-utils%2Fdownload%2F%40vue%2Ftest-utils-2.0.0-beta.8.tgz#13be1a31f4d6d396e2a9d595d4e0f236421eba98"
+  integrity sha1-E74aMfTW05biqdWV1ODyNkIeupg=
 
 abab@^2.0.3:
   version "2.0.3"
@@ -1182,16 +1162,17 @@ atob@^2.1.2:
   resolved "https://registry.yarnpkg.com/atob/-/atob-2.1.2.tgz#6d9517eb9e030d2436666651e86bd9f6f13533c9"
   integrity sha512-Wm6ukoaOGJi/73p/cl2GvLjTI5JM1k/O14isD73YML8StrH/7/lRFgmg8nICZgD3bZZvjwCGxtMOD3wWNAu8cg==
 
-autoprefixer@^10.0.1:
-  version "10.0.1"
-  resolved "https://registry.npm.taobao.org/autoprefixer/download/autoprefixer-10.0.1.tgz#e2d9000f84ebd98d77b7bc16f8adb2ff1f7bb946"
-  integrity sha1-4tkAD4Tr2Y13t7wW+K2y/x97uUY=
+autoprefixer@9:
+  version "9.8.6"
+  resolved "https://registry.npm.taobao.org/autoprefixer/download/autoprefixer-9.8.6.tgz#3b73594ca1bf9266320c5acf1588d74dea74210f"
+  integrity sha1-O3NZTKG/kmYyDFrPFYjXTep0IQ8=
   dependencies:
-    browserslist "^4.14.5"
-    caniuse-lite "^1.0.30001137"
+    browserslist "^4.12.0"
+    caniuse-lite "^1.0.30001109"
     colorette "^1.2.1"
     normalize-range "^0.1.2"
     num2fraction "^1.2.2"
+    postcss "^7.0.32"
     postcss-value-parser "^4.1.0"
 
 aws-sign2@~0.7.0:
@@ -1363,7 +1344,7 @@ browserslist@^4.0.0:
     escalade "^3.0.1"
     node-releases "^1.1.58"
 
-browserslist@^4.14.5:
+browserslist@^4.12.0:
   version "4.14.6"
   resolved "https://registry.npm.taobao.org/browserslist/download/browserslist-4.14.6.tgz#97702a9c212e0c6b6afefad913d3a1538e348457"
   integrity sha1-l3AqnCEuDGtq/vrZE9OhU440hFc=
@@ -1474,7 +1455,12 @@ caniuse-lite@^1.0.0, caniuse-lite@^1.0.30001088:
   resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30001090.tgz#ff7766332f60e80fea4903f30d360622e5551850"
   integrity sha512-QzPRKDCyp7RhjczTPZaqK3CjPA5Ht2UnXhZhCI4f7QiB5JK6KEuZBxIzyWnB3wO4hgAj4GMRxAhuiacfw0Psjg==
 
-caniuse-lite@^1.0.30001137, caniuse-lite@^1.0.30001154:
+caniuse-lite@^1.0.30001109:
+  version "1.0.30001157"
+  resolved "https://registry.npm.taobao.org/caniuse-lite/download/caniuse-lite-1.0.30001157.tgz#2d11aaeb239b340bc1aa730eca18a37fdb07a9ab"
+  integrity sha1-LRGq6yObNAvBqnMOyhijf9sHqas=
+
+caniuse-lite@^1.0.30001154:
   version "1.0.30001156"
   resolved "https://registry.npm.taobao.org/caniuse-lite/download/caniuse-lite-1.0.30001156.tgz?cache=0&sync_timestamp=1604556200557&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fcaniuse-lite%2Fdownload%2Fcaniuse-lite-1.0.30001156.tgz#75c20937b6012fe2b02ab58b30d475bf0718de97"
   integrity sha1-dcIJN7YBL+KwKrWLMNR1vwcY3pc=
@@ -3373,7 +3359,7 @@ isarray@0.0.1:
   resolved "https://registry.yarnpkg.com/isarray/-/isarray-0.0.1.tgz#8a18acfca9a8f4177e09abfc6038939b05d1eedf"
   integrity sha1-ihis/Kmo9Bd+Cav8YDiTmwXR7t8=
 
-isarray@1.0.0:
+isarray@1.0.0, isarray@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/isarray/-/isarray-1.0.0.tgz#bb935d48582cba168c06834957a54a3e07124f11"
   integrity sha1-u5NdSFgsuhaMBoNJV6VKPgcSTxE=
@@ -4140,6 +4126,14 @@ levn@~0.3.0:
     prelude-ls "~1.1.2"
     type-check "~0.3.2"
 
+line-column@^1.0.2:
+  version "1.0.2"
+  resolved "https://registry.npm.taobao.org/line-column/download/line-column-1.0.2.tgz#d25af2936b6f4849172b312e4792d1d987bc34a2"
+  integrity sha1-0lryk2tvSEkXKzEuR5LR2Ye8NKI=
+  dependencies:
+    isarray "^1.0.0"
+    isobject "^2.0.0"
+
 lines-and-columns@^1.1.6:
   version "1.1.6"
   resolved "https://registry.yarnpkg.com/lines-and-columns/-/lines-and-columns-1.1.6.tgz#1c00c743b433cd0a4e80758f7b64a57440d9ff00"
@@ -4437,6 +4431,11 @@ mz@^2.7.0:
     any-promise "^1.0.0"
     object-assign "^4.0.1"
     thenify-all "^1.0.0"
+
+nanoid@^3.1.16:
+  version "3.1.16"
+  resolved "https://registry.npm.taobao.org/nanoid/download/nanoid-3.1.16.tgz?cache=0&sync_timestamp=1603674706627&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fnanoid%2Fdownload%2Fnanoid-3.1.16.tgz#b21f0a7d031196faf75314d7c65d36352beeef64"
+  integrity sha1-sh8KfQMRlvr3UxTXxl02NSvu72Q=
 
 nanomatch@^1.2.9:
   version "1.2.13"
@@ -5311,6 +5310,16 @@ postcss@^7.0.0, postcss@^7.0.1, postcss@^7.0.14, postcss@^7.0.16, postcss@^7.0.2
     chalk "^2.4.2"
     source-map "^0.6.1"
     supports-color "^6.1.0"
+
+postcss@^8.1.0:
+  version "8.1.6"
+  resolved "https://registry.npm.taobao.org/postcss/download/postcss-8.1.6.tgz?cache=0&sync_timestamp=1604591918977&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fpostcss%2Fdownload%2Fpostcss-8.1.6.tgz#b022ba2cfb8701da234d073ed3128c5a384c35ff"
+  integrity sha1-sCK6LPuHAdojTQc+0xKMWjhMNf8=
+  dependencies:
+    colorette "^1.2.1"
+    line-column "^1.0.2"
+    nanoid "^3.1.16"
+    source-map "^0.6.1"
 
 prelude-ls@~1.1.2:
   version "1.1.2"
@@ -6686,14 +6695,23 @@ vitepress@^0.7.3:
     vite "^1.0.0-rc.9"
     vue "^3.0.2"
 
-vue-router@^4.0.0-rc.1:
-  version "4.0.0-rc.1"
-  resolved "https://registry.npm.taobao.org/vue-router/download/vue-router-4.0.0-rc.1.tgz?cache=0&sync_timestamp=1603710629657&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fvue-router%2Fdownload%2Fvue-router-4.0.0-rc.1.tgz#42f41315849163a1243886c9aa6d7c14f24fd003"
-  integrity sha1-QvQTFYSRY6EkOIbJqm18FPJP0AM=
+vue-router@next:
+  version "4.0.0-rc.2"
+  resolved "https://registry.npm.taobao.org/vue-router/download/vue-router-4.0.0-rc.2.tgz#8545cab76a05ca4f6dffbe6c6a671a4dbf585ab2"
+  integrity sha1-hUXKt2oFyk9t/75samcaTb9YWrI=
 
 vue@^3.0.2:
   version "3.0.2"
   resolved "https://registry.npm.taobao.org/vue/download/vue-3.0.2.tgz?cache=0&sync_timestamp=1603223848670&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fvue%2Fdownload%2Fvue-3.0.2.tgz#9d5b7b2983f35e64a34d13c7c9d6831239feca3c"
+  integrity sha1-nVt7KYPzXmSjTRPHydaDEjn+yjw=
+  dependencies:
+    "@vue/compiler-dom" "3.0.2"
+    "@vue/runtime-dom" "3.0.2"
+    "@vue/shared" "3.0.2"
+
+vue@next:
+  version "3.0.2"
+  resolved "https://registry.npm.taobao.org/vue/download/vue-3.0.2.tgz?cache=0&sync_timestamp=1603239662920&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fvue%2Fdownload%2Fvue-3.0.2.tgz#9d5b7b2983f35e64a34d13c7c9d6831239feca3c"
   integrity sha1-nVt7KYPzXmSjTRPHydaDEjn+yjw=
   dependencies:
     "@vue/compiler-dom" "3.0.2"

@@ -1,5 +1,5 @@
 <template>
-<div>Playground</div>
+  <ako-card>Playground</ako-card>
 </template>
 
 <script>
