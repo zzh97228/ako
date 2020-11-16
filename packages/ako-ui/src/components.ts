@@ -1,5 +1,4 @@
 import { Card } from '@lagabu/card';
+import { Row, Column, Container } from '@lagabu/grid';
 
-export {
-  Card,
-};
+export const components = { Card, Row, Col: Column, Container };

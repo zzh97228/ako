@@ -11,14 +11,18 @@ describe('grid.service', () => {
     let gridInstance = mountFunc({
       grid: {
         columns: 6,
-        padding: '12px',
+        gutter: {
+          'xs': '12px'
+        }
       },
     });
     gridInstance.appendStyle();
     const dom = document.head.querySelector('#ako-style');
     expect(dom).not.toBeNull();
-    expect(dom?.innerHTML).toContain('--grid-columns: 6');
-    expect(dom?.innerHTML).toContain('--grid-padding: 12px');
+    expect(dom!.innerHTML).toContain('--grid-columns: 6');
+    expect(dom!.innerHTML).toContain('--gutter-xs: 12px');
+    expect(dom!.innerHTML).toContain('--gutter-xs-reverse: -12px');
+
     gridInstance = mountFunc({
       grid: {
         columns: 7,

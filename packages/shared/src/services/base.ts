@@ -6,7 +6,11 @@ export type IService = {
 };
 export class BaseService implements IService {
   constructor(...args: any) {}
-  register(Vue: App, ...args: any) {}
+  register(Vue: App, ...args: any) {
+    if (!Vue.config.globalProperties.$ako) {
+      Vue.config.globalProperties.$ako = {};
+    }
+  }
 }
 
 export class StyleService extends BaseService implements IService {

@@ -1,5 +1,36 @@
+.make-gutter(@type: ~'xs') {
+  @temp-reverse: ~'var(--gutter-@{type}-reverse, 4px)';
+  @temp-val: ~'var(--gutter-@{type}, -4px)';
+  .row--gutter-@{type} {
+    margin-left: @temp-reverse;
+    margin-right: @temp-reverse;
+    & > .col {
+      padding-left: @temp-val;
+      padding-right: @temp-val;
+    }
+    &--column {
+      margin-top: @temp-reverse;
+      margin-bottom: @temp-reverse;
+
+      & > .col {
+        padding-bottom: @temp-val;
+        padding-top: @temp-val;
+      }
+    }
+  }
+}
+
 .row {
   display: flex;
+  position: relative;
+
+  &--column {
+    flex-direction: column;
+  }
+
+  &--column-reverse {
+    flex-direction: column-reverse;
+  }
 
   &--justify-content {
     &-center {
@@ -36,5 +67,41 @@
       align-items: baseline;
     }
   }
+}
 
+.make-gutter(~'xs');
+.make-gutter(~'sm');
+.make-gutter(~'md');
+.make-gutter(~'lg');
+.make-gutter(~'xl');
+
+
+.col {
+  position: relative;
+  max-width: 100%;
+  min-height: 1px;
+  flex-grow: 1;
+
+  &--shrink {
+    flex-shrink: 1;
+    flex-grow: 0;
+  }
+
+  &--grow {
+    flex-shrink: 0;
+    flex-grow: 1;
+  }
+}
+
+.container {
+  position: relative;
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+
+  &--fluid {
+    margin-left: 0;
+    margin-right: 0;
+    max-width: 100%;
+  }
 }

@@ -10,10 +10,8 @@ declare global {
 declare module '@vue/runtime-core' {
   export interface ComponentCustomProperties {
     $ako?: {
-      $prefix?: string;
-      $color?: ColorType;
+      $colors?: ColorType;
       $breakpoints?: BreakpointsType;
-      $grid?: GridType;
     };
   }
 }

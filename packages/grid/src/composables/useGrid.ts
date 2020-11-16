@@ -1,13 +1,7 @@
-import { convertToUnit } from '@lagabu/shared';
+import { convertToUnit, defaultBreakpoints } from '@lagabu/shared';
 import { computed, ExtractPropTypes, Ref, inject, InjectionKey, provide, toRef } from 'vue';
 
-export const FLEX_OBJ = {
-  xs: true,
-  sm: true,
-  md: true,
-  lg: true
-}
-export const FLEX_KEYS = Object.keys(FLEX_OBJ);
+export const FLEX_KEYS = Object.keys(defaultBreakpoints);
 export const GridSymbol: InjectionKey<{
   gutter: Ref<string>;
   column: Ref<boolean>;
@@ -23,19 +17,22 @@ export function useGridProvider(props: ExtractPropTypes<typeof gridProps>) {
   const classes = computed(() => {
     if (!FLEX_KEYS.includes(props.gutter)) return {};
     return {
-      [`row-gutter--${props.gutter}`]: !!props.gutter,
+      [`row--gutter-${props.gutter}${props.column ? '-column' : ''}`]: !!props.gutter,
     };
   });
   const styles = computed(() => {
     const style: Record<string, string> = {};
-    if (FLEX_KEYS.includes(props.gutter)) return style;
-    const value = convertToUnit(props.gutter) || '0px';
+    if (!props.gutter || FLEX_KEYS.includes(props.gutter)) return style;
+    let value = convertToUnit(props.gutter) || '0px';
+    if (!value.match(/^\-/)) {
+      value = '-' + value;
+    }
     if (!props.column) {
-      style['padding-left'] = value;
-      style['padding-right'] = value;
+      style['margin-left'] = value;
+      style['margin-right'] = value;
     } else {
-      style['padding-top'] = value;
-      style['padding-bottom'] = value;
+      style['margin-top'] = value;
+      style['margin-bottom'] = value;
     }
     return style;
   });
@@ -52,16 +49,14 @@ export function useGridProvider(props: ExtractPropTypes<typeof gridProps>) {
 
 export function useGridInjector() {
   const grid = inject(GridSymbol);
-  let styles = computed(() => ({}));
-  if (!grid) return { style: styles };
-  styles = computed(() => {
+  if (!grid) return { style: {} };
+  const styles = computed(() => {
     let gutter: string = grid.gutter.value;
     if (FLEX_KEYS.includes(gutter)) return {};
     gutter = convertToUnit(gutter) || '0px';
-    !gutter.match(/^(\-)/) && (gutter = '-' + gutter);
     return {
-      [`margin-${grid.column.value ? 'top' : 'left'}`]: gutter,
-      [`margin-${grid.column.value ? 'bottom' : 'right'}`]: gutter,
+      [`padding-${grid.column.value ? 'top' : 'left'}`]: gutter,
+      [`padding-${grid.column.value ? 'bottom' : 'right'}`]: gutter,
     };
   });
 

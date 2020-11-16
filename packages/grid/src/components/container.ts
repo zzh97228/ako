@@ -1,23 +1,23 @@
-import { defineComponent, h } from 'vue';
 import { useSize, sizeProps } from '@lagabu/shared';
+import { defineComponent, h } from 'vue';
 
-export const Card = defineComponent({
-  name: 'card',
+export const Container = defineComponent({
+  name: 'container',
   props: {
     tag: {
       type: String,
       default: 'div',
     },
-    ...sizeProps,
+    ...sizeProps
   },
   setup(props, { slots }) {
-    const { sizeStyle } = useSize(props);
+    const { sizeStyle: style } = useSize(props);
     return () =>
       h(
         props.tag,
         {
-          class: 'card',
-          style: sizeStyle.value,
+          class: 'container',
+          style: style.value
         },
         slots.default && slots.default()
       );

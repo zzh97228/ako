@@ -7,6 +7,7 @@ export const Row = defineComponent({
   name: 'row',
   props: {
     ...gridProps,
+    columnReverse: Boolean,
     justify: {
       type: String,
       default: null,
@@ -27,6 +28,8 @@ export const Row = defineComponent({
     const classes = computed(() => {
       return {
         row: true,
+        [`row--column`]: !!props.column,
+        [`row--column-reverse`]: !!props.columnReverse,
         [`row--justify-content-${props.justify}`]: !!props.justify,
         [`row--align-items-${props.align}`]: !!props.align,
       };

@@ -2,30 +2,30 @@ import { App } from 'vue';
 import { StyleService } from './base';
 export const defaultBaseColors = {
   'red-lighten': '#ffa39e',
-  'red-base': '#f5222d',
+  red: '#f5222d',
   'red-darken': '#a8071a',
   'blue-lighten': '#91d5ff',
-  'blue-base': '#1890ff',
+  blue: '#1890ff',
   'blue-darken': '#0050b3',
   'cyan-lighten': '#87e8de',
-  'cyan-base': '#13c2c2',
+  cyan: '#13c2c2',
   'cyan-darken': '#006d75',
   'green-lighten': '#b7eb8f',
-  'green-base': '#52c41a',
+  green: '#52c41a',
   'green-darken': '#237804',
   'yellow-lighten': '#fffb8f',
-  'yellow-base': '#fadb14',
+  yellow: '#fadb14',
   'yellow-darken': '#ad8b00',
   'black-lighten': '#bfbfbf',
-  'black-base': '#262626',
+  black: '#262626',
   'black-darken': '#000000',
 };
 export const defaultThemeColors = {
-  primary: defaultBaseColors['blue-base'],
+  primary: defaultBaseColors['blue'],
   secondary: defaultBaseColors['blue-lighten'],
-  success: defaultBaseColors['green-base'],
-  error: defaultBaseColors['red-base'],
-  warning: defaultBaseColors['yellow-base'],
+  success: defaultBaseColors['green'],
+  error: defaultBaseColors['red'],
+  warning: defaultBaseColors['yellow'],
 };
 
 export type ThemeColorType = { [props: string]: string } & typeof defaultThemeColors;

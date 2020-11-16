@@ -24,6 +24,10 @@ export function isArray<T extends any>(str: any): str is Array<T> {
   return Array.isArray(str);
 }
 
+export function isCssColor(str: string | undefined) {
+  return !!str && !!str.match(/^(#|(hsl|rgb)a?\(|var\(--)/g)
+}
+
 export function hasDocument() {
   return typeof document !== 'undefined';
 }
@@ -69,7 +73,8 @@ export function registerServices(
   }
 }
 
-export function convertToNumber(str: string | number) {
+export function convertToNumber(str: string | number | undefined) {
+  if (isUndefined(str)) return NaN;
   if (isNumber(str) || !isNaN(+str)) return +str;
-  return +str.replace(/[^0-9.\-]/g, '');
+  return +str.replace(/[^0-9\.\-]/g, '');
 }

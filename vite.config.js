@@ -3,8 +3,14 @@ const { readdirSync } = require('fs');
 const pkgs = readdirSync(resolve(__dirname, './packages'));
 const regs = []
 const aliasObj = pkgs.reduce((prev, next) => {
-  regs.push(new RegExp('("@lagabu/' + next + '")'));
-  prev[`/@lagabu/${next}/`] = resolve(__dirname, './packages/' + next)
+  let fullPath = '@lagabu/'
+  if(next === 'ako-ui') {
+    fullPath = next
+  } else  {
+    fullPath += next
+  }
+  regs.push(new RegExp(`("${fullPath}")`));
+  prev[`/${fullPath}/`] = resolve(__dirname, './packages/' + next)
   return prev
 }, {})
 module.exports = {

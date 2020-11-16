@@ -3,14 +3,14 @@ import { convertToNumber, hasWindow } from '../utils/helpers';
 import { StyleService } from './base';
 export const defaultBreakpoints = {
   xs: '',
-  sm: '',
-  md: '',
-  lg: '',
-  xl: '',
+  sm: '576px',
+  md: '768px',
+  lg: '992px',
+  xl: '1200px'
 };
-export type BreakpointsType = { [props: string]: boolean } & {
+export type BreakpointsType = { [props: string]: boolean } & Omit<{
   [T in keyof typeof defaultBreakpoints]: boolean;
-};
+}, 'xs'>;
 export type BreakpointsOptions = {
   [T in keyof typeof defaultBreakpoints]: string | number;
 };
@@ -29,13 +29,7 @@ export class VariableService extends StyleService {
   }
 
   genStyleString() {
-    // TODO
-    let rootStr = `\n:root{\n`,
-      key: string,
-      val: string,
-      classesStr = `\n`;
-    rootStr += `\n}\n`;
-    return rootStr;
+    return '';
   }
   registerBreakpoints(Vue: App) {
     if (!hasWindow()) return;
@@ -44,8 +38,12 @@ export class VariableService extends StyleService {
     const self = this;
     const state = reactive(
       Object.keys(this.breakpoints).reduce((prev, next) => {
+        if (next === 'xs') {
+          prev[next] = true
+          return prev
+        }
         size = convertToNumber(this.breakpoints[next]);
-        prev[next] = windowSize < size;
+        prev[next] = windowSize >= size;
         return prev;
       }, {} as BreakpointsType)
     );
@@ -53,11 +51,16 @@ export class VariableService extends StyleService {
       windowSize = window.innerWidth;
       for (let key in state) {
         if (Object.prototype.hasOwnProperty.call(self.breakpoints, key)) {
+          if (key === 'xs') {
+            state[key] = true
+            continue;
+          }
           size = convertToNumber(self.breakpoints[key]);
-          state[key] = windowSize < size;
+          state[key] = windowSize >= size;
         }
       }
     }
+    Vue.config.globalProperties.$ako.$breakpoints = state;
     window.addEventListener('resize', onResize, false);
   }
   register(Vue: App) {
