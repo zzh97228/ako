@@ -19,6 +19,7 @@ export const defaultBaseColors = {
   'black-lighten': '#bfbfbf',
   black: '#262626',
   'black-darken': '#000000',
+  white: '#ffffff'
 };
 export const defaultThemeColors = {
   primary: defaultBaseColors['blue'],
@@ -56,11 +57,11 @@ export class ColorService extends StyleService {
   genColorClasses(key: string, isTheme = false) {
     const addon = isTheme ? '-color' : '',
       val = 'var(--' + key + addon + ')';
-    return `\n.${key}-color {
+    return `\nbody .${key}-color {
       background-color: ${val};
       border-color: ${val};
     }
-    .${key}-color--text {
+    body .${key}-color--text {
       color: ${val};
       caret-color: ${val};
     }\n

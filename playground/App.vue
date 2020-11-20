@@ -1,12 +1,5 @@
 <template>
-  <ako-row gutter="4px">
-    <ako-col xs="6" sm="4" md="2">
-      haha
-    </ako-col>
-    <ako-col cols="6">
-      hehe
-    </ako-col>
-  </ako-row>
+  <router-view></router-view>
 </template>
 
 <script>
@@ -16,5 +9,14 @@ export default {
 </script>
 
 <style lang="less">
+body, html {
+  margin: 0;
+  padding: 0;
+}
 
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
 </style>

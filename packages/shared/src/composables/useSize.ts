@@ -1,15 +1,14 @@
-import { computed, ExtractPropTypes } from 'vue';
+import { computed, ExtractPropTypes, PropType } from 'vue';
 import { convertToUnit } from '../utils/helpers';
 
 export const sizeProps = {
-  height: [String, Number],
   width: [String, Number],
+  height: [String, Number],
   maxHeight: [String, Number],
   maxWidth: [String, Number],
   minHeight: [String, Number],
   minWidth: [String, Number],
 };
-
 export function useSize(props: ExtractPropTypes<typeof sizeProps>) {
   return {
     sizeStyle: computed(() => {

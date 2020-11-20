@@ -1,3 +1,4 @@
+import { mount } from '@vue/test-utils';
 import {
   convertToUnit,
   convertToNumber,
@@ -8,6 +9,7 @@ import {
   isObject,
   isString,
   isUndefined,
+  genFunctionalComponent,
 } from '../helpers';
 
 describe('helpers.ts', () => {
@@ -49,5 +51,17 @@ describe('helpers.ts', () => {
     expect(convertToNumber('11.1.1')).toBeNaN();
     expect(convertToNumber('-11.2vw')).toEqual(-11.2);
     expect(convertToNumber(11)).toEqual(11);
+  });
+
+  it('should generate functional component', () => {
+    const name = 'tempComponent';
+    const wrapper = mount(genFunctionalComponent(name, 'main'), {
+      slots: {
+        default: name,
+      },
+    });
+    expect(wrapper.classes()).toContain('temp-component');
+    expect(wrapper.element.tagName).toEqual('MAIN');
+    expect(wrapper.text()).toEqual(name);
   });
 });

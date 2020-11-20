@@ -1,4 +1,4 @@
-import { App, Component } from 'vue';
+import { App, Component, Directive, FunctionalComponent, h } from 'vue';
 import { BaseService } from '../services';
 
 export function isString(str: any): str is string {
@@ -25,7 +25,7 @@ export function isArray<T extends any>(str: any): str is Array<T> {
 }
 
 export function isCssColor(str: string | undefined) {
-  return !!str && !!str.match(/^(#|(hsl|rgb)a?\(|var\(--)/g)
+  return !!str && !!str.match(/^(#|(hsl|rgb)a?\(|var\(--)/g);
 }
 
 export function hasDocument() {
@@ -48,6 +48,12 @@ export function hyphenate(str: string) {
   return str.replace(/\B([A-Z])/g, '-$1').toLowerCase();
 }
 
+/**
+ * register components
+ * @param Vue
+ * @param components
+ * @param prefix
+ */
 export function registerComponents(Vue: App, components: Record<string, Component>, prefix = '') {
   let compo: Component;
   for (let key in components) {
@@ -59,6 +65,12 @@ export function registerComponents(Vue: App, components: Record<string, Componen
   }
 }
 
+/**
+ * register inner service
+ * @param Vue
+ * @param services
+ * @param opts
+ */
 export function registerServices(
   Vue: App,
   services: Record<string, typeof BaseService>,
@@ -73,8 +85,35 @@ export function registerServices(
   }
 }
 
+/**
+ * register Directives
+ * @param Vue
+ * @param directives
+ */
+export function registerDirectives(Vue: App, directives: Record<string, Directive>) {
+  for (let dk in directives) {
+    if (Object.prototype.hasOwnProperty.call(directives, dk)) {
+      Vue.directive(dk, directives[dk]);
+    }
+  }
+}
+
 export function convertToNumber(str: string | number | undefined) {
   if (isUndefined(str)) return NaN;
   if (isNumber(str) || !isNaN(+str)) return +str;
   return +str.replace(/[^0-9\.\-]/g, '');
+}
+
+export type CustomFunctionalProps = {
+  tag: string;
+}
+export function genFunctionalComponent(name: string, defaultTag = 'div'): FunctionalComponent<CustomFunctionalProps> {
+  return (props, { slots }) =>
+    h(
+      props.tag || defaultTag,
+      {
+        class: hyphenate(name),
+      },
+      slots.default && slots.default()
+    );
 }

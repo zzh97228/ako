@@ -1,0 +1,18 @@
+{
+  "name": "@lagabu/btn",
+  "main": "dist/btn.umd.bundle.js",
+  "types": "dist/index.d.ts",
+  "module": "dist/ako-ui.es.bundle.js",
+  "files": [
+    "dist",
+    "README.md",
+    "dist/index.d.ts"
+  ],
+  "dependencies": {
+    "@lagabu/shared": "latest",
+    "vue": "next"
+  },
+  "peerDependencies": {
+    "vue": "next"
+  }
+}

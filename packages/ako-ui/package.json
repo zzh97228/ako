@@ -30,7 +30,9 @@
   "dependencies": {
     "vue": "next",
     "@lagabu/shared": "latest",
-    "@lagabu/card": "latest"
+    "@lagabu/card": "latest",
+    "@lagabu/btn": "latest",
+    "@lagabu/application": "latest"
   },
   "peerDependencies": {
     "vue": "next"

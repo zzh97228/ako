@@ -1,0 +1,8 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`card.ts should render card 1`] = `
+<div class="card primary-color elevation-xs"
+     style="width: 100%; height: 100%;"
+>
+</div>
+`;

@@ -52,7 +52,7 @@ export function useGridInjector() {
   if (!grid) return { style: {} };
   const styles = computed(() => {
     let gutter: string = grid.gutter.value;
-    if (FLEX_KEYS.includes(gutter)) return {};
+    if (!gutter || FLEX_KEYS.includes(gutter)) return {};
     gutter = convertToUnit(gutter) || '0px';
     return {
       [`padding-${grid.column.value ? 'top' : 'left'}`]: gutter,

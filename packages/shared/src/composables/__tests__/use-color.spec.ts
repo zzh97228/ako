@@ -1,6 +1,6 @@
 import { mount, VueWrapper } from '@vue/test-utils';
 import { defineComponent, h } from 'vue';
-import { colorProps, useColor } from '../useColor';
+import { genColorProp, useColor } from '../useColor';
 
 describe('useColor.ts', () => {
   let mountFunc: (options?: object, isTextColor?: boolean) => VueWrapper<any>;
@@ -9,7 +9,7 @@ describe('useColor.ts', () => {
       return mount(
         defineComponent({
           props: {
-            ...colorProps,
+            ...genColorProp(),
           },
           setup(props) {
             const color = useColor(props, isTextColor);
