@@ -1,6 +1,7 @@
+import vue from 'vue';
 import { Ripple, useColor, useElevation, genElevationProp, genColorProp } from '@lagabu/shared';
 import { computed, defineComponent, h, mergeProps, withDirectives } from 'vue';
-export const Btn = defineComponent({
+export default defineComponent({
   name: 'btn',
   props: {
     outlined: Boolean,

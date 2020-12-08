@@ -1,7 +1,7 @@
 import { mount, VueWrapper } from '@vue/test-utils';
 import { computed, reactive } from 'vue';
 import { GridSymbol } from '../../composables/useGrid';
-import { Column } from '../column';
+import Column from '../column';
 
 describe('column.ts', () => {
   let mountFunc: (options?: object, column?: boolean) => VueWrapper<any>;
@@ -52,7 +52,6 @@ describe('column.ts', () => {
     expect(wrapper.attributes('style')).toContain('padding-left: 4px');
     expect(wrapper.attributes('style')).toContain('padding-right: 4px');
     expect(wrapper.html()).toMatchSnapshot();
-
   });
 
   it('should have vertical padding when row provide column props', () => {

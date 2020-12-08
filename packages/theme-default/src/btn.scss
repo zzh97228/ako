@@ -1,0 +1,15 @@
+.btn {
+  display: block;
+  outline: none;
+  cursor: pointer;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  padding: 4px 11px;
+  &__content {
+    line-height: 1.5;
+  }
+
+  &--outlined {
+    border-color: currentColor;
+  }
+}

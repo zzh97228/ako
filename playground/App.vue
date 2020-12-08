@@ -8,8 +8,9 @@ export default {
 };
 </script>
 
-<style lang="less">
-body, html {
+<style>
+body,
+html {
   margin: 0;
   padding: 0;
 }

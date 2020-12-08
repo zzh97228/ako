@@ -1,13 +1,13 @@
 {
   "name": "@lagabu/shared",
-  "version": "1.0.0-alpha.0",
+  "version": "0.1.0-alpha.0",
   "main": "dist/shared.umd.bundle.js",
   "module": "dist/shared.es.bundle.js",
-  "typed": "dist/index.d.ts",
+  "typed": "dist/shared.d.ts",
   "files": [
     "dist",
     "README.md",
-    "dist/index.d.ts"
+    "dist/shared.d.ts"
   ],
   "dependencies": {
     "vue": "next"

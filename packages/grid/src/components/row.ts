@@ -1,9 +1,10 @@
+import vue from 'vue';
 import { computed, defineComponent, h, mergeProps } from 'vue';
 import { useGridProvider, gridProps } from '../composables';
 const BASE_PARAMS = ['center', 'start', 'end'];
 export const JUSTIFY_PARAMS = [...BASE_PARAMS, 'space-around', 'space-between'];
 export const ALIGN_PARAMS = [...BASE_PARAMS, 'stretch', 'baseline'];
-export const Row = defineComponent({
+export default defineComponent({
   name: 'row',
   props: {
     ...gridProps,

@@ -12,7 +12,7 @@
     // "declarationMap": true,                /* Generates a sourcemap for each corresponding '.d.ts' file. */
     // "sourceMap": true,                     /* Generates corresponding '.map' file. */
     // "outFile": "./",                       /* Concatenate and emit output to single file. */
-    "outDir": "dist" /* Redirect output structure to the directory. */,
+    // "outDir": "dist" /* Redirect output structure to the directory. */,
     // "rootDir": "./",                       /* Specify the root directory of input files. Use to control the output directory structure with --outDir. */
     // "composite": true,                     /* Enable project compilation */
     // "tsBuildInfoFile": "./",               /* Specify file to store incremental compilation information */
@@ -20,7 +20,7 @@
     "noEmit": true,                        /* Do not emit outputs. */
     // "importHelpers": true,                 /* Import emit helpers from 'tslib'. */
     "downlevelIteration": true /* Provide full support for iterables in 'for-of', spread, and destructuring when targeting 'ES5' or 'ES3'. */,
-    "isolatedModules": true,               /* Transpile each file as a separate module (similar to 'ts.transpileModule'). */
+    // "isolatedModules": true,               /* Transpile each file as a separate module (similar to 'ts.transpileModule'). */
 
     /* Strict Type-Checking Options */
     "strict": true /* Enable all strict type-checking options. */,
@@ -43,7 +43,8 @@
     "baseUrl": "." /* Base directory to resolve non-absolute module names. */,
     "paths": { 
       "@lagabu/*": ["packages/*/src"],
-      "ako-ui": ["packages/ako-ui/src"]
+      "ako-ui": ["packages/ako-ui/src"],
+      "/src/*": ["src/*"]
     },                           /* A series of entries which re-map imports to lookup locations relative to the 'baseUrl'. */
     // "rootDirs": [],                        /* List of root folders whose combined content represents the structure of the project at runtime. */
     // "typeRoots": [],                       /* List of folders to include type definitions from. */
@@ -66,6 +67,6 @@
     /* Advanced Options */
     "forceConsistentCasingInFileNames": true /* Disallow inconsistently-cased references to the same file. */
   },
-  "include": ["packages", "playground"],
-  "exclude": ["**/node_modules", "**/dist"]
+  "include": ["packages/*/src", "src", "src/*/__tests__", "packages/global.d.ts", "packages/*/__tests__", "playground"],
+  "exclude": ["**/node_modules"]
 }

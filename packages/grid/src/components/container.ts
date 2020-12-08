@@ -1,14 +1,14 @@
 import { useSize, sizeProps } from '@lagabu/shared';
-import { defineComponent, h } from 'vue';
+import vue, { defineComponent, h } from 'vue';
 
-export const Container = defineComponent({
+export default defineComponent({
   name: 'container',
   props: {
     tag: {
       type: String,
       default: 'div',
     },
-    ...sizeProps
+    ...sizeProps,
   },
   setup(props, { slots }) {
     const { sizeStyle: style } = useSize(props);
@@ -17,7 +17,7 @@ export const Container = defineComponent({
         props.tag,
         {
           class: 'container',
-          style: style.value
+          style: style.value,
         },
         slots.default && slots.default()
       );

@@ -1,0 +1,13 @@
+@import './mixins/theme';
+
+@include make-basic-color-classes();
+@include make-theme-color-classes();
+@include make-grey-colors();
+
+body .theme--light {
+  color: var(--grey-12);
+}
+
+body .theme--dark {
+  color: var(--grey-0);
+}

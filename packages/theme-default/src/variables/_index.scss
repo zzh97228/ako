@@ -1,0 +1,18 @@
+@import './colors';
+@import './elevation';
+$grid-columns: 12;
+$breakpoints: (
+  'xs': 0px,
+  'sm': 576px,
+  'md': 768px,
+  'lg': 992px,
+  'xl': 1140px,
+);
+
+$gutters: (
+  'xs': 4px,
+  'sm': 8px,
+  'md': 12px,
+  'lg': 16px,
+  'xl': 20px,
+);

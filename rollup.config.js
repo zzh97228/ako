@@ -19,7 +19,10 @@ function genRollupObj(packageFolder, pkg, format, global = false) {
     prev[next] = resolve(__dirname, './packages/' + RegExp.$1 + '/src');
     return prev;
   }, {});
-  const plugins = [];
+  const plugins = [terser()];
+  function isESM() {
+    return !!format && format === 'es';
+  }
   return {
     input: {
       input: resolve(packageFolder, 'src/index.ts'),
@@ -27,13 +30,14 @@ function genRollupObj(packageFolder, pkg, format, global = false) {
       plugins: [
         nodeResolve(),
         ts({
+          useTsconfigDeclarationDir: isESM(),
           tsconfig: resolve(__dirname, './tsconfig.json'),
           tsconfigOverride: {
             compilerOptions: {
-              declaration: format && format === 'es',
-              rootDir: resolve(__dirname, './packages'),
+              declaration: isESM(),
+              declarationMap: isESM(),
+              declarationDir: resolve(packageFolder, 'dist/temp'),
             },
-            include: [resolve(packageFolder, 'src')],
             exclude: ['**/node_modules', '**/__tests__', '**/dist', 'playground'],
           },
         }),
@@ -49,7 +53,7 @@ function genRollupObj(packageFolder, pkg, format, global = false) {
               ],
             }),
           ],
-          extract: format === 'es' && resolve(packageFolder, 'dist/' + name + '.min.css'),
+          extract: isESM() && resolve(packageFolder, 'dist/' + name + '.min.css'),
           inject: false,
         }),
         ...plugins,

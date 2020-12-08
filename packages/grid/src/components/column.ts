@@ -1,11 +1,11 @@
-import { convertToNumber, defaultBreakpoints } from '@lagabu/shared';
-import { defineComponent, h, mergeProps, PropType } from 'vue';
+import vue, { defineComponent, h, PropType } from 'vue';
 import { useGridInjector, FLEX_KEYS } from '../composables';
+import { FlexEnum } from '../services';
 
 export type GridBreakpointsProps = { [props: string]: any } & {
-  [T in keyof typeof defaultBreakpoints]: PropType<string | number>;
+  [T in FlexEnum]: PropType<string | number>;
 };
-export const Column = defineComponent({
+export default defineComponent({
   name: 'column',
   props: {
     cols: [String, Number],
@@ -22,37 +22,27 @@ export const Column = defineComponent({
       styles: grid.style,
     };
   },
-  methods: {
-    getBreakpointsClasses(): Record<string, any> {
-      const $breakpoints = this.$ako?.$breakpoints;
-      if (!$breakpoints) return {};
-      let size: undefined | number | string = undefined;
-      // TODO This breakpoints is too heavy. Need to rewrite
-      if ($breakpoints.xl) {
-        size = this.xl ? this.xl : this.lg || this.md || this.sm || this.xs;
-      } else if ($breakpoints.lg) {
-        size = this.lg ? this.lg : this.md || this.sm || this.xs;
-      } else if ($breakpoints.md) {
-        size = this.md ? this.md : this.sm || this.xs;
-      } else if ($breakpoints.sm) {
-        size = this.sm ? this.sm : this.xs;
-      } else if ($breakpoints.xs) {
-        size = this.xs;
-      }
-      size = convertToNumber(size);
-      return {
-        [`col-${size}`]: !!size,
-      };
-    },
-  },
+  methods: {},
   computed: {
+    breakpointsClasses(): Record<string, any> {
+      const obj: Record<string, any> = {};
+      let val: string | number | undefined, bk: FlexEnum;
+      for (let i = 0; i < FLEX_KEYS.length; i++) {
+        bk = FLEX_KEYS[i] as FlexEnum;
+        val = this[bk];
+        if (val) {
+          obj[`col-${val}-${bk}`] = !!val;
+        }
+      }
+      return obj;
+    },
     classes(): Record<string, any> {
       return {
         col: true,
         'col--shrink': this.shrink,
         'col--grow': this.grow,
         [`col-${this.cols}`]: !!this.cols,
-        ...this.getBreakpointsClasses(),
+        ...this.breakpointsClasses,
       };
     },
   },

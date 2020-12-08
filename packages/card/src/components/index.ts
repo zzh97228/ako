@@ -1,7 +1,9 @@
+import { FunctionalComponent } from 'vue';
 import { genFunctionalComponent } from '@lagabu/shared';
-
-export * from './card';
-export const CardTitle = genFunctionalComponent('CardTitle');
-export const CardSubtitle = genFunctionalComponent('CardSubtitle');
-export const CardActions = genFunctionalComponent('CardActions');
-export const CardContent = genFunctionalComponent('CardContent');
+import Card from './card';
+export { Card };
+type CustomFunctionalProps = FunctionalComponent<{ tag: string }>;
+export const CardTitle: CustomFunctionalProps = genFunctionalComponent('CardTitle');
+export const CardSubtitle: CustomFunctionalProps = genFunctionalComponent('CardSubtitle');
+export const CardActions: CustomFunctionalProps = genFunctionalComponent('CardActions');
+export const CardContent: CustomFunctionalProps = genFunctionalComponent('CardContent');

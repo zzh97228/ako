@@ -1,1 +1,2 @@
-export * from './btn';
+import Btn from './btn';
+export { Btn };

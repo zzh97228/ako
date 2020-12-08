@@ -1,0 +1,14 @@
+@import './btn.scss';
+@import './card.scss';
+@import './colors.scss';
+@import './grid.scss';
+// mixins
+@import './mixins/theme';
+@import './mixins/grid';
+
+:root {
+  @include make-basic-color-vars();
+  @include make-theme-color-vars();
+  @include make-grey-vars();
+  @include make-gutter-vars();
+}

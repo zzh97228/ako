@@ -1,7 +1,8 @@
+import vue from 'vue';
 import { defineComponent, h, mergeProps, computed } from 'vue';
 import { useSize, sizeProps, useColor, useElevation, genElevationProp, genColorProp } from '@lagabu/shared';
 
-export const Card = defineComponent({
+export default defineComponent({
   name: 'card',
   props: {
     tag: {

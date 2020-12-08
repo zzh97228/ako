@@ -1,4 +1,4 @@
-import { computed, ExtractPropTypes, PropType } from 'vue';
+import { computed, ComputedRef, ExtractPropTypes, PropType } from 'vue';
 import { convertToUnit } from '../utils/helpers';
 
 export const sizeProps = {
@@ -20,6 +20,6 @@ export function useSize(props: ExtractPropTypes<typeof sizeProps>) {
       if (props.minHeight) obj['minHeight'] = convertToUnit(props.minHeight);
       if (props.minWidth) obj['minWidth'] = convertToUnit(props.minWidth);
       return obj;
-    }),
+    }) as ComputedRef<Record<string, any>>,
   };
 }

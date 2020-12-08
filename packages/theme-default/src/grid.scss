@@ -1,0 +1,39 @@
+@import './mixins/grid';
+.row {
+  display: flex;
+  flex-wrap: nowrap;
+
+  &--column {
+    flex-direction: column;
+  }
+
+  &--wrap {
+    flex-wrap: wrap;
+  }
+
+  @include make-cols();
+  @include make-breakpoints-cols();
+}
+
+.col {
+  display: block;
+  flex: 0 0 auto;
+
+  &--shrink {
+    flex: 0 1 auto;
+  }
+
+  &--grow {
+    flex: 1 0 auto;
+  }
+}
+
+@include make-gutters();
+
+.container {
+  display: flex;
+
+  &--fluid {
+    max-width: 100%;
+  }
+}

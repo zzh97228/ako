@@ -1,0 +1,59 @@
+@use '../variables/index' as v;
+@use 'sass:map';
+
+@mixin make-gutter-vars {
+  @each $key, $val in v.$gutters {
+    --gutter-#{$key}: #{$val};
+    --gutter-#{$key}-reverse: #{-$val};
+  }
+}
+
+@mixin make-col($i, $break-name: '') {
+  .row > .col-#{$i}#{$break-name} {
+    flex: 0 0 percentage($i / v.$grid-columns);
+    max-width: percentage($i / v.$grid-columns);
+  }
+}
+
+@mixin make-cols($break-name: '') {
+  @for $i from 0 to v.$grid-columns {
+    @include make-col($i + 1, $break-name);
+  }
+}
+
+@mixin breakpoints-media($size) {
+  @media screen and (min-width: $size) {
+    @content;
+  }
+}
+
+@mixin make-breakpoints-cols {
+  @each $key, $val in v.$breakpoints {
+    $temp-val: '-' + #{$key};
+    @include breakpoints-media($val) {
+      @include make-cols($temp-val);
+    }
+  }
+}
+
+@mixin make-gutter($key, $column: false) {
+  $column-key: if($column, '-column', '');
+  $top-or-left: if($column, 'top', 'left');
+  $bottom-or-right: if($column, 'bottom', 'right');
+  .row--gutter#{$key}#{$column-key} {
+    margin-#{$top-or-left}: var(--gutter#{$key}-reverse);
+    margin-#{$bottom-or-right}: var(--gutter#{$key}-reverse);
+    & > .col {
+      padding-#{$top-or-left}: var(--gutter#{$key});
+      padding-#{$bottom-or-right}: var(--gutter#{$key});
+    }
+  }
+}
+
+@mixin make-gutters {
+  @each $key, $val in v.$gutters {
+    $temp-key: '-' + #{$key};
+    @include make-gutter($temp-key, true);
+    @include make-gutter($temp-key, false);
+  }
+}

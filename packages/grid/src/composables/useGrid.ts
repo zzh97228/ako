@@ -1,9 +1,10 @@
-import { convertToUnit, defaultBreakpoints } from '@lagabu/shared';
-import { computed, ExtractPropTypes, Ref, inject, InjectionKey, provide, toRef } from 'vue';
+import { convertToUnit } from '@lagabu/shared';
+import { FlexEnum } from '../services';
+import vue, { computed, ExtractPropTypes, Ref, inject, InjectionKey, provide, toRef, ref } from 'vue';
 
-export const FLEX_KEYS = Object.keys(defaultBreakpoints);
+export const FLEX_KEYS: Array<string | FlexEnum> = [FlexEnum.xs, FlexEnum.sm, FlexEnum.md, FlexEnum.lg, FlexEnum.xl];
 export const GridSymbol: InjectionKey<{
-  gutter: Ref<string>;
+  gutter: Ref<string | null>;
   column: Ref<boolean>;
 }> = Symbol('Grid');
 export const gridProps = {
@@ -48,10 +49,12 @@ export function useGridProvider(props: ExtractPropTypes<typeof gridProps>) {
 }
 
 export function useGridInjector() {
-  const grid = inject(GridSymbol);
-  if (!grid) return { style: {} };
+  const grid = inject(GridSymbol, {
+    gutter: ref(null),
+    column: ref(false),
+  });
   const styles = computed(() => {
-    let gutter: string = grid.gutter.value;
+    let gutter: string | null = grid.gutter.value;
     if (!gutter || FLEX_KEYS.includes(gutter)) return {};
     gutter = convertToUnit(gutter) || '0px';
     return {

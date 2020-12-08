@@ -1,6 +1,6 @@
 import { mount, VueWrapper } from '@vue/test-utils';
-import { defineComponent, h } from 'vue';
-import { Btn } from '../btn';
+import { h } from 'vue';
+import Btn from '../btn';
 
 describe('btn.ts', () => {
   let mountFunc: (opts?: object) => VueWrapper<any>;

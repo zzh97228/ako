@@ -1,12 +1,12 @@
 {
   "name": "@lagabu/grid",
-  "version": "0.1.0-alpha.1",
+  "version": "0.1.0-alpha.0",
   "main": "dist/grid.umd.bundle.js",
-  "types": "dist/index.d.ts",
+  "types": "dist/grid.d.ts",
   "files": [
     "dist",
     "README.md",
-    "dist/index.d.ts"
+    "dist/grid.d.ts"
   ],
   "publishConfig": {
     "registry": "https://registry.npmjs.org",

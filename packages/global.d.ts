@@ -1,6 +1,5 @@
-import {} from 'vue';
-import { ColorType, BreakpointsType, RippleRecord } from '@lagabu/shared';
-import { GridType } from '@lagabu/grid';
+import vue from 'vue';
+import { RippleRecord } from '@lagabu/shared';
 declare global {
   interface HTMLElement {
     _ripple?: RippleRecord;
@@ -9,9 +8,6 @@ declare global {
 
 declare module '@vue/runtime-core' {
   export interface ComponentCustomProperties {
-    $ako?: {
-      $colors?: ColorType;
-      $breakpoints?: BreakpointsType;
-    };
+    $ako?: {};
   }
 }

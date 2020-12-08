@@ -1,13 +1,12 @@
 import { computed, ExtractPropTypes } from 'vue';
-import { defaultElevation } from '../services/variable';
-const elevationParams = Object.keys(defaultElevation);
+const elevationParams = ['xs', 'sm', 'md', 'lg', 'xl'];
 export function genElevationProp(defaultStr: string | null = 'xs') {
   return {
     elevation: {
       type: String,
-      default: defaultStr
-    }
-  }
+      default: defaultStr,
+    },
+  };
 }
 export function useElevation(props: ExtractPropTypes<ReturnType<typeof genElevationProp>>) {
   const classes = computed(() => {

@@ -1,15 +1,14 @@
-import { registerServices, VariableService, VariableProps, registerComponents } from '@lagabu/shared';
+import vue, { App } from 'vue';
+import { registerServices, registerComponents } from '@lagabu/shared';
 import { GridService, GridProps } from './services';
-import { Column, Row, Container } from './components';
-import { App } from 'vue';
+import { Col, Row, Container } from './components';
 
-export type GridPluginOptions = { [props: string]: any; prefix?: string } & GridProps & VariableProps;
+export type GridPluginOptions = { [props: string]: any; prefix?: string } & GridProps;
 export function GridPlugin(Vue: App, opts: GridPluginOptions = {}) {
   registerServices(
     Vue,
     {
       GridService,
-      VariableService,
     },
     opts
   );
@@ -17,8 +16,8 @@ export function GridPlugin(Vue: App, opts: GridPluginOptions = {}) {
     Vue,
     {
       Row,
-      Column,
-      Container
+      Column: Col,
+      Container,
     },
     opts.prefix
   );

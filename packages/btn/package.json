@@ -3,6 +3,7 @@
   "main": "dist/btn.umd.bundle.js",
   "types": "dist/index.d.ts",
   "module": "dist/ako-ui.es.bundle.js",
+  "version": "0.1.0-alpha.0",
   "files": [
     "dist",
     "README.md",

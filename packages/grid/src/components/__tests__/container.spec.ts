@@ -1,5 +1,5 @@
 import { mount } from '@vue/test-utils';
-import { Container } from '../container';
+import Container from '../container';
 
 describe('container.ts', () => {
   it('should render container with customized tag and size', () => {

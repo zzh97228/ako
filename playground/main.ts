@@ -1,6 +1,7 @@
 import { createApp } from 'vue';
 import App from './App.vue';
-import Ako from 'ako-ui';
+import { install } from '/src/index';
+import '@lagabu/theme-default';
 import { Router } from './router';
 
-createApp(App).use(Router).use(Ako).mount('#app');
+createApp(App).use(Router).mount('#app');

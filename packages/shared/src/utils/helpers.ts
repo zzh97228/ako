@@ -104,10 +104,12 @@ export function convertToNumber(str: string | number | undefined) {
   return +str.replace(/[^0-9\.\-]/g, '');
 }
 
-export type CustomFunctionalProps = {
+export function genFunctionalComponent(
+  name: string,
+  defaultTag = 'div'
+): FunctionalComponent<{
   tag: string;
-}
-export function genFunctionalComponent(name: string, defaultTag = 'div'): FunctionalComponent<CustomFunctionalProps> {
+}> {
   return (props, { slots }) =>
     h(
       props.tag || defaultTag,
