@@ -7,11 +7,14 @@
     --gutter-#{$key}-reverse: #{-$val};
   }
 }
+@mixin make-columns-vars {
+  --columns: #{v.$grid-columns};
+}
 
 @mixin make-col($i, $break-name: '') {
-  .row > .col-#{$i}#{$break-name} {
-    flex: 0 0 percentage($i / v.$grid-columns);
-    max-width: percentage($i / v.$grid-columns);
+  .col-#{$i}#{$break-name} {
+    flex: 0 0 calc(#{$i} / var(--columns) * 100%);
+    max-width: calc(#{$i} / var(--columns) * 100%);
   }
 }
 

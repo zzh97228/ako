@@ -8,17 +8,9 @@ const ts = require('rollup-plugin-typescript2'),
 
 const FORMATS = ['es', 'umd', 'cjs'];
 
-function genRollupObj(packageFolder, pkg, format, global = false) {
+function genRollupObj(packageFolder, pkg, format, isGlobal = false) {
   const name = (String(pkg.name) || '').replace(/(@lagabu\/)/, '');
-  const external = [...Object.keys(pkg.peerDependencies || {})];
-  if (!global) {
-    external.push(...Object.keys(pkg.dependencies || {}));
-  }
-  const globals = Object.keys(pkg.devDependencies || {}).reduce((prev, next) => {
-    if (!next.match(/^@lagabu\/(.*)$/)) return prev;
-    prev[next] = resolve(__dirname, './packages/' + RegExp.$1 + '/src');
-    return prev;
-  }, {});
+  const external = [...Object.keys(pkg.peerDependencies || {}), ...Object.keys(pkg.dependencies || {})];
   const plugins = [terser()];
   function isESM() {
     return !!format && format === 'es';
@@ -62,13 +54,10 @@ function genRollupObj(packageFolder, pkg, format, global = false) {
     output: {
       dir: resolve(packageFolder, 'dist'),
       format,
-      globals: {
-        ...globals,
-        ...external.reduce((prev, next) => {
-          prev[next] = next;
-          return prev;
-        }, {}),
-      },
+      globals: external.reduce((prev, next) => {
+        prev[next] = next;
+        return prev;
+      }, {}),
       name,
       entryFileNames: name + '.' + format + '.bundle.js',
       extend: true,

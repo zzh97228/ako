@@ -1,5 +1,7 @@
 <template>
-  <router-view></router-view>
+  <ako-container max-width="768px">
+    <router-view></router-view>
+  </ako-container>
 </template>
 
 <script>
@@ -7,17 +9,3 @@ export default {
   name: 'App',
 };
 </script>
-
-<style>
-body,
-html {
-  margin: 0;
-  padding: 0;
-}
-
-*,
-*::before,
-*::after {
-  box-sizing: border-box;
-}
-</style>

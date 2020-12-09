@@ -6783,9 +6783,9 @@ vitepress@^0.7.3:
     vue "^3.0.2"
 
 vue-router@next:
-  version "4.0.0-rc.2"
-  resolved "https://registry.npm.taobao.org/vue-router/download/vue-router-4.0.0-rc.2.tgz#8545cab76a05ca4f6dffbe6c6a671a4dbf585ab2"
-  integrity sha1-hUXKt2oFyk9t/75samcaTb9YWrI=
+  version "4.0.1"
+  resolved "https://registry.npm.taobao.org/vue-router/download/vue-router-4.0.1.tgz?cache=0&sync_timestamp=1607347284428&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fvue-router%2Fdownload%2Fvue-router-4.0.1.tgz#309240e50524b1e7d4e82e27f0a0fa25fe3d1d71"
+  integrity sha1-MJJA5QUksefU6C4n8KD6Jf49HXE=
 
 vue@^3.0.2:
   version "3.0.2"

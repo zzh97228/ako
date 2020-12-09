@@ -1,0 +1,14 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`container.ts should have fluid classes when set fluid props 1`] = `
+<div class="container container--fluid">
+</div>
+`;
+
+exports[`container.ts should render container with customized tag and size 1`] = `
+<main class="container"
+      style="width: 100px; height: 200px;"
+>
+  container
+</main>
+`;

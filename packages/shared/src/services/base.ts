@@ -12,9 +12,9 @@ export class BaseService implements IService {
     }
   }
 }
-
+export const styleId = 'addon-styles';
 export class StyleService extends BaseService implements IService {
-  private uid = 'ako-style';
+  private uid = styleId;
   constructor() {
     super();
   }

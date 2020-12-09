@@ -1,8 +1,19 @@
 import vue from 'vue';
 import { StyleService } from './base';
-export type ThemeColors = 'primary' | 'success' | 'warning' | 'error';
+export const enum ThemeEnum {
+  primary = 'primary',
+  success = 'success',
+  warning = 'warning',
+  error = 'error',
+}
+export const ThemeList: Array<ThemeEnum | string> = [
+  ThemeEnum.primary,
+  ThemeEnum.success,
+  ThemeEnum.error,
+  ThemeEnum.warning,
+];
 export type ThemeColorType = { [props: string]: string } & {
-  [T in ThemeColors]: string;
+  [T in ThemeEnum]: string;
 };
 export type BasicColors =
   | 'red-0'
@@ -75,11 +86,11 @@ export class ColorService extends StyleService {
   genColorClasses(key: string, isTheme = false) {
     const addon = isTheme ? '-color' : '',
       val = 'var(--' + key + addon + ')';
-    return `\nbody .${key} {
+    return `body .${key}${addon} {
       background-color: ${val};
       border-color: ${val};
     }
-    body .${key}-color--text {
+    body .${key}${addon}--text {
       color: ${val};
       caret-color: ${val};
     }\n
@@ -93,14 +104,14 @@ export class ColorService extends StyleService {
     for (let tk in this.themeColors) {
       if (this.themeColors[tk]) {
         colorValue = this.themeColors[tk];
-        rootStr += `--${tk}-color: ${colorValue};\n`;
+        rootStr += `--${tk}-color: ${colorValue} !important;\n`;
         classesStr += this.genColorClasses(tk, true);
       }
     }
     for (let bk in this.basicColors) {
       if (this.basicColors[bk]) {
         colorValue = this.basicColors[bk];
-        rootStr += `--${bk}: ${colorValue};\n`;
+        rootStr += `--${bk}: ${colorValue} !important;\n`;
         classesStr += this.genColorClasses(bk);
       }
     }

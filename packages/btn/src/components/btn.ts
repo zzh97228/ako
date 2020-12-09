@@ -1,4 +1,4 @@
-import vue from 'vue';
+import vue, { VNodeArrayChildren } from 'vue';
 import { Ripple, useColor, useElevation, genElevationProp, genColorProp } from '@lagabu/shared';
 import { computed, defineComponent, h, mergeProps, withDirectives } from 'vue';
 export default defineComponent({
@@ -12,15 +12,16 @@ export default defineComponent({
     block: Boolean,
     round: Boolean,
     disabled: Boolean,
-    fab: Boolean,
     link: Boolean,
+    loading: Boolean,
     ...genColorProp(),
     ...genElevationProp(),
   },
   setup(props, { slots }) {
-    const isTextColor = computed(() => props.outlined);
+    const isTextColor = computed(() => props.outlined || props.link);
     const color = useColor(props, isTextColor);
     const elevation = useElevation(props);
+    const notAllowed = computed(() => props.loading || props.disabled);
     const classes = computed(() => {
       return {
         btn: true,
@@ -32,7 +33,6 @@ export default defineComponent({
         'btn--block': props.block,
         'btn--round': props.round,
         'btn--disabled': props.disabled,
-        'btn--fab': props.fab,
         'btn--link': props.link,
       };
     });
@@ -42,10 +42,35 @@ export default defineComponent({
       colorStyles: color.style,
       elevationClasses: elevation.class,
       elevationStyles: elevation.style,
+      notAllowed,
     };
   },
   methods: {
-    button() {
+    genLoadingSlot(children?: VNodeArrayChildren) {
+      return h(
+        'div',
+        {
+          class: 'btn__loading',
+        },
+        children
+      );
+    },
+    genBtnContent() {
+      return h(
+        'div',
+        {
+          class: 'btn__content',
+        },
+        this.$slots.default && this.$slots.default()
+      );
+    },
+    genBtn() {
+      const children: VNodeArrayChildren = [];
+      if (this.loading) {
+        children.push(this.genLoadingSlot(this.$slots.loading && this.$slots.loading()));
+      } else {
+        children.push(this.genBtnContent());
+      }
       return h(
         'button',
         mergeProps(
@@ -53,7 +78,7 @@ export default defineComponent({
             class: this.classes,
             'aria-disabled': !!this.disabled || undefined,
             onClick: (e: MouseEvent) => {
-              if (this.disabled) {
+              if (this.notAllowed) {
                 e.stopImmediatePropagation();
                 return;
               }
@@ -68,17 +93,11 @@ export default defineComponent({
             style: this.elevationStyles,
           }
         ),
-        h(
-          'div',
-          {
-            class: 'btn__content',
-          },
-          this.$slots.default && this.$slots.default()
-        )
+        children
       );
     },
   },
   render() {
-    return withDirectives(this.button(), [[Ripple]]);
+    return withDirectives(this.genBtn(), [[Ripple]]);
   },
 });

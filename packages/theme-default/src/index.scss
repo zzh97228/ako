@@ -5,10 +5,14 @@
 // mixins
 @import './mixins/theme';
 @import './mixins/grid';
-
+@import './mixins/elevation';
+// variables
+@import './variables/index';
 :root {
   @include make-basic-color-vars();
   @include make-theme-color-vars();
   @include make-grey-vars();
   @include make-gutter-vars();
+  @include make-columns-vars();
+  @include make-elevation-vars();
 }

@@ -1,4 +1,4 @@
-import vue from 'vue';
+import vue, { VNodeArrayChildren } from 'vue';
 import { defineComponent, h, mergeProps, computed } from 'vue';
 import { useSize, sizeProps, useColor, useElevation, genElevationProp, genColorProp } from '@lagabu/shared';
 
@@ -19,7 +19,8 @@ export default defineComponent({
   setup(props, { slots }) {
     const { sizeStyle } = useSize(props);
     const elevation = useElevation(props);
-    const color = useColor(props);
+    const isOutlined = computed(() => props.outlined);
+    const color = useColor(props, isOutlined);
     const classes = computed(() => {
       return {
         card: true,
@@ -28,6 +29,17 @@ export default defineComponent({
         'card--tile': props.tile,
       };
     });
+
+    const genImage = (children?: VNodeArrayChildren) => {
+      return h(
+        'div',
+        {
+          class: 'card__image',
+        },
+        children
+      );
+    };
+
     return () =>
       h(
         props.tag,
@@ -45,7 +57,16 @@ export default defineComponent({
             style: elevation.style.value,
           }
         ),
-        slots.default && slots.default()
+        [
+          slots.image && genImage(slots.image()),
+          h(
+            'div',
+            {
+              class: 'card__content',
+            },
+            slots.default && slots.default()
+          ),
+        ]
       );
   },
 });

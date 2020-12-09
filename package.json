@@ -1,13 +1,6 @@
 {
   "name": "ako-ui",
-  "version": "0.1.0-alpha.0",
-  "types": "dist/ako-ui.d.ts",
-  "main": "dist/ako-ui.iife.bundle.js",
-  "module": "dist/ako-ui.es.bundle.js",
-  "files": [
-    "dist",
-    "README.md"
-  ],
+  "private": true,
   "scripts": {
     "clean": "node ./scripts/clean.js",
     "test": "jest",

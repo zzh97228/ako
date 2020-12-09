@@ -1,5 +1,13 @@
-import { computed, ExtractPropTypes } from 'vue';
-const elevationParams = ['xs', 'sm', 'md', 'lg', 'xl'];
+import vue, { computed, ExtractPropTypes } from 'vue';
+import { ElevationEnum } from '../services/elevation';
+
+const elevationParams: Array<ElevationEnum | string> = [
+  ElevationEnum.xs,
+  ElevationEnum.sm,
+  ElevationEnum.md,
+  ElevationEnum.lg,
+  ElevationEnum.xl,
+];
 export function genElevationProp(defaultStr: string | null = 'xs') {
   return {
     elevation: {

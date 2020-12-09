@@ -2,7 +2,7 @@ name: CI
 
 on:
   push:
-    branches: [ master ]
+    branches: [ next ]
 
 jobs:
   build-and-deploy:
@@ -12,7 +12,7 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - name: Checkout
         uses: actions/checkout@v2
-        with: 
+        with:
           persist-credentials: false
 
       - name: Install

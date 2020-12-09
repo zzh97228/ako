@@ -1,15 +1,62 @@
 .btn {
-  display: block;
+  $normal-padding: 7px;
+  $large-padding: 11px;
+  $small-padding: 3px;
+  $justify-padding: 11px;
+  display: inline-block;
   outline: none;
   cursor: pointer;
   border: 1px solid transparent;
   border-radius: 4px;
-  padding: 4px 11px;
+  padding: $normal-padding $justify-padding;
+  font-size: 1rem;
+  overflow: hidden;
   &__content {
     line-height: 1.5;
+    text-overflow: ellipsis;
   }
 
+  &--small {
+    padding: $small-padding $justify-padding;
+  }
+
+  &--large {
+    padding: $large-padding $justify-padding;
+    font-size: 1.5rem;
+  }
+
+  &--round {
+    border-radius: 50%;
+    padding: $normal-padding;
+    &.btn--large {
+      padding: $large-padding;
+    }
+
+    &.btn--small {
+      padding: $small-padding;
+    }
+  }
+
+  &--flat,
+  &--outlined,
+  &--link,
+  &--disabled {
+    box-shadow: none !important;
+  }
+
+  &--tile {
+    border-radius: 0;
+  }
   &--outlined {
     border-color: currentColor;
+  }
+
+  &--block {
+    display: block;
+  }
+
+  &--disabled {
+    background-color: var(--grey-3, grey);
+    cursor: not-allowed;
   }
 }

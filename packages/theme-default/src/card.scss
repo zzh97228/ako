@@ -1,3 +1,57 @@
 .card {
+  $card-inner-padding: 8px;
+  $border-radius: 4px;
   display: block;
+  padding: $card-inner-padding;
+  border: 1px solid transparent;
+  border-radius: $border-radius;
+  &--outlined {
+    border-color: currentColor;
+  }
+
+  &--tile {
+    border-radius: none !important;
+    .card__image {
+      border-radius: none !important;
+    }
+  }
+
+  &--flat,
+  &--outlined {
+    box-shadow: none !important;
+  }
+  &__content {
+    display: block;
+  }
+
+  &__image {
+    margin-top: -$card-inner-padding;
+    margin-left: -$card-inner-padding;
+    margin-right: -$card-inner-padding;
+    border-top-left-radius: $border-radius;
+    border-top-right-radius: $border-radius;
+  }
+
+  &-title,
+  &-subtitle,
+  &-content,
+  &-actions {
+    display: block;
+    line-height: 1.5;
+  }
+
+  $subtitle-padding: 4px;
+  $title-padding: 8px;
+  &-subtitle {
+    padding: $subtitle-padding 0;
+  }
+
+  &-title {
+    font-size: 1.5rem;
+    padding: $title-padding 0;
+
+    & + .btn--subtitle {
+      margin-top: -$subtitle-padding;
+    }
+  }
 }

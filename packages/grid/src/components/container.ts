@@ -8,6 +8,7 @@ export default defineComponent({
       type: String,
       default: 'div',
     },
+    fluid: Boolean,
     ...sizeProps,
   },
   setup(props, { slots }) {
@@ -16,7 +17,10 @@ export default defineComponent({
       h(
         props.tag,
         {
-          class: 'container',
+          class: {
+            container: true,
+            'container--fluid': props.fluid,
+          },
           style: style.value,
         },
         slots.default && slots.default()

@@ -67,6 +67,6 @@
     /* Advanced Options */
     "forceConsistentCasingInFileNames": true /* Disallow inconsistently-cased references to the same file. */
   },
-  "include": ["packages/*/src", "src", "src/*/__tests__", "packages/global.d.ts", "packages/*/__tests__", "playground"],
+  "include": ["packages/*/src", "packages/global.d.ts", "packages/*/__tests__", "playground"],
   "exclude": ["**/node_modules"]
 }

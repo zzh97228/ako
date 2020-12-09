@@ -4,5 +4,7 @@ exports[`card.ts should render card 1`] = `
 <div class="card primary-color elevation-xs"
      style="width: 100%; height: 100%;"
 >
+  <div class="card__content">
+  </div>
 </div>
 `;

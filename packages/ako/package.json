@@ -1,0 +1,22 @@
+{
+  "name": "@lagabu/ako",
+  "version": "0.1.0-alpha.0",
+  "types": "dist/ako.d.ts",
+  "main": "dist/ako.umd.bundle.js",
+  "module": "dist/ako.es.bundle.js",
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "dependencies": {
+    "vue": "next",
+    "@lagabu/shared": "latest",
+    "@lagabu/grid": "latest",
+    "@lagabu/btn": "latest",
+    "@lagabu/card": "latest",
+    "@lagabu/theme-default": "latest"
+  },
+  "peerDependencies": {
+    "vue": "next"
+  }
+}

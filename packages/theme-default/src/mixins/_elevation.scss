@@ -1,6 +1,14 @@
 @use '../variables/elevation' as e;
 @mixin make-elevation-vars {
+  @each $key, $val in e.$elevation-map {
+    --elevation-#{$key}: #{$val};
+  }
 }
 
 @mixin make-elevation-classes {
+  @each $key, $val in e.$elevation-map {
+    .elevation-#{$key} {
+      box-shadow: var(--elevation-#{$key});
+    }
+  }
 }

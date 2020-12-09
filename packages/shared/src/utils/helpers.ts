@@ -48,6 +48,22 @@ export function hyphenate(str: string) {
   return str.replace(/\B([A-Z])/g, '-$1').toLowerCase();
 }
 
+export function deepEqual<T extends unknown, U extends unknown>(left: T, right: U): boolean {
+  if (left === right) return true;
+  if (typeof left !== typeof right) return false;
+  if (isObject(left) && isObject(right)) {
+    if (Object.keys(left).length !== Object.keys(right).length) return false;
+    let flag = true;
+    for (let key in left) {
+      if (!Object.prototype.hasOwnProperty.call(right, key)) return false;
+      flag = deepEqual(left[key], (right as Record<string, any>)[key]);
+      if (!flag) return false;
+    }
+    return flag;
+  }
+  return false;
+}
+
 /**
  * register components
  * @param Vue

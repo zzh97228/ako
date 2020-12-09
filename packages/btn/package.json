@@ -11,9 +11,11 @@
   ],
   "dependencies": {
     "@lagabu/shared": "latest",
-    "vue": "next"
+    "vue": "next",
+    "vue-router": "next"
   },
   "peerDependencies": {
-    "vue": "next"
+    "vue": "next",
+    "vue-router": "next"
   }
 }

@@ -33,9 +33,9 @@ describe('useColor.ts', () => {
 
     expect(wrapper.classes()).toContain('primary-color');
     await wrapper.setProps({
-      color: 'red',
+      color: 'red-5',
     });
-    expect(wrapper.classes()).toContain('red-color');
+    expect(wrapper.classes()).toContain('red-5');
 
     await wrapper.setProps({
       color: '#000',
@@ -55,9 +55,9 @@ describe('useColor.ts', () => {
     );
     expect(wrapper.classes()).toContain('primary-color--text');
     await wrapper.setProps({
-      color: 'red',
+      color: 'red-5',
     });
-    expect(wrapper.classes()).toContain('red-color--text');
+    expect(wrapper.classes()).toContain('red-5--text');
 
     await wrapper.setProps({
       color: '#000',

@@ -10,6 +10,7 @@ import {
   isString,
   isUndefined,
   genFunctionalComponent,
+  deepEqual,
 } from '../helpers';
 
 describe('helpers.ts', () => {
@@ -63,5 +64,57 @@ describe('helpers.ts', () => {
     expect(wrapper.classes()).toContain('temp-component');
     expect(wrapper.element.tagName).toEqual('MAIN');
     expect(wrapper.text()).toEqual(name);
+  });
+
+  it('should deep equal two value', () => {
+    // basic type test
+    let left: any, right: any;
+    left = 1;
+    right = 1;
+    expect(deepEqual(left, right)).toBeTruthy();
+    // different type test
+    left = '1';
+    expect(deepEqual(left, right)).toBeFalsy();
+    // shallow object test
+    left = {
+      k: 1,
+    };
+    right = {
+      k: 2,
+    };
+    expect(deepEqual(left, right)).toBeFalsy();
+    // object test
+    left = {
+      k: {
+        a: 1,
+      },
+    };
+    right = {
+      k: {
+        a: 1,
+      },
+    };
+    expect(deepEqual(left, right)).toBeTruthy();
+    // function test
+    let tempFunc = function () {};
+    left = {
+      a: tempFunc,
+    };
+    right = {
+      a: tempFunc,
+    };
+    expect(deepEqual(left, right)).toBeTruthy();
+    // same value map test
+    let tempMap1 = new Map<number, number>();
+    let tempMap2 = new Map<number, number>();
+    tempMap1.set(1, 2);
+    tempMap2.set(1, 2);
+    left = {
+      a: tempMap1,
+    };
+    right = {
+      a: tempMap2,
+    };
+    expect(deepEqual(left, right)).toBeTruthy();
   });
 });

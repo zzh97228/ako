@@ -7,19 +7,17 @@ const { Extractor, ExtractorConfig } = require('@microsoft/api-extractor');
 
 async function build(pkgName) {
   let clonedFormats = [...FORMATS];
-  const pkgFolder = pkgName === 'ako-ui' ? resolve(__dirname, '..') : resolve(__dirname, '../packages/' + pkgName);
+  const pkgFolder = resolve(__dirname, '../packages/' + pkgName);
   try {
     console.log('... 🚀Start Building🚀 ...');
     if (pkgName === 'theme-default') {
       clonedFormats = ['es'];
-    } else {
-      if (pkgName === 'ako-ui') clonedFormats.push('iife');
     }
 
     let isGlobal = false;
     for (let f of clonedFormats) {
       console.log(`... Building ${f} ...`);
-      isGlobal = pkgName === 'ako-ui' && f === 'iife';
+      isGlobal = pkgName === 'ako';
       const { input, output } = genRollupObj(pkgFolder, require(resolve(pkgFolder, 'package.json')), f, isGlobal);
       const bundle = await rollup.rollup(input);
       await bundle.write(output);

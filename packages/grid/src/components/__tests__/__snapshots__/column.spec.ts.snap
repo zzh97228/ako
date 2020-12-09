@@ -1,0 +1,15 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`column.ts should have vertical padding when row provide column props 1`] = `
+<div class="col col--shrink col-10"
+     style="padding-top: 4px; padding-bottom: 4px;"
+>
+</div>
+`;
+
+exports[`column.ts should render column component with default props 1`] = `
+<div class="col col--grow col-6 col-6-xs col-4-md"
+     style="padding-left: 4px; padding-right: 4px;"
+>
+</div>
+`;
