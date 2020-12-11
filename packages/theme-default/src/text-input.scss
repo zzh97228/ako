@@ -1,0 +1,46 @@
+@use 'sass:map';
+@use './variables/index' as v;
+@mixin make-small-or-large-content($key: 'sm') {
+  .text-input__prefix,
+  .text-input__suffix {
+    padding: map.get(v.$vertical-padding, $key);
+  }
+  .text-input__content {
+    padding: map.get(v.$vertical-padding, $key) v.$justify-padding;
+  }
+}
+.text-input {
+  // TODO text-input style
+  &__content {
+    display: inline-block;
+    outline: none;
+    border: 0;
+    padding: map.get(v.$vertical-padding, 'md') v.$justify-padding;
+    font-size: 1rem;
+    line-height: v.$inline-line-height;
+  }
+  &__wrapper {
+    display: block;
+    position: relative;
+    border: v.$border-size solid currentColor;
+    border-radius: v.$border-radius;
+  }
+
+  &__prefix,
+  &__suffix {
+    display: inline-block;
+    padding: map.get(v.$vertical-padding, 'md');
+  }
+
+  &--flat {
+    border-color: transparent !important;
+  }
+
+  &--small {
+    @include make-small-or-large-content('sm');
+  }
+
+  &--large {
+    @include make-small-or-large-content('lg');
+  }
+}

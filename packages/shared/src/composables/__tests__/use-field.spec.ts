@@ -1,28 +1,33 @@
-import { genModelProps, useModel } from '@lagabu/shared';
-import { mount } from '@vue/test-utils';
+import { mount, VueWrapper } from '@vue/test-utils';
 import { defineComponent, h } from 'vue';
-import { useFieldInjector, useFieldProvider } from '../useField';
+import { useFieldConsumer, useFieldProvider } from '../useField';
+import { genModelProps, useModel } from '../useModel';
 
 describe('useField.ts', () => {
   let childComponent: any, parentComponent: any;
   beforeEach(() => {
     parentComponent = defineComponent({
+      name: 'parent',
       props: {
         ...genModelProps([String]),
       },
       setup(props, context) {
         const modelOptions = useModel(props, context);
         useFieldProvider(modelOptions);
-        return () => h('div', context.slots.default && context.slots.default());
+        return modelOptions;
+      },
+      render() {
+        return h('div', this.$slots.default && this.$slots.default());
       },
     });
     childComponent = defineComponent({
+      name: 'child',
       props: {
         ...genModelProps([String]),
       },
       setup(props, context) {
         const modelOptions = useModel(props, context);
-        useFieldInjector(modelOptions);
+        useFieldConsumer(modelOptions);
         return modelOptions;
       },
       render() {
@@ -30,8 +35,7 @@ describe('useField.ts', () => {
       },
     });
   });
-  it('should use field provider', () => {
-    // TODO use Field
+  it('should use field provider', async () => {
     const wrapper = mount(parentComponent, {
       props: {
         modelValue: 'hello',
@@ -41,5 +45,12 @@ describe('useField.ts', () => {
       },
     });
     expect(wrapper.text()).toBe('hello');
+    wrapper.vm.model = 'world';
+    await wrapper.vm.$nextTick();
+    expect(wrapper.text()).toBe('world');
+    const child = wrapper.getComponent({ name: 'child' }) as VueWrapper<any>;
+    child.vm.setInnerState('and');
+    await wrapper.vm.$nextTick();
+    expect(wrapper.vm.lazyState.value).toBe('and');
   });
 });

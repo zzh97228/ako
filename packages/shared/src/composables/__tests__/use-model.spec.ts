@@ -1,5 +1,5 @@
 import { mount } from '@vue/test-utils';
-import { defineComponent, h, SetupContext } from 'vue';
+import { defineComponent, h, PropType, ref, SetupContext } from 'vue';
 import { genModelProps, useModel } from '../useModel';
 
 describe('useModel.ts', () => {
@@ -9,12 +9,19 @@ describe('useModel.ts', () => {
     tempComponent = defineComponent({
       props: {
         ...stringOrNumberModel,
+        disabled: Boolean,
+        testFunc: {
+          type: Function as PropType<() => any>,
+          default: () => {},
+        },
       },
       setup(props, context) {
-        const { model, lazyState } = useModel(props, context);
+        const notAllowed = ref(props.disabled);
+        const { model, lazyState, setInnerState } = useModel(props, context, notAllowed, undefined, props.testFunc);
         return {
           model,
           lazyState,
+          setInnerState,
         };
       },
       render() {
@@ -22,26 +29,12 @@ describe('useModel.ts', () => {
       },
     });
   });
-  it("should have emit value when set model's value", () => {
-    let emittedValue = '';
-    const emitFn = jest.fn((emitStr, emitVal) => {
-      emittedValue = emitVal;
-    });
-    const ctx = {
-      emit: emitFn,
-      attrs: {},
-      slots: {},
-    } as SetupContext;
-    const { model, lazyState } = useModel(
-      {
-        modelValue: '',
-      },
-      ctx
-    );
-    model.value = 'hello';
-    expect(lazyState.value).toEqual('hello');
-    expect(emittedValue).toEqual('hello');
-    expect(emitFn).toHaveBeenCalled();
+  it("should have emit value when set model's value", async () => {
+    const wrapper = mount(tempComponent);
+    wrapper.vm.model = 'hello';
+    await wrapper.vm.$nextTick();
+    expect(wrapper.emitted()).toHaveProperty('update:modelValue');
+    expect(wrapper.emitted()['update:modelValue'][0]).toEqual(['hello']);
   });
 
   it('should change and emit value when set modelValue', async () => {
@@ -101,5 +94,41 @@ describe('useModel.ts', () => {
     expect(emitFunc).toHaveBeenCalled();
     expect(wrapper.text()).toBe('clicked');
     expect(wrapper.vm.$data.txt).toBe('clicked');
+  });
+
+  it('should not change inner value when `disabled` option set', async () => {
+    const wrapper = mount(tempComponent, {
+      props: {
+        disabled: true,
+        modelValue: 'hello',
+      },
+    });
+
+    expect(wrapper.text()).toBe('hello');
+    // change model.value
+    wrapper.vm.model = 'world';
+    await wrapper.vm.$nextTick();
+    expect(wrapper.text()).toBe('hello');
+    // set inner state function
+    wrapper.vm.setInnerState('world');
+    await wrapper.vm.$nextTick();
+    expect(wrapper.text()).toBe('hello');
+    // change modelValue
+    await wrapper.setProps({
+      modelValue: 'world',
+    });
+    expect(wrapper.text()).toBe('hello');
+  });
+
+  it('should call functions before unmount', () => {
+    const cb = jest.fn();
+    const wrapper = mount(tempComponent, {
+      props: {
+        testFunc: cb,
+      },
+    });
+
+    wrapper.unmount();
+    expect(cb).toHaveBeenCalled();
   });
 });

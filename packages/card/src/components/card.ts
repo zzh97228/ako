@@ -12,6 +12,7 @@ export default defineComponent({
     outlined: Boolean,
     flat: Boolean,
     tile: Boolean,
+    loading: Boolean, //TODO loading bars
     ...genElevationProp(),
     ...sizeProps,
     ...genColorProp(),

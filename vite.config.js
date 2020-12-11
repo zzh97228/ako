@@ -4,7 +4,7 @@ const pkgs = readdirSync(resolve(__dirname, './packages'));
 const regs = [];
 const aliasObj = pkgs.reduce((prev, next) => {
   let fullPath = '@lagabu/' + next;
-  regs.push(new RegExp(`("${fullPath}")`));
+  regs.push(new RegExp(`(['"]${fullPath}['"])`));
   prev[`/${fullPath}/`] = resolve(__dirname, './packages/' + next);
   return prev;
 }, {});
@@ -21,7 +21,7 @@ module.exports = {
         let code = ctx.code;
         for (let reg of regs) {
           // replace "@lagabu/*" with /@lagabu/*/src/index
-          code = code.replace(reg, `"/${reg.source.replace(/["\\\(\)]/g, '')}/src/index"`);
+          code = code.replace(reg, `"/${reg.source.replace(/[\[\]\'\"\\\(\)]/g, '')}/src/index"`);
         }
         return code;
       },

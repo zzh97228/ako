@@ -1,4 +1,17 @@
-import vue, { customRef, reactive, Ref, SetupContext, UnwrapRef, watch } from 'vue';
+import vue, {
+  computed,
+  customRef,
+  DeepReadonly,
+  isRef,
+  onBeforeUnmount,
+  reactive,
+  readonly,
+  Ref,
+  SetupContext,
+  UnwrapRef,
+  watch,
+  WatchStopHandle,
+} from 'vue';
 import { deepEqual } from '../utils/helpers';
 
 export type ModelPropType<T> = { [prop: string]: any } & {
@@ -22,55 +35,74 @@ export function genModelProps<T extends TempConstructor | Array<TempConstructor>
   };
 }
 type TOrUndefined<T = any> = T | undefined;
-type LazyStateType<T> = UnwrapRef<{
-  value: TOrUndefined<T>;
-}>;
-type ModelCallback<T> = (lazyState: LazyStateType<T>, newVal: TOrUndefined<T>, oldVal: TOrUndefined<T>) => any;
+type InnerState<T> = {
+  value: T | undefined;
+};
+type LazyStateType<T> = {
+  readonly value: DeepReadonly<UnwrapRef<T>> | undefined;
+};
+type ModelCallback<T> = (lazyState: InnerState<T>, newVal: TOrUndefined<T>, oldVal: TOrUndefined<T>) => any;
 export type ModelReturn<T> = {
   lazyState: LazyStateType<T>;
-  model: Ref<UnwrapRef<T> | undefined>;
+  model: Ref<T | undefined>;
+  setInnerState: (val: T | undefined | UnwrapRef<T>) => void;
 };
-/**
- * @public
- * bind v-model and solve pernal model value
- * @param props
- * @param context
- * @param callback
- */
+
 export function useModel<T extends unknown>(
   props: ModelPropType<T>,
   context: SetupContext,
-  callback?: ModelCallback<T>
-): ModelReturn<T> {
-  const lazyState: LazyStateType<T> = reactive({
+  disabled?: boolean | Ref<boolean>,
+  modelCb?: ModelCallback<T>,
+  beforeUnmountCb?: (...args: any) => any
+) {
+  const innerState = reactive({
     value: props.modelValue,
-  });
-  const model = customRef<UnwrapRef<T> | undefined>(() => {
+  }) as InnerState<T>;
+  const lazyState: LazyStateType<T> = readonly(innerState);
+  const notAllowed = computed(() => (isRef(disabled) ? disabled.value : !!disabled));
+  const setInnerState = (val: T | undefined | UnwrapRef<T>) => {
+    if (notAllowed.value) return;
+    innerState.value = val as T;
+  };
+
+  const model = customRef<T | undefined>(() => {
     return {
       get() {
-        return lazyState.value;
+        return innerState.value;
       },
       set(val) {
-        if (deepEqual(val, lazyState.value)) return;
-        lazyState.value = val;
+        if (notAllowed.value || deepEqual(val, lazyState.value)) return;
+        innerState.value = val;
         context.emit('update:modelValue', val);
       },
     };
   });
 
-  watch(
+  const stopWatcher: WatchStopHandle = watch(
     () => props.modelValue,
     (newVal, oldVal) => {
-      if (!callback) {
+      if (notAllowed.value) return;
+      if (!modelCb) {
         if (deepEqual(newVal, oldVal) || deepEqual(newVal, lazyState.value)) return;
-        lazyState.value = newVal as UnwrapRef<T> | undefined;
+        innerState.value = newVal as T | undefined;
       } else {
-        callback.call(null, lazyState, newVal, oldVal);
+        modelCb.call(null, innerState, newVal, oldVal);
       }
     }
   );
+
+  onBeforeUnmount(() => {
+    if (beforeUnmountCb) {
+      beforeUnmountCb.call(null);
+    } else {
+      stopWatcher();
+    }
+  });
+
   return {
     lazyState,
     model,
+    setInnerState,
+    stopWatcher,
   };
 }

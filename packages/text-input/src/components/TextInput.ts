@@ -1,5 +1,5 @@
 import vue, { defineComponent, h, reactive, ref, VNodeArrayChildren } from 'vue';
-import { useModel, genModelProps } from '@lagabu/shared';
+import { useModel, genModelProps, useFieldConsumer } from '@lagabu/shared';
 
 function createAddonSlot(className: string) {
   return (children?: VNodeArrayChildren) =>
@@ -13,14 +13,19 @@ function createAddonSlot(className: string) {
 }
 
 export default defineComponent({
-  name: 'text-input',
+  name: 'TextInput',
   props: {
+    small: Boolean,
+    large: Boolean,
+    flat: Boolean,
+    placeholder: String,
     disabled: Boolean,
     ...genModelProps([String, Number]),
   },
   setup(props, context) {
     const { emit } = context;
-    const { model, lazyState } = useModel(props, context);
+    const { model, lazyState, setInnerState } = useModel(props, context);
+    useFieldConsumer({ model, lazyState, setInnerState });
     const inputRef = ref<null | HTMLInputElement>(null);
     const state = reactive({
       isComposing: false,
@@ -39,6 +44,7 @@ export default defineComponent({
         ref: inputRef,
         disabled: props.disabled,
         value: lazyState.value,
+        placeholder: props.placeholder,
         onCompositionstart: () => {
           state.isComposing = true;
         },
@@ -77,7 +83,12 @@ export default defineComponent({
     return h(
       'div',
       {
-        class: 'text-input__wrapper',
+        class: {
+          'text-input__wrapper': true,
+          'text-input--flat': this.flat,
+          'text-input--small': this.small,
+          'text-input--large': this.large,
+        },
       },
       [
         this.$slots.prefix && this.genInputPrefix(this.$slots.prefix()),

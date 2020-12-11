@@ -2,6 +2,7 @@
   "name": "@lagabu/grid",
   "version": "0.1.0-alpha.0",
   "main": "dist/grid.umd.bundle.js",
+  "module": "dist/grid.es.bundle.js",
   "types": "dist/grid.d.ts",
   "files": [
     "dist",

@@ -2,6 +2,7 @@
 @import './card.scss';
 @import './colors.scss';
 @import './grid.scss';
+@import './text-input.scss';
 // mixins
 @import './mixins/theme';
 @import './mixins/grid';
@@ -15,4 +16,9 @@
   @include make-gutter-vars();
   @include make-columns-vars();
   @include make-elevation-vars();
+}
+
+body,
+html {
+  font-size: 14px;
 }

@@ -1,5 +1,5 @@
 import { mount, VueWrapper } from '@vue/test-utils';
-import Card from '../card';
+import Card from '../Card';
 
 describe('card.ts', () => {
   let mountFunc: (options?: object) => VueWrapper<any>;

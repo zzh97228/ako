@@ -13,7 +13,7 @@ export default defineComponent({
     round: Boolean,
     disabled: Boolean,
     link: Boolean,
-    loading: Boolean,
+    loading: Boolean, // TODO loading style
     ...genColorProp(),
     ...genElevationProp(),
   },

@@ -1,5 +1,6 @@
 import { inject, InjectionKey, onBeforeUnmount, provide, watch, WatchStopHandle } from 'vue';
-import { deepEqual, isUndefined, ModelReturn } from '@lagabu/shared';
+import { deepEqual, isUndefined } from '../utils/helpers';
+import { ModelReturn } from './useModel';
 export const FieldSymbol: InjectionKey<{
   inField: boolean;
   register: (instance: FieldContent) => any;
@@ -16,8 +17,9 @@ export class FieldContent<T = any> {
   fieldUID: number;
   lazyState: ModelReturn<T>['lazyState'];
   model: ModelReturn<T>['model'];
-  type: FieldEnum;
+  setInnerState: ModelReturn<T>['setInnerState'];
 
+  type: FieldEnum;
   childStop?: WatchStopHandle;
   currentStop?: WatchStopHandle;
   constructor(opts: FieldContentOptions<T>, type: FieldEnum = FieldEnum.child) {
@@ -25,15 +27,16 @@ export class FieldContent<T = any> {
     this.fieldUID = fieldUID++;
     this.model = opts.model;
     this.lazyState = opts.lazyState;
+    this.setInnerState = opts.setInnerState;
   }
 
   bindChild(child: FieldContent<T>) {
     if (this.type !== FieldEnum.parent && child.type !== FieldEnum.child) return;
     // set init value
     if (!isUndefined(this.lazyState.value)) {
-      child.lazyState.value = this.lazyState.value;
+      child.setInnerState.call(null, this.lazyState.value as T);
     } else if (!isUndefined(child.lazyState.value)) {
-      this.lazyState.value = child.lazyState.value;
+      this.setInnerState.call(null, child.lazyState.value as T);
     }
 
     // watch child's model and emit model
@@ -46,7 +49,7 @@ export class FieldContent<T = any> {
       () => this.lazyState.value,
       (newVal, oldVal) => {
         if (deepEqual(newVal, oldVal) || deepEqual(child.lazyState.value, newVal)) return;
-        child.lazyState.value = newVal;
+        child.setInnerState.call(null, newVal as T);
       }
     );
   }
@@ -74,7 +77,7 @@ export function useFieldProvider<T extends unknown>(modelOptions: ModelReturn<T>
 
   return {};
 }
-export function useFieldInjector<T extends unknown>(modelOptions: ModelReturn<T>) {
+export function useFieldConsumer<T extends unknown>(modelOptions: ModelReturn<T>) {
   const content = new FieldContent(modelOptions);
   const field = inject(FieldSymbol, {
     inField: false,

@@ -48,6 +48,11 @@ export function hyphenate(str: string) {
   return str.replace(/\B([A-Z])/g, '-$1').toLowerCase();
 }
 
+export function upperFirst(str: string) {
+  if (str.length <= 1) return str.toUpperCase();
+  return str.substr(0, 1).toUpperCase() + str.substr(1);
+}
+
 export function deepEqual<T extends unknown, U extends unknown>(left: T, right: U): boolean {
   if (left === right) return true;
   if (typeof left !== typeof right) return false;

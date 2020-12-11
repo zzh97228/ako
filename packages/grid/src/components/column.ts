@@ -1,5 +1,5 @@
 import vue, { defineComponent, h, PropType } from 'vue';
-import { useGridInjector, FLEX_KEYS } from '../composables';
+import { useGridConsumer, FLEX_KEYS } from '../composables';
 import { FlexEnum } from '../services';
 
 export type GridBreakpointsProps = { [props: string]: any } & {
@@ -17,7 +17,7 @@ export default defineComponent({
     grow: Boolean,
   },
   setup() {
-    const grid = useGridInjector();
+    const grid = useGridConsumer();
     return {
       styles: grid.style,
     };

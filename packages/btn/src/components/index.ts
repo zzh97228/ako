@@ -1,2 +1,2 @@
-import Btn from './btn';
+import Btn from './Btn';
 export { Btn };

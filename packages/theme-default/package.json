@@ -2,5 +2,8 @@
   "name": "@lagabu/theme-default",
   "version": "0.1.0-alpha.0",
   "main": "index.js",
-  "files": ["dist", "lib", "README.md"]
+  "files": ["dist", "lib", "index.js","README.md"],
+  "peerDependencies": {
+    "sass": "latest"
+  }
 }

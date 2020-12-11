@@ -1,18 +1,20 @@
+@use './variables/index' as v;
+@use 'sass:map';
 .btn {
-  $normal-padding: 7px;
-  $large-padding: 11px;
-  $small-padding: 3px;
-  $justify-padding: 11px;
+  $normal-padding: map.get(v.$vertical-padding, 'md');
+  $large-padding: map.get(v.$vertical-padding, 'lg');
+  $small-padding: map.get(v.$vertical-padding, 'sm');
+  $justify-padding: v.$justify-padding;
   display: inline-block;
   outline: none;
   cursor: pointer;
-  border: 1px solid transparent;
+  border: v.$border-size solid transparent;
   border-radius: 4px;
   padding: $normal-padding $justify-padding;
-  font-size: 1rem;
+  font-size: v.$inline-font-size;
   overflow: hidden;
   &__content {
-    line-height: 1.5;
+    line-height: v.$inline-line-height;
     text-overflow: ellipsis;
   }
 

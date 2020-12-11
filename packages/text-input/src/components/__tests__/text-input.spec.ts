@@ -1,6 +1,6 @@
 import { mount, VueWrapper } from '@vue/test-utils';
 import { defineComponent } from 'vue';
-import TextInput from '../text-input';
+import TextInput from '../TextInput';
 describe('input.ts', () => {
   let mountFunc: (options?: object) => VueWrapper<any>;
   beforeEach(() => {

@@ -14,6 +14,7 @@ export const gridProps = {
   },
   column: Boolean,
 };
+
 export function useGridProvider(props: ExtractPropTypes<typeof gridProps>) {
   const classes = computed(() => {
     if (!FLEX_KEYS.includes(props.gutter)) return {};
@@ -48,7 +49,7 @@ export function useGridProvider(props: ExtractPropTypes<typeof gridProps>) {
   };
 }
 
-export function useGridInjector() {
+export function useGridConsumer() {
   const grid = inject(GridSymbol, {
     gutter: ref(null),
     column: ref(false),
