@@ -5,6 +5,7 @@ $border-size: 1px;
 $border-radius: 4px;
 $inline-line-height: 1.5;
 $inline-font-size: 14px;
+$larger-font-size: 16px;
 $grid-columns: 12;
 $breakpoints: (
   'xs': 0px,
@@ -23,9 +24,9 @@ $gutters: (
 );
 
 $vertical-padding: (
-  sm: 3px,
-  md: 7px,
-  lg: 11px,
+  sm: 0px,
+  md: 3px,
+  lg: 9px,
 );
 
 @function make-max-height($key: 'sm') {

@@ -41,8 +41,8 @@ type InnerState<T> = {
 type LazyStateType<T> = {
   readonly value: DeepReadonly<UnwrapRef<T>> | undefined;
 };
-type ModelCallback<T> = (lazyState: InnerState<T>, newVal: TOrUndefined<T>, oldVal: TOrUndefined<T>) => any;
-export type ModelReturn<T> = {
+type ModelCallback<T> = (innerState: InnerState<T>, newVal: TOrUndefined<T>, oldVal: TOrUndefined<T>) => any;
+export type ModelReturn<T extends unknown> = {
   lazyState: LazyStateType<T>;
   model: Ref<T | undefined>;
   setInnerState: (val: T | undefined | UnwrapRef<T>) => void;

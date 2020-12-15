@@ -1,9 +1,22 @@
-import vue, { VNodeArrayChildren } from 'vue';
-import { Ripple, useColor, useElevation, genElevationProp, genColorProp } from '@lagabu/shared';
+import vue, { toRef, VNodeArrayChildren } from 'vue';
+import {
+  Ripple,
+  useColor,
+  useElevation,
+  genElevationProp,
+  genColorProp,
+  genToggleProps,
+  useToggle,
+} from '@lagabu/shared';
+import { useGroupConsumer, namespace } from '../composables';
 import { computed, defineComponent, h, mergeProps, withDirectives } from 'vue';
 export default defineComponent({
   name: 'btn',
   props: {
+    tag: {
+      type: String,
+      default: 'button',
+    },
     outlined: Boolean,
     flat: Boolean,
     tile: Boolean,
@@ -13,14 +26,18 @@ export default defineComponent({
     round: Boolean,
     disabled: Boolean,
     link: Boolean,
+    toggleable: Boolean,
     loading: Boolean, // TODO loading style
     ...genColorProp(),
     ...genElevationProp(),
+    ...genToggleProps('btn--active'),
   },
-  setup(props, { slots }) {
+  setup(props, context) {
     const isTextColor = computed(() => props.outlined || props.link);
     const color = useColor(props, isTextColor);
     const elevation = useElevation(props);
+    const { isActive, class: toggleClasses, toggle } = useToggle(props, context);
+    const group = useGroupConsumer(isActive, props.toggleable);
     const notAllowed = computed(() => props.loading || props.disabled);
     const classes = computed(() => {
       return {
@@ -42,7 +59,19 @@ export default defineComponent({
       colorStyles: color.style,
       elevationClasses: elevation.class,
       elevationStyles: elevation.style,
+      toggleClasses,
       notAllowed,
+      onClick: (e: MouseEvent) => {
+        if (notAllowed.value) {
+          e.preventDefault();
+          e.stopImmediatePropagation();
+          return;
+        }
+        toggle(
+          group.onToggle,
+          computed(() => group.notAllowed.value || !props.toggleable)
+        );
+      },
     };
   },
   methods: {
@@ -72,17 +101,12 @@ export default defineComponent({
         children.push(this.genBtnContent());
       }
       return h(
-        'button',
+        this.tag,
         mergeProps(
           {
-            class: this.classes,
             'aria-disabled': !!this.disabled || undefined,
-            onClick: (e: MouseEvent) => {
-              if (this.notAllowed) {
-                e.stopImmediatePropagation();
-                return;
-              }
-            },
+            class: this.classes,
+            onClick: this.onClick,
           },
           {
             class: this.colorClasses,
@@ -91,6 +115,9 @@ export default defineComponent({
           {
             class: this.elevationClasses,
             style: this.elevationStyles,
+          },
+          {
+            class: this.toggleClasses,
           }
         ),
         children

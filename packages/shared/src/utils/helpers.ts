@@ -24,6 +24,10 @@ export function isArray<T extends any>(str: any): str is Array<T> {
   return Array.isArray(str);
 }
 
+export function isFunction(str: any): str is Function {
+  return typeof str === 'function';
+}
+
 export function isCssColor(str: string | undefined) {
   return !!str && !!str.match(/^(#|(hsl|rgb)a?\(|var\(--)/g);
 }

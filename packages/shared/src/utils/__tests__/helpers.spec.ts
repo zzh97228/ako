@@ -116,5 +116,11 @@ describe('helpers.ts', () => {
       a: tempMap2,
     };
     expect(deepEqual(left, right)).toBeTruthy();
+    left = [1, [2, 3]];
+    right = [1, [2, 3]];
+    expect(deepEqual(left, right)).toBeTruthy();
+    left = [1, [2, 3]];
+    right = [1, [2, 4]];
+    expect(deepEqual(left, right)).toBeFalsy();
   });
 });

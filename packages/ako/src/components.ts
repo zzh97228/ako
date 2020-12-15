@@ -1,3 +1,3 @@
 import { Row, Column, Container } from '@lagabu/grid';
-
-export { Row, Column, Container };
+import { Btn } from '@lagabu/btn';
+export { Row, Column, Container, Btn };
