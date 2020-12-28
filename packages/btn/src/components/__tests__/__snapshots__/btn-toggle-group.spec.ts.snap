@@ -1,0 +1,61 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`BtnToggleGroup.ts should toggle multiple btn 1`] = `
+<div class="btn-toggle-group">
+  <button class="btn primary-color elevation-xs btn--active">
+    <div class="btn__content">
+      button-1
+    </div>
+  </button>
+  <button class="btn primary-color elevation-xs btn--active">
+    <div class="btn__content">
+      button-2
+    </div>
+  </button>
+  <button class="btn primary-color elevation-xs">
+    <div class="btn__content">
+      button-3
+    </div>
+  </button>
+  <button class="btn primary-color elevation-xs">
+    <div class="btn__content">
+      button-4
+    </div>
+  </button>
+  <button class="btn primary-color elevation-xs">
+    <div class="btn__content">
+      button-5
+    </div>
+  </button>
+</div>
+`;
+
+exports[`BtnToggleGroup.ts should toggle single btn 1`] = `
+<div class="btn-toggle-group">
+  <button class="btn primary-color elevation-xs">
+    <div class="btn__content">
+      button-1
+    </div>
+  </button>
+  <button class="btn primary-color elevation-xs btn--active">
+    <div class="btn__content">
+      button-2
+    </div>
+  </button>
+  <button class="btn primary-color elevation-xs">
+    <div class="btn__content">
+      button-3
+    </div>
+  </button>
+  <button class="btn primary-color elevation-xs">
+    <div class="btn__content">
+      button-4
+    </div>
+  </button>
+  <button class="btn primary-color elevation-xs">
+    <div class="btn__content">
+      button-5
+    </div>
+  </button>
+</div>
+`;

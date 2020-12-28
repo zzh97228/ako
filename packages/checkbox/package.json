@@ -1,0 +1,7 @@
+{
+  "name": "@lagabu/checkbox",
+  "dependencies": {
+    "vue": "next",
+    "@lagabu/shared": "latest"
+  }
+}

@@ -1,0 +1,4 @@
+{
+  "name": "@lagabu/file-input",
+  "main": "dist/file-input.umd.bundle.js"
+}

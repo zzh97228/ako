@@ -1,0 +1,130 @@
+import { defineComponent, h, PropType, ref } from 'vue';
+import { isArray, isUndefined, useModel } from '@lagabu/shared';
+export default defineComponent({
+  name: 'FileInput',
+  props: {
+    modelValue: {
+      type: [Object, Array] as PropType<File | Array<File>>,
+      default: undefined,
+      validator: (val: any) => {
+        if (val instanceof File) return true;
+        if (isArray(val)) {
+          for (let key in val) {
+            if (!(val[key] instanceof File)) return false;
+          }
+          return true;
+        }
+        return false;
+      },
+    },
+    disabled: Boolean,
+    multiple: Boolean,
+    accept: {
+      type: String,
+      default: '*/*',
+    },
+  },
+  setup(props, context) {
+    const inputRef = ref<null | HTMLInputElement>(null);
+    const { lazyState, model, setInnerState } = useModel(props, context);
+
+    function normalize(val: File | File[] | undefined) {
+      if (isUndefined(val)) {
+        return props.multiple ? [] : undefined;
+      } else if (isArray(val)) {
+        return props.multiple ? val : val[0];
+      } else {
+        return props.multiple ? [val] : val;
+      }
+    }
+
+    function onContentClick(e: MouseEvent) {
+      if (props.disabled) {
+        e.preventDefault();
+        e.stopImmediatePropagation();
+        return;
+      }
+      let elm: HTMLInputElement | null;
+      if (!(elm = inputRef.value)) return;
+      elm.click();
+    }
+
+    function onInputChange(e: InputEvent) {
+      if (props.disabled) {
+        e.preventDefault();
+        e.stopImmediatePropagation();
+        return;
+      }
+      const target = e.target as HTMLInputElement;
+      const files = target.files;
+      if (!files?.length) return;
+      if (props.multiple) {
+        let file: File | null;
+        const fileArray: File[] = [];
+        for (let i = 0; i < files.length; i++) {
+          if (!(file = files.item(i))) continue;
+          // TODO validate file size
+          fileArray.push(file);
+        }
+        model.value = fileArray;
+      } else {
+        model.value = files[0];
+      }
+
+      // reset input content
+      (e.target as any).value = null;
+    }
+
+    // normalize modelValue first
+    setInnerState(normalize(props.modelValue));
+
+    return {
+      onContentClick,
+      onInputChange,
+      inputRef,
+    };
+  },
+  methods: {
+    genInput() {
+      return h('input', {
+        ref: 'inputRef',
+        type: 'file',
+        disabled: this.disabled,
+        multiple: this.multiple,
+        accept: this.accept,
+        style: {
+          display: 'none',
+        },
+        onChange: this.onInputChange,
+      });
+    },
+    genContent() {
+      return h('div', {
+        class: 'file-input',
+        onClick: this.onContentClick,
+      });
+    },
+    genActivator() {
+      return h(
+        'div',
+        {
+          class: 'file-input__activator',
+        },
+        this.$slots.activator
+          ? this.$slots.activator({
+              onClick: this.onContentClick,
+            })
+          : this.genContent()
+      );
+    },
+  },
+  render() {
+    return h(
+      'div',
+      {
+        class: 'file-input__wrapper',
+      },
+      [this.genActivator(), this.genInput()]
+    );
+  },
+});

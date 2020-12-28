@@ -1,0 +1,7 @@
+{
+  "name": "@lagabu/carousel",
+  "dependencies": {
+    "vue": "next",
+    "@lagabu/shared": "latest"
+  }
+}

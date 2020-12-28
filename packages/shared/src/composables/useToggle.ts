@@ -5,18 +5,19 @@ export function genToggleProps(defaultClass?: string) {
   return {
     activeClass: {
       type: String,
-      default: defaultClass || undefined,
+      default: defaultClass || void 0,
     },
     active: {
       type: Boolean,
-      default: undefined,
+      default: void 0,
     },
+    toggleable: Boolean,
   };
 }
 
 export type TogglePropsType = ExtractPropTypes<ReturnType<typeof genToggleProps>>;
 export function useToggle(props: TogglePropsType, ctx: SetupContext) {
-  const isActive: Ref<boolean> = isUndefined(props.active) ? ref(false) : readonly(toRef(props, 'active'));
+  const isActive: Ref<boolean | undefined> = isUndefined(props.active) ? ref(false) : readonly(toRef(props, 'active'));
   return {
     class: computed(() => {
       if (!props.activeClass) return {};
@@ -25,11 +26,11 @@ export function useToggle(props: TogglePropsType, ctx: SetupContext) {
       };
     }),
     toggle: (cb?: () => any, notAllowed?: boolean | Ref<boolean>) => {
-      if ((isRef(notAllowed) && notAllowed.value) || (isBool(notAllowed) && notAllowed)) return;
+      if (!props.toggleable || (isRef(notAllowed) && notAllowed.value) || (isBool(notAllowed) && notAllowed)) return;
       if (!isReadonly(isActive)) {
         isActive.value = !isActive.value;
         cb && isFunction(cb) && cb.call(null);
-        ctx.emit('update:active');
+        ctx.emit('update:active', isActive.value);
       }
     },
     isActive,

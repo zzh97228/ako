@@ -5,7 +5,9 @@ import vue, {
   InjectionKey,
   isReadonly,
   isRef,
+  onBeforeMount,
   onBeforeUnmount,
+  onMounted,
   PropType,
   provide,
   ref,
@@ -21,6 +23,9 @@ type ConsumerResult = { [prop: string]: any } & {
   onToggle: () => any;
   notAllowed: Ref<boolean>;
 };
+type ConsumerProps = {} & {
+  toggleable?: boolean;
+};
 export type IGroup = {
   namespace: string;
   innerSymbol: InjectionKey<
@@ -33,14 +38,27 @@ export type IGroup = {
     }
   >;
   useGroupProvider: (props: GroupPropsType, context: SetupContext) => ModelReturn<number | number[] | undefined>;
-  useGroupConsumer: (isActive: Ref<boolean>, toggleable?: boolean) => ConsumerResult;
+  useGroupConsumer: (props: ConsumerProps, isActive: Ref<boolean | undefined>) => ConsumerResult;
 };
 
-export function genGroupProps() {
+export function genGroupProps(defaultModelValue?: any) {
   return {
     disabled: Boolean,
     multiple: Boolean,
-    modelValue: [Array, Number] as PropType<Array<number> | number>,
+    modelValue: {
+      type: [Array, Number] as PropType<Array<number> | number>,
+      default: defaultModelValue,
+      validator: (str: any) => {
+        if (isNumber(str)) return true;
+        if (isArray(str)) {
+          for (let i = 0; i < str.length; i++) {
+            if (!isNumber(str[i])) return false;
+          }
+          return true;
+        }
+        return false;
+      },
+    },
   };
 }
 type GroupInstance = {
@@ -79,6 +97,7 @@ export function makeToggleGroup(symbolName = 'ToggleGroup') {
         const normalizedValue = normalize(newVal);
         let child: GroupInstance,
           innerValue = false;
+
         for (let i = 0; i < ists.length; i++) {
           child = ists[i];
           if (props.multiple) {
@@ -158,8 +177,10 @@ export function makeToggleGroup(symbolName = 'ToggleGroup') {
         }
       }
       // normalize modelValue and set active when created
-      const normalizedValue = updateChildren(lazyState.value);
-      setInnerState(normalizedValue);
+      onMounted(() => {
+        const normalizedValue = updateChildren(lazyState.value);
+        setInnerState(normalizedValue);
+      });
 
       // provide symbol
       provide(result.innerSymbol, {
@@ -176,7 +197,7 @@ export function makeToggleGroup(symbolName = 'ToggleGroup') {
         notAllowed,
       };
     },
-    useGroupConsumer(isActive: Ref<boolean>, toggleable?: boolean) {
+    useGroupConsumer(props: ConsumerProps, isActive: Ref<boolean | undefined>) {
       const group = inject(result.innerSymbol, {
         [gNamespace]: false,
         register: (...args: any[]) => ({
@@ -190,7 +211,7 @@ export function makeToggleGroup(symbolName = 'ToggleGroup') {
         [gNamespace]: group[gNamespace],
         notAllowed: group.notAllowed,
       };
-      if (group[gNamespace] && toggleable) {
+      if (group[gNamespace] && props.toggleable) {
         const id = groupUID++;
         const { onToggle } = group.register(id, isActive);
         consumerResult.onToggle = onToggle;

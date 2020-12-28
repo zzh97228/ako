@@ -30,7 +30,11 @@ describe('useToggle.ts', () => {
   });
 
   it('should have active class when set active value', async () => {
-    const wrapper = mountFunc();
+    const wrapper = mountFunc({
+      props: {
+        toggleable: true,
+      },
+    });
     wrapper.vm.isActive = true;
     await wrapper.vm.$nextTick();
     expect(wrapper.classes()).toContain('active');
@@ -42,10 +46,22 @@ describe('useToggle.ts', () => {
     const wrapper = mountFunc({
       props: {
         active: true,
+        toggleable: true,
       },
     });
     expect(wrapper.classes()).toContain('active');
     await wrapper.trigger('click');
     expect(wrapper.vm.isActive).toBeTruthy();
+  });
+
+  it('should not toggle active when not set toggleable', async () => {
+    const wrapper = mountFunc({
+      props: {
+        toggleable: false,
+      },
+    });
+
+    await wrapper.trigger('click');
+    expect(wrapper.vm.isActive).toBeFalsy();
   });
 });

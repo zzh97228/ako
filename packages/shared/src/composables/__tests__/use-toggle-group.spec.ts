@@ -11,7 +11,7 @@ describe('useToggleGroup', () => {
       props: genToggleProps('active'),
       setup(props, context) {
         const { isActive, toggle, class: toggleClasses } = useToggle(props, context);
-        const { onToggle, notAllowed } = useGroupConsumer(isActive, true);
+        const { onToggle, notAllowed } = useGroupConsumer(props, isActive);
         return {
           isActive,
           onToggle,
@@ -46,7 +46,7 @@ describe('useToggleGroup', () => {
           children.push(
             h(
               item,
-              { key: 'item-' + i },
+              { key: 'item-' + i, toggleable: true },
               {
                 default: () => 'item-' + i,
               }

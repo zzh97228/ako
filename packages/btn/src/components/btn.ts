@@ -26,7 +26,6 @@ export default defineComponent({
     round: Boolean,
     disabled: Boolean,
     link: Boolean,
-    toggleable: Boolean,
     loading: Boolean, // TODO loading style
     ...genColorProp(),
     ...genElevationProp(),
@@ -37,7 +36,7 @@ export default defineComponent({
     const color = useColor(props, isTextColor);
     const elevation = useElevation(props);
     const { isActive, class: toggleClasses, toggle } = useToggle(props, context);
-    const group = useGroupConsumer(isActive, props.toggleable);
+    const group = useGroupConsumer(props, isActive);
     const notAllowed = computed(() => props.loading || props.disabled);
     const classes = computed(() => {
       return {
@@ -67,10 +66,7 @@ export default defineComponent({
           e.stopImmediatePropagation();
           return;
         }
-        toggle(
-          group.onToggle,
-          computed(() => group.notAllowed.value || !props.toggleable)
-        );
+        toggle(group.onToggle, group.notAllowed);
       },
     };
   },
@@ -104,7 +100,6 @@ export default defineComponent({
         this.tag,
         mergeProps(
           {
-            'aria-disabled': !!this.disabled || undefined,
             class: this.classes,
             onClick: this.onClick,
           },

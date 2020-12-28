@@ -1,2 +1,3 @@
 import Btn from './Btn';
-export { Btn };
+import BtnToggleGroup from './BtnToggleGroup';
+export { Btn, BtnToggleGroup };
