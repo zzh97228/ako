@@ -14,6 +14,11 @@ export function genToggleProps(defaultClass?: string) {
     toggleable: Boolean,
   };
 }
+export function setActive(isActive: Ref<boolean | undefined>, value: any, cb?: () => any) {
+  if (isReadonly(isActive)) return;
+  isActive.value = value;
+  cb && isFunction(cb) && cb.call(null);
+}
 
 export type TogglePropsType = ExtractPropTypes<ReturnType<typeof genToggleProps>>;
 export function useToggle(props: TogglePropsType, ctx: SetupContext) {
@@ -27,11 +32,10 @@ export function useToggle(props: TogglePropsType, ctx: SetupContext) {
     }),
     toggle: (cb?: () => any, notAllowed?: boolean | Ref<boolean>) => {
       if (!props.toggleable || (isRef(notAllowed) && notAllowed.value) || (isBool(notAllowed) && notAllowed)) return;
-      if (!isReadonly(isActive)) {
-        isActive.value = !isActive.value;
+      setActive(isActive, !isActive.value, () => {
         cb && isFunction(cb) && cb.call(null);
         ctx.emit('update:active', isActive.value);
-      }
+      });
     },
     isActive,
   };

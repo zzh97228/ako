@@ -1,6 +1,7 @@
-import { deepEqual, genToggleProps, isUndefined, useModel, useToggle } from '@lagabu/shared';
-import vue, { computed, defineComponent, h, isReadonly, mergeProps, onBeforeUnmount, toRef, watch } from 'vue';
+import { deepEqual, genToggleProps, isUndefined, useModel, useToggle, setActive } from '@lagabu/shared';
+import vue, { computed, defineComponent, h, isReadonly, onBeforeUnmount, Ref, toRef, watch } from 'vue';
 import { useGroupConsumer, namespace } from '../composables';
+
 export default defineComponent({
   name: 'checkbox',
   props: {
@@ -23,9 +24,7 @@ export default defineComponent({
       (innerState, newVal, oldVal) => {
         if (deepEqual(newVal, oldVal) || deepEqual(newVal, lazyState.value)) return;
         innerState.value = newVal;
-        if (!isReadonly(isActive)) {
-          isActive.value = !props.indetermined ? Boolean(newVal) : false;
-        }
+        setActive(isActive, !props.indetermined ? Boolean(newVal) : false);
       }
     );
     // initial checkbox value
@@ -52,7 +51,7 @@ export default defineComponent({
       () => props.indetermined,
       (newVal, oldVal) => {
         if (newVal) {
-          isActive.value = void 0 as any;
+          setActive(isActive, void 0);
         }
       }
     );

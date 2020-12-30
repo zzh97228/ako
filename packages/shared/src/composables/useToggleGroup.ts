@@ -1,13 +1,8 @@
 import vue, {
-  computed,
   ExtractPropTypes,
   inject,
   InjectionKey,
-  isReadonly,
-  isRef,
-  onBeforeMount,
   onBeforeUnmount,
-  onMounted,
   PropType,
   provide,
   ref,
@@ -15,8 +10,9 @@ import vue, {
   SetupContext,
   toRef,
 } from 'vue';
-import { deepEqual, isArray, isNumber, isUndefined, upperFirst } from '../utils/helpers';
+import { convertToNumber, deepEqual, isArray, isNumber, isUndefined, upperFirst } from '../utils/helpers';
 import { ModelReturn, useModel } from './useModel';
+import { setActive } from './useToggle';
 
 type GroupValue = number | number[] | undefined;
 type ConsumerResult = { [prop: string]: any } & {
@@ -82,15 +78,22 @@ export function makeToggleGroup(symbolName = 'ToggleGroup') {
         if (isUndefined(value)) {
           return props.multiple ? [] : undefined;
         } else if (isArray(value)) {
-          return props.multiple ? value.filter((v) => isNumber(v)) : value[0];
+          let val: any;
+          const result: number[] = [];
+          for (let i = 0; i < value.length; i++) {
+            val = convertToNumber(value[i]) || 0;
+            if (!props.multiple && i === 0) {
+              return val;
+            }
+            if (result.indexOf(val) < 0) {
+              result.push(val);
+            }
+          }
+          return result;
         } else {
+          value = convertToNumber(value) || 0;
           return props.multiple ? [value] : value;
         }
-      }
-
-      function setIsActive(isActive: Ref<boolean>, value: boolean) {
-        if (isReadonly(isActive)) return;
-        isActive.value = value;
       }
 
       function updateChildren(newVal: any) {
@@ -105,7 +108,7 @@ export function makeToggleGroup(symbolName = 'ToggleGroup') {
           } else {
             innerValue = i === normalizedValue;
           }
-          setIsActive(child.isActive, innerValue);
+          setActive(child.isActive, innerValue);
         }
         return normalizedValue;
       }
@@ -114,11 +117,12 @@ export function makeToggleGroup(symbolName = 'ToggleGroup') {
         context,
         toRef(props, 'disabled'),
         (innerState, newVal, oldVal) => {
-          if (deepEqual(newVal, oldVal)) return;
-          let value = updateChildren(newVal);
-          innerState.value = value;
+          if (deepEqual(newVal, oldVal) || deepEqual(newVal, innerState.value)) return;
+          innerState.value = updateChildren(newVal);
         }
       );
+      // initial value
+      setInnerState(normalize(lazyState.value as any));
 
       function setMultipleModelValue() {
         model.value = ists.reduce((prev, next, index) => {
@@ -148,17 +152,23 @@ export function makeToggleGroup(symbolName = 'ToggleGroup') {
             }
           }
           ists.forEach((instance, index) => {
-            if (index !== idx) setIsActive(instance.isActive, false);
+            if (index !== idx) setActive(instance.isActive, false);
           });
           model.value = idx;
         }
       }
 
       function register(id: number, isActive: Ref<boolean>) {
-        ists.push({
-          id,
-          isActive,
-        });
+        const idx =
+          ists.push({
+            id,
+            isActive,
+          }) - 1;
+        if (props.multiple && isArray(lazyState.value)) {
+          ists[idx].isActive.value = lazyState.value.includes(idx);
+        } else if (!props.multiple) {
+          ists[idx].isActive.value = lazyState.value === idx;
+        }
         return {
           onToggle: () => {
             clickItem(id);
@@ -176,11 +186,6 @@ export function makeToggleGroup(symbolName = 'ToggleGroup') {
           model.value = idx < 0 ? undefined : idx;
         }
       }
-      // normalize modelValue and set active when created
-      onMounted(() => {
-        const normalizedValue = updateChildren(lazyState.value);
-        setInnerState(normalizedValue);
-      });
 
       // provide symbol
       provide(result.innerSymbol, {

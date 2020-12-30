@@ -1,10 +1,10 @@
-import { isNumber, isString } from './helpers';
+import { isUndefined, isString } from './helpers';
 
-export function clamp(num: number, min?: number | null, max?: number | null) {
-  if (isNumber(min) && isNumber(max)) return Math.max(min, Math.min(max, num));
-  else if (isNumber(min) && !isNumber(max)) return Math.max(num, min);
-  else if (isNumber(max) && !isNumber(min)) return Math.min(num, max);
-  else return num;
+export function clamp(num: number, min?: number | null, max?: number | null): number {
+  min = isUndefined(min) || min === null ? num : min;
+  max = isUndefined(max) || max === null ? num : max;
+  if (min > max) [min, max] = [max, min];
+  return Math.min(max, Math.max(min, num));
 }
 
 export function lerp(from: number, to: number, t: number | string) {

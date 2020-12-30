@@ -1,6 +1,7 @@
 import theme from 'vitepress/dist/client/theme-default';
 import Ako from '@lagabu/ako';
 import '@lagabu/theme-default';
+import './styles.css'
 
 export default {
   Layout: theme.Layout,

@@ -9,10 +9,5 @@ export const Router = createRouter({
       path: '/',
       component: Home,
     },
-    {
-      name: 'Test',
-      path: '/test',
-      component: Test,
-    },
   ],
 });

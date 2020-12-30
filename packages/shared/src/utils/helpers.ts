@@ -125,7 +125,8 @@ export function registerDirectives(Vue: App, directives: Record<string, Directiv
 
 export function convertToNumber(str: string | number | undefined) {
   if (isUndefined(str)) return NaN;
-  if (isNumber(str) || !isNaN(+str)) return +str;
+  const num = +str;
+  if (isNumber(str) || !isNaN(num)) return num;
   return +str.replace(/[^0-9\.\-]/g, '');
 }
 

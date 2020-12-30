@@ -1,18 +1,16 @@
-import vue, { defineComponent, h, PropType, toRef } from 'vue';
-import { genModelProps } from '@lagabu/shared';
-import { useCarouselProvider } from '../composables';
+import { convertToNumber, isBool } from '@lagabu/shared';
+import vue, { defineComponent, h, onBeforeUnmount, onMounted, PropType, toRef } from 'vue';
+import { carouselProps, useCarouselProvider } from '../composables';
 
 export default defineComponent({
   name: 'carousel',
-  props: {
-    ...genModelProps([Number, String]),
-    disabled: Boolean,
-  },
+  props: carouselProps,
   setup(props, context) {
-    const { clickNext, clickPrev } = useCarouselProvider(props, context);
+    const { clickNext, clickPrev, transitionHeight } = useCarouselProvider(props, context);
     return {
       clickPrev,
       clickNext,
+      transitionHeight,
     };
   },
   methods: {
@@ -47,11 +45,13 @@ export default defineComponent({
     },
   },
   render() {
-    // TODO carousel
     return h(
       'div',
       {
-        class: 'carousel__container',
+        class: 'carousel__wrapper',
+        style: {
+          height: this.transitionHeight,
+        },
       },
       [this.genPrevActivator(), this.genContent(), this.genNextActivator()]
     );

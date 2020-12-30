@@ -1,0 +1,5 @@
+#app {
+  --c-brand: var(--blue-5, blue);
+  --c-brand-light: var(--blue-4, blue);
+
+}
