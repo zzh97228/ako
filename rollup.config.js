@@ -6,15 +6,18 @@ const ts = require('rollup-plugin-typescript2'),
   autoprefixer = require('autoprefixer'),
   { terser } = require('rollup-plugin-terser');
 
-const FORMATS = ['es', 'umd', 'cjs'];
+const FORMATS = ['esm', 'umd', 'cjs'];
 
 function genRollupObj(packageFolder, pkg, format, isGlobal = false) {
-  const name = (String(pkg.name) || '').replace(/(@lagabu\/)/, '');
-  const external = [...Object.keys(pkg.peerDependencies || {}), ...Object.keys(pkg.dependencies || {})];
-  const plugins = [terser()];
   function isESM() {
-    return !!format && format === 'es';
+    return !!format && format === 'esm';
   }
+  const name = (String(pkg.name) || '').replace(/(@lagabu\/)/, '');
+  const external = isGlobal
+    ? [...Object.keys(pkg.peerDependencies || {})]
+    : [...Object.keys(pkg.peerDependencies || {}), ...Object.keys(pkg.dependencies || {})];
+  const plugins = isESM() ? [] : [terser()];
+
   return {
     input: {
       input: resolve(packageFolder, 'src/index.ts'),
@@ -59,7 +62,7 @@ function genRollupObj(packageFolder, pkg, format, isGlobal = false) {
         return prev;
       }, {}),
       name,
-      entryFileNames: name + '.' + format + '.bundle.js',
+      entryFileNames: name + '.' + format + (isGlobal ? '.browser' : '') + '.bundle.js',
       extend: true,
       exports: 'auto',
     },

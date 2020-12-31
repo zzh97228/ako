@@ -4,6 +4,7 @@ const { resolve } = require('path');
 const { readdirSync, existsSync } = require('fs');
 const { FORMATS, genRollupObj } = require('../rollup.config');
 const { Extractor, ExtractorConfig } = require('@microsoft/api-extractor');
+ 
 
 async function build(pkgName) {
   let clonedFormats = [...FORMATS];
@@ -11,16 +12,21 @@ async function build(pkgName) {
   try {
     console.log('... 🚀Start Building🚀 ...');
     if (pkgName === 'theme-default') {
-      clonedFormats = ['es'];
+      clonedFormats = ['esm'];
     }
 
-    let isGlobal = false;
-    for (let f of clonedFormats) {
-      console.log(`... Building ${f} ...`);
-      isGlobal = pkgName === 'ako';
-      const { input, output } = genRollupObj(pkgFolder, require(resolve(pkgFolder, 'package.json')), f, isGlobal);
-      const bundle = await rollup.rollup(input);
-      await bundle.write(output);
+    async function buildRollup(global) {
+      for (let f of clonedFormats) {
+        console.log(`... Building${global ? ' Browser' : ''} ${f} ...`);
+        const { input, output } = genRollupObj(pkgFolder, require(resolve(pkgFolder, 'package.json')), f, global);
+        const bundle = await rollup.rollup(input);
+        await bundle.write(output);
+      }
+    }
+
+    await buildRollup();
+    if (pkgName === 'ako') {
+      await buildRollup(true)
     }
 
     // packages' api-extractor.json

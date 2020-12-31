@@ -27,13 +27,7 @@ export default defineComponent({
             [this.activeClass]: Boolean(this.isActive),
           },
         },
-        h(
-          KeepAlive,
-          {},
-          {
-            default: () => this.isActive && this.$slots.default && this.$slots.default(),
-          }
-        )
+        this.isActive && this.$slots.default && this.$slots.default()
       );
     },
     onAfter() {

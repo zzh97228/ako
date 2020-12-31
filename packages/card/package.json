@@ -2,7 +2,7 @@
   "name": "@lagabu/card",
   "main": "dist/card.umd.bundle.js",
   "types": "dist/index.d.ts",
-  "module": "dist/card.es.bundle.js",
+  "module": "dist/card.esm.bundle.js",
   "version": "0.1.0-alpha.0",
   "files": [
     "dist",

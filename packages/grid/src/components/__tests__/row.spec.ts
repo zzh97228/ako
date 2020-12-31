@@ -1,5 +1,5 @@
 import { mount, VueWrapper } from '@vue/test-utils';
-import Row from '../row';
+import Row from '../Row';
 
 describe('row.ts', () => {
   let mountFunc: (options?: object) => VueWrapper<any>;

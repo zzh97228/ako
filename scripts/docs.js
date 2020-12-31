@@ -8,8 +8,8 @@ const distFolder = resolve(docFolder, 'dist');
 
 const options = Object.assign({}, config, {
   root: resolve(__dirname, '../docs'),
-  port: 3000
-})
+  port: 3000,
+});
 
 async function serve() {
   try {
@@ -27,8 +27,8 @@ async function builder() {
     console.log('... cleaning dist ...');
     shell.rm('-rf', distFolder);
     console.log('... building ...');
-    await build(options);
-    shell.mv(resolve(docFolder, './.vitepress/dist/*'), distFolder);
+    await build(options.root, options);
+    shell.mv(resolve(docFolder, './.vitepress/dist'), distFolder);
     shell.cp(resolve(__dirname, '../.nojekyll'), distFolder);
   } catch (err) {
     console.error(err);

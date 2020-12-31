@@ -1,7 +1,7 @@
 import { mount, VueWrapper } from '@vue/test-utils';
 import { computed } from 'vue';
 import { GridSymbol } from '../../composables/useGrid';
-import Column from '../column';
+import Column from '../Col';
 
 describe('column.ts', () => {
   let mountFunc: (options?: object, column?: boolean) => VueWrapper<any>;

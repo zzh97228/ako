@@ -1,7 +1,7 @@
 {
   "name": "@lagabu/text-box",
   "main": "dist/text-box.umd.bundle.js",
-  "module": "dist/text-box.es.bundle.js",
+  "module": "dist/text-box.esm.bundle.js",
   "types": "dist/text-box.d.bundle.js",
   "files": [
     "dist",

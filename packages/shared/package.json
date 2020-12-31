@@ -2,7 +2,7 @@
   "name": "@lagabu/shared",
   "version": "0.1.0-alpha.0",
   "main": "dist/shared.umd.bundle.js",
-  "module": "dist/shared.es.bundle.js",
+  "module": "dist/shared.esm.bundle.js",
   "typed": "dist/shared.d.ts",
   "files": [
     "dist",

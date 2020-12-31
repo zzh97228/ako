@@ -1,4 +1,13 @@
-import { deepEqual, genToggleProps, isUndefined, useModel, useToggle, setActive } from '@lagabu/shared';
+import {
+  deepEqual,
+  genToggleProps,
+  isUndefined,
+  useModel,
+  useToggle,
+  setActive,
+  genColorProp,
+  useColor,
+} from '@lagabu/shared';
 import vue, { computed, defineComponent, h, isReadonly, onBeforeUnmount, Ref, toRef, watch } from 'vue';
 import { useGroupConsumer, namespace } from '../composables';
 
@@ -6,6 +15,7 @@ export default defineComponent({
   name: 'checkbox',
   props: {
     ...genToggleProps('checkbox--active'),
+    ...genColorProp(),
     modelValue: Boolean,
     indetermined: Boolean,
     radio: Boolean,
@@ -17,6 +27,7 @@ export default defineComponent({
   },
   setup(props, context) {
     const { isActive, toggle } = useToggle(props, context);
+    const { class: colorClasses, style: colorStyle } = useColor(props);
     const { lazyState, model, setInnerState } = useModel(
       props,
       context,
@@ -59,9 +70,14 @@ export default defineComponent({
     const classes = computed(() => {
       return {
         checkbox: true,
+        ...colorClasses.value,
         [`${props.activeClass}`]: isActive.value,
         'checkbox--indetermined': !group[namespace] && props.indetermined && isUndefined(isActive.value),
       };
+    });
+
+    const styles = computed(() => {
+      return colorStyle.value;
     });
 
     onBeforeUnmount(() => {
@@ -73,6 +89,7 @@ export default defineComponent({
       lazyState,
       model,
       classes,
+      styles,
       onClick,
     };
   },
@@ -80,6 +97,7 @@ export default defineComponent({
     genCheckbox() {
       return h('div', {
         class: this.classes,
+        style: this.styles,
       });
     },
     genActivator() {

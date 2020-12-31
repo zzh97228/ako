@@ -1,0 +1,6 @@
+{
+  "name": "@lagabu/slider",
+  "dependencies": {
+    "@lagabu/shared": "latest"
+  }
+}

@@ -1,5 +1,5 @@
 import { mount, VueWrapper } from '@vue/test-utils';
-import Container from '../container';
+import Container from '../Container';
 
 describe('container.ts', () => {
   let mountFunc: (opts?: object) => VueWrapper<any>;

@@ -2,7 +2,7 @@
   "name": "@lagabu/text-input",
   "types": "dist/text-input.d.ts",
   "main": "dist/text-input.umd.bundle.js",
-  "module": "dist/text-input.es.bundle.js",
+  "module": "dist/text-input.esm.bundle.js",
   "files": [
     "dist",
     "README.md"
