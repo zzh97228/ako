@@ -1,9 +1,9 @@
 # Btn
 
-<ako-btn>button</ako-btn>
+<ac-btn>button</ac-btn>
 
-<ako-btn link>button</ako-btn>
+<ac-btn link>button</ac-btn>
 
-<ako-btn color="primary" outlined>button</ako-btn>
+<ac-btn color="primary" outlined>button</ac-btn>
 
-<ako-btn color="primary" flat>button</ako-btn>
+<ac-btn color="primary" flat>button</ac-btn>

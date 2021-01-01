@@ -1,30 +1,20 @@
 const { resolve } = require('path');
 const { readdirSync } = require('fs');
 const pkgs = readdirSync(resolve(__dirname, './packages'));
-const regs = [];
-const aliasObj = pkgs.reduce((prev, next) => {
-  let fullPath = '@lagabu/' + next;
-  regs.push(new RegExp(`(['"]${fullPath}['"])`));
-  prev[`/${fullPath}/`] = resolve(__dirname, './packages/' + next);
-  return prev;
-}, {});
+const vue = require('@vitejs/plugin-vue');
+
+const aliasObj = pkgs.map((p) => {
+ return {
+    find: `@lagabu/${p}`,
+    replacement: resolve(__dirname, `./packages/${p}/src/index`),
+  }
+});
+
 module.exports = {
   alias: aliasObj,
-  port: 8080,
   root: resolve(__dirname, 'playground'),
-  transforms: [
-    {
-      test: (ctx) => {
-        return !ctx.path.match(/node_modules/);
-      },
-      transform: (ctx) => {
-        let code = ctx.code;
-        for (let reg of regs) {
-          // replace "@lagabu/*" with /@lagabu/*/src/index
-          code = code.replace(reg, `"/${reg.source.replace(/[\[\]\'\"\\\(\)]/g, '')}/src/index"`);
-        }
-        return code;
-      },
-    },
-  ],
+  plugins: [vue()],
+  server: {
+    port: 3000,
+  },
 };

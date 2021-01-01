@@ -1,11 +1,11 @@
 <template>
-  <ako-container max-width="768px">
-    <router-view></router-view>
-  </ako-container>
+  <div>App</div>
 </template>
 
-<script>
-export default {
-  name: 'App',
-};
+<script setup lang="ts">
+import { reactive } from "vue";
+
+const state = reactive({
+  value: 'hello'
+})
 </script>

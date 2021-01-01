@@ -4,7 +4,7 @@ const { resolve } = require('path');
 const { readdirSync, existsSync } = require('fs');
 const { FORMATS, genRollupObj } = require('../rollup.config');
 const { Extractor, ExtractorConfig } = require('@microsoft/api-extractor');
- 
+const accoJson = require('../package.json');
 
 async function build(pkgName) {
   let clonedFormats = [...FORMATS];
@@ -25,7 +25,7 @@ async function build(pkgName) {
     }
 
     await buildRollup();
-    if (pkgName === 'ako') {
+    if (pkgName === accoJson.name) {
       await buildRollup(true)
     }
 

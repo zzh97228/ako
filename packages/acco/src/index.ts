@@ -7,7 +7,7 @@ import * as services from './services';
 export type AkoOptions = { [prop: string]: any } & ColorProps & GridProps;
 export default {
   install(Vue: App, opts: AkoOptions = {}) {
-    registerComponents(Vue, components, 'ako-');
+    registerComponents(Vue, components, 'ac-');
     registerServices(Vue, services, opts);
     registerDirectives(Vue, directives);
   },

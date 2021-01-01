@@ -1,17 +1,7 @@
 import { createApp } from 'vue';
 import App from './App.vue';
-import '@lagabu/theme-default';
 import './assets/styles.scss';
-import Ako from '@lagabu/ako';
-import { Router } from './router';
+import Acco from '@lagabu/acco';
+import '@lagabu/theme-default';
 
-createApp(App)
-  .use(Ako, {
-    color: {
-      basic: {
-        'red-0': '#fff',
-      },
-    },
-  })
-  .use(Router)
-  .mount('#app');
+createApp(App).use(Acco).mount('#app');

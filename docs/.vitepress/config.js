@@ -1,23 +1,6 @@
 const { readdirSync } = require('fs');
 const { resolve } = require('path');
-
-module.exports = {
-  title: 'Ako',
-  description: 'Documentation of ako-ui',
-  base: process.env.NODE_ENV === 'production' ? '/ako-ui/' : '/',
-  themeConfig: {
-    repo: 'zzh97228/ako-ui',
-    nav: [
-      { text: 'Components', link: '/components/grid' },
-      { text: 'Directives', link: '/directives/ripple' },
-    ],
-    sidebar: {
-      '/components/': getComponents(),
-      '/directives/': getDirectives(),
-    },
-  },
-};
-
+const viteConfig = require('../../vite.config');
 function getFilesTemplate(dirName) {
   const files = readdirSync(resolve(__dirname, `../${dirName}`));
   return [
@@ -39,3 +22,28 @@ function getComponents() {
 function getDirectives() {
   return getFilesTemplate('directives');
 }
+
+function getAlias() {
+  return viteConfig.alias.reduce((prev, next) => {
+    prev[next.find] = next.replacement;
+    return prev;
+  }, {});
+}
+
+module.exports = {
+  title: 'Acco',
+  description: 'Documentation of acco',
+  base: process.env.NODE_ENV === 'production' ? '/acco/' : '/',
+  alias: getAlias(),
+  themeConfig: {
+    repo: 'zzh97228/acco',
+    nav: [
+      { text: 'Components', link: '/components/grid' },
+      { text: 'Directives', link: '/directives/ripple' },
+    ],
+    sidebar: {
+      '/components/': getComponents(),
+      '/directives/': getDirectives(),
+    },
+  },
+};

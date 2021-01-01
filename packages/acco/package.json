@@ -1,9 +1,9 @@
 {
-  "name": "@lagabu/ako",
+  "name": "@lagabu/acco",
   "version": "0.1.0-alpha.0",
-  "types": "dist/ako.d.ts",
-  "main": "dist/ako.umd.bundle.js",
-  "module": "dist/ako.esm.bundle.js",
+  "types": "dist/acco.d.ts",
+  "main": "dist/acco.umd.bundle.js",
+  "module": "dist/acco.esm.bundle.js",
   "files": [
     "dist",
     "README.md"

@@ -165,8 +165,8 @@ module.exports = {
 
   // A map from regular expressions to paths to transformers
   transform: {
-    '\\.(less)$': 'jest-css-modules',
-    '\\.(css)$': 'jest-css-modules',
+    // '\\.(less)$': 'jest-css-modules',
+    // '\\.(css)$': 'jest-css-modules',
     '.*\\.(j|t)sx?$': 'ts-jest',
   },
 
