@@ -3,7 +3,8 @@ import Acco from '@lagabu/acco';
 import '@lagabu/theme-default';
 
 export default {
-  ...DefaultTheme,
+  Layout: DefaultTheme.Layout,
+  NotFound: DefaultTheme.NotFound,
   enhanceApp({ app }) {
     app.use(Acco);
   },

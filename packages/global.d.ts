@@ -8,7 +8,5 @@ declare global {
 }
 
 declare module '@vue/runtime-core' {
-  export interface ComponentCustomProperties {
-    $ako?: {};
-  }
+  export interface ComponentCustomProperties {}
 }

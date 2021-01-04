@@ -174,16 +174,4 @@ describe('useToggleGroup', () => {
     expect(wrapper.vm.lazyState.value).toBeUndefined();
   });
 
-  it('should update toggle group when item unmounted', async () => {
-    const state = ref<undefined | number | number[]>([0, 1]);
-    const wrapper = mount(group, {
-      props: {
-        multiple: true,
-        modelValue: state,
-      },
-    });
-    await wrapper.unmount();
-    expect(wrapper.emitted()).toHaveProperty('update:modelValue');
-    expect(wrapper.emitted()['update:modelValue'][0]).toEqual([[]]);
-  });
 });

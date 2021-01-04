@@ -1,8 +1,8 @@
 import { isUndefined, isString } from './helpers';
 
 export function clamp(num: number, min?: number | null, max?: number | null): number {
-  min = isUndefined(min) || min === null ? num : min;
-  max = isUndefined(max) || max === null ? num : max;
+  min = isUndefined(min) || min === null ? -Infinity : min;
+  max = isUndefined(max) || max === null ? Infinity : max;
   if (min > max) [min, max] = [max, min];
   return Math.min(max, Math.max(min, num));
 }

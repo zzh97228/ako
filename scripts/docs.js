@@ -1,6 +1,4 @@
-const { build, resolveConfig } = require('vitepress');
-const { createVitePressPlugin } = require('vitepress/dist/node/plugin');
-const { createServer } = require('vite');
+const { build, createServer } = require('vitepress');
 const { resolve } = require('path');
 const shell = require('shelljs');
 const docFolder = resolve(__dirname, '../docs');
@@ -14,30 +12,11 @@ const options = {
 async function serve() {
   try {
     console.log('... serving ...');
-    const config = await resolveConfig(options.root);
-    const site = config.site;
-    const server = await createServer({
-      root: options.root,
-      plugins: [
-        ...createVitePressPlugin(options.root, config),
-        {
-          config() {
-            return {
-              define: {
-                __CARBON__: !!site.themeConfig.carbonAds?.carbon,
-                __BSA__: !!site.themeConfig.carbonAds?.custom,
-                __ALGOLIA__: !!site.themeConfig.algolia
-              }
-            };
-          },
-        },
-      ],
-      server: {
-        port: options.port,
-      },
+    const server = await createServer(options.root, {
+      port: options.port,
     });
     server.listen(options.port);
-    console.log(`serving at http://localhost:${options.port}`);
+    // console.log(`serving at http://localhost:${options.port}`);
   } catch (err) {
     console.error(err);
   }

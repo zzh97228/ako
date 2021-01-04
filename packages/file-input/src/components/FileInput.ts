@@ -1,5 +1,42 @@
 import { defineComponent, h, PropType, ref } from 'vue';
-import { isArray, isUndefined, useModel } from '@lagabu/shared';
+import { convertToNumber, isArray, isNumber, isString, isUndefined, useModel } from '@lagabu/shared';
+function b2kb(size: number): number {
+  return size / (1 << 10);
+}
+
+function normalizeSize(size: number | string): number {
+  let num: number = 0;
+  if (isNumber(size)) {
+    num = size;
+  } else if (isString(size) && size.match(/(\d*\.?\d+)(b|kb?|mb?|gb?)/i)) {
+    num = convertToNumber(RegExp.$1);
+    const innerUnit = RegExp.$2.toLowerCase();
+    switch (innerUnit) {
+      case 'b': {
+        num /= 1 << 10;
+        break;
+      }
+      case 'm':
+      case 'mb': {
+        num *= 1 << 10;
+        break;
+      }
+      case 'g':
+      case 'gb': {
+        num *= 1 << 20;
+        break;
+      }
+      case 'k':
+      case 'kb':
+      default: {
+        break;
+      }
+    }
+  }
+
+  return num;
+}
+
 export default defineComponent({
   name: 'FileInput',
   props: {
@@ -23,10 +60,18 @@ export default defineComponent({
       type: String,
       default: '*/*',
     },
+    maxSize: [String, Number],
   },
   setup(props, context) {
     const inputRef = ref<null | HTMLInputElement>(null);
     const { lazyState, model, setInnerState } = useModel(props, context);
+
+    function isSizeValidate(file: File): boolean {
+      if (!props.maxSize) return true;
+      const maxSize = normalizeSize(props.maxSize),
+        size = b2kb(file.size);
+      return size < maxSize;
+    }
 
     function normalize(val: File | File[] | undefined) {
       if (isUndefined(val)) {
@@ -38,7 +83,7 @@ export default defineComponent({
       }
     }
 
-    function onContentClick(e: MouseEvent) {
+    const onContentClick = (e: MouseEvent) => {
       if (props.disabled) {
         e.preventDefault();
         e.stopImmediatePropagation();
@@ -47,9 +92,9 @@ export default defineComponent({
       let elm: HTMLInputElement | null;
       if (!(elm = inputRef.value)) return;
       elm.click();
-    }
+    };
 
-    function onInputChange(e: InputEvent) {
+    const onInputChange = (e: InputEvent) => {
       if (props.disabled) {
         e.preventDefault();
         e.stopImmediatePropagation();
@@ -58,22 +103,32 @@ export default defineComponent({
       const target = e.target as HTMLInputElement;
       const files = target.files;
       if (!files?.length) return;
+      const errorArray: File[] = [];
       if (props.multiple) {
         let file: File | null;
         const fileArray: File[] = [];
         for (let i = 0; i < files.length; i++) {
           if (!(file = files.item(i))) continue;
-          // TODO validate file size
-          fileArray.push(file);
+          if (isSizeValidate(file)) {
+            fileArray.push(file);
+          } else {
+            errorArray.push(file);
+          }
         }
         model.value = fileArray;
       } else {
-        model.value = files[0];
+        if (isSizeValidate(files[0])) {
+          model.value = files[0];
+        } else {
+          errorArray.push(files[0]);
+        }
       }
-
+      if (errorArray.length > 0) {
+        context.emit('change:oversize', errorArray);
+      }
       // reset input content
       (e.target as any).value = null;
-    }
+    };
 
     // normalize modelValue first
     setInnerState(normalize(props.modelValue));
