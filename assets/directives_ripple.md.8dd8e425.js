@@ -1,1 +1,0 @@
-import{K as t,L as e}from"./framework.27075354.js";const r='{"title":"","description":"","frontmatter":{},"relativePath":"directives/ripple.md","lastUpdated":1609492039521}',i={};i.render=function(r,i,a,o,d,n){return e(),t("div")};export default i;export{r as __pageData};
