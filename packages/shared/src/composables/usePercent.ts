@@ -1,4 +1,14 @@
-import { computed, customRef, ExtractPropTypes, onBeforeUnmount, reactive, SetupContext, toRef, watch } from 'vue';
+import {
+  computed,
+  customRef,
+  ExtractPropTypes,
+  nextTick,
+  onBeforeUnmount,
+  reactive,
+  SetupContext,
+  toRef,
+  watch,
+} from 'vue';
 import { convertToNumber, isNumber, isString } from '../utils/helpers';
 import { clamp } from '../utils/math';
 import { genModelProps } from './useModel';
@@ -121,8 +131,10 @@ export function usePercent(props: ExtractPropTypes<PercentProps>, context: Setup
     () => props.modelValue,
     (newVal, oldVal) => {
       if (notAllowed.value || newVal === oldVal || newVal == state.innerValue) return;
-      state.percent = getComputedPercent(newVal);
-      state.innerValue = getValue(state.percent, start.value, end.value);
+      nextTick(() => {
+        state.percent = getComputedPercent(newVal);
+        state.innerValue = getValue(state.percent, start.value, end.value);
+      });
     }
   );
 

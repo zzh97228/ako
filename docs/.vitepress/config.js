@@ -38,12 +38,23 @@ module.exports = {
   themeConfig: {
     repo: 'zzh97228/acco',
     nav: [
+      { text: 'Guide', link: '/guide/index' },
       { text: 'Components', link: '/components/grid' },
       { text: 'Directives', link: '/directives/ripple' },
     ],
     sidebar: {
       '/components/': getComponents(),
       '/directives/': getDirectives(),
+      '/guide/': [
+        {
+          text: 'Introduction',
+          children: [
+            { text: 'What is Acco?', link: '/guide/index' },
+            { text: 'Getting Start', link: '/guide/start' },
+            { text: 'Colors', link: '/guide/colors' },
+          ],
+        },
+      ],
     },
   },
 };

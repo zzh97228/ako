@@ -6,3 +6,4 @@ export * from './useField';
 export * from './useToggle';
 export * from './useToggleGroup';
 export * from './usePercent';
+export * from './useValidation';

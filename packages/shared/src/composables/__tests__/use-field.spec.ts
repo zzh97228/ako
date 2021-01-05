@@ -45,11 +45,12 @@ describe('useField.ts', () => {
       },
     });
     expect(wrapper.text()).toBe('hello');
-    wrapper.vm.model = 'world';
-    await wrapper.vm.$nextTick();
+    await wrapper.setProps({
+      modelValue: 'world',
+    });
     expect(wrapper.text()).toBe('world');
     const child = wrapper.getComponent({ name: 'child' }) as VueWrapper<any>;
-    child.vm.setInnerState('and');
+    child.vm.model = 'and';
     await wrapper.vm.$nextTick();
     expect(wrapper.vm.lazyState.value).toBe('and');
   });

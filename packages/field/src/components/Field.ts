@@ -1,19 +1,20 @@
-import { genModelProps, useModel, useFieldProvider } from '@lagabu/shared';
-import { defineComponent, h } from 'vue';
+import { genModelProps, useModel, useFieldProvider, useValidation, genValidationProps } from '@lagabu/shared';
+import { computed, defineComponent, h } from 'vue';
 
 export default defineComponent({
   name: 'field',
   props: {
-    ...genModelProps([String, Number, Object]),
-    rules: {
-      type: Object,
-      default: () => ({}),
-    },
+    ...genModelProps([String, Number, Object, Boolean]),
+    ...genValidationProps(),
   },
   setup(props, context) {
-    // TODO hope to have validation;
     const modelOptions = useModel(props, context);
     useFieldProvider(modelOptions);
+    const { errors, hasError } = useValidation(props, context, modelOptions.lazyState);
+    return {
+      errors,
+      hasError,
+    };
   },
   methods: {
     genContent() {

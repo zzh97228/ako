@@ -1,5 +1,5 @@
 import { mount } from '@vue/test-utils';
-import Field from '../field';
+import Field from '../Field';
 
 describe('field.ts', () => {
   it('should render field', () => {

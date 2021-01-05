@@ -1,7 +1,6 @@
 import { genPercentProps, usePercent, useSize, sizeProps, clamp } from '@lagabu/shared';
 import vue, { computed, defineComponent, h, reactive, ref } from 'vue';
 
-type GetPercentKeys = 'x' | 'y' | 'x1' | 'y1' | 'width' | 'height';
 export default defineComponent({
   name: 'slider',
   props: {

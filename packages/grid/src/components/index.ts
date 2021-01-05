@@ -1,5 +1,5 @@
 import Row from './Row';
-import Item from './Col';
+import Col from './Col';
 import Container from './Container';
 
-export { Row, Item, Container };
+export { Row, Col, Container };
