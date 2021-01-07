@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`btn.ts should render btn with default props 1`] = `
-<button class="btn btn--small btn--large btn--flat btn--outlined btn--block btn--round primary-color--text elevation-xs">
+<button class="btn btn--small btn--large btn--flat btn--outlined btn--block btn--round btn--icon primary-color--text elevation-xs">
   <div class="btn__content">
   </div>
 </button>

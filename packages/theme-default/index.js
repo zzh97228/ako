@@ -1,1 +1,1 @@
-import './dist/theme-default.min.css';
+import './dist/all.min.css';

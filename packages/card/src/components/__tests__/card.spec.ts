@@ -11,11 +11,13 @@ describe('card.ts', () => {
       props: {
         width: '100%',
         height: '100%',
+        outlined: true,
       },
     });
 
     expect(wrapper.classes()).toContain('card');
     expect(wrapper.classes()).toContain('elevation-xs');
+    expect(wrapper.classes()).toContain('card--outlined');
     expect(wrapper.attributes('style')).toContain('width: 100%');
     expect(wrapper.attributes('style')).toContain('height: 100%');
     expect(wrapper.html()).toMatchSnapshot();

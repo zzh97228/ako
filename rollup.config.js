@@ -48,7 +48,7 @@ function genRollupObj(packageFolder, pkg, format, isGlobal = false) {
               ],
             }),
           ],
-          extract: isESM() && resolve(packageFolder, 'dist/' + name + '.min.css'),
+          extract: isESM() && resolve(packageFolder, 'dist/all.min.css'),
           inject: false,
         }),
         ...plugins,

@@ -1,1 +1,3 @@
-<h1 align="center">Shared</h1>
+# Shared
+
+This package contains global tool functions.

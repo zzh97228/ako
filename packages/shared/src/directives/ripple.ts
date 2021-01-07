@@ -1,13 +1,49 @@
-import { Directive, DirectiveBinding, DirectiveHook } from 'vue';
-import { convertToNumber, convertToUnit } from '../utils/helpers';
+import { computed, Directive, DirectiveBinding, DirectiveHook, isRef, ref, Ref } from 'vue';
+import { convertToNumber, convertToUnit, isBool, isNumber, isObject, isString } from '../utils/helpers';
 
 export type RippleRecord = {
   event?: (...args: any[]) => any;
   eventName?: string;
 };
-const mounted: DirectiveHook<HTMLElement> = (el, binding) => {
-  const duration = 600,
-    startTimeout = 250;
+export type RippleBinding = DirectiveBinding<
+  | string
+  | number
+  | {
+      disabled?: boolean | Ref<boolean>;
+      duration?: string | number;
+      eventName?: string;
+    }
+  | undefined
+>;
+
+const mounted: DirectiveHook<HTMLElement> = (el, binding: RippleBinding) => {
+  const value = binding.value;
+  const arg = binding.arg;
+
+  let disabled: Ref<boolean> = ref(false),
+    eventName = 'pointerdown',
+    duration = 300,
+    tempDur = 0;
+
+  if (isObject(value)) {
+    if (isRef(value.disabled)) {
+      disabled = value.disabled;
+    } else {
+      disabled = ref(!!value.disabled);
+    }
+
+    if (value.duration && (tempDur = convertToNumber(value.duration))) {
+      duration = tempDur;
+    }
+
+    if (value.eventName) {
+      eventName = value.eventName;
+    }
+  } else if (value && (tempDur = convertToNumber(value))) {
+    duration = tempDur;
+  }
+  const startTimeout = 250,
+    isTile = Boolean(arg && arg === 'tile');
 
   function setStyles(el: HTMLElement, obj: Record<string, string | null>) {
     for (let key in obj) {
@@ -15,7 +51,7 @@ const mounted: DirectiveHook<HTMLElement> = (el, binding) => {
     }
   }
   function ripple(e: MouseEvent) {
-    if (el.getAttribute('aria-disabled')) {
+    if (disabled.value) {
       return;
     }
     const rect = el.getBoundingClientRect(),
@@ -29,7 +65,6 @@ const mounted: DirectiveHook<HTMLElement> = (el, binding) => {
       radius = Math.sqrt(maxX ** 2 + maxY ** 2);
     let elBorderWidth: string | number | null = convertToNumber(getComputedStyle(el).borderWidth);
 
-
     // define ripple element
     const rippleWrapper = document.createElement('div');
     rippleWrapper.className = 'ripple__wrapper';
@@ -42,13 +77,13 @@ const mounted: DirectiveHook<HTMLElement> = (el, binding) => {
       width: '0',
       height: '0',
       position: 'relative',
-      'border-radius': '50%',
+      'border-radius': isTile ? '0' : '50%',
       'background-color': 'currentColor',
       opacity: '0.25',
       transition: `all ${duration}ms ease`,
       'z-index': '20',
     });
-    elBorderWidth = convertToUnit(0 - elBorderWidth) || null
+    elBorderWidth = convertToUnit(0 - elBorderWidth) || null;
     setStyles(rippleWrapper, {
       position: 'absolute',
       top: elBorderWidth,
@@ -60,8 +95,10 @@ const mounted: DirectiveHook<HTMLElement> = (el, binding) => {
 
     let storedPosition = el.style.position || getComputedStyle(el).position,
       shouldChangePosition = false;
+
     if (['absolute', 'fixed'].includes(storedPosition)) {
       el.style.position = 'relative';
+
       shouldChangePosition = true;
     }
 
@@ -73,7 +110,7 @@ const mounted: DirectiveHook<HTMLElement> = (el, binding) => {
       'border-top-right-radius': elStyle.borderTopRightRadius,
       'border-bottom-left-radius': elStyle.borderBottomLeftRadius,
       'border-bottom-right-radius': elStyle.borderBottomRightRadius,
-    })
+    });
 
     // append ripple
     rippleWrapper.appendChild(rippleContent);
@@ -119,10 +156,10 @@ const mounted: DirectiveHook<HTMLElement> = (el, binding) => {
     }
     el.addEventListener('mouseup', clearRipple, false);
   }
-  el.addEventListener('mousedown', ripple, false);
+  el.addEventListener(eventName as any, ripple, false);
   el._ripple = {
     event: ripple,
-    eventName: 'mousedown',
+    eventName,
   };
 };
 

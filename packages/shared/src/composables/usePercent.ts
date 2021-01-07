@@ -131,10 +131,8 @@ export function usePercent(props: ExtractPropTypes<PercentProps>, context: Setup
     () => props.modelValue,
     (newVal, oldVal) => {
       if (notAllowed.value || newVal === oldVal || newVal == state.innerValue) return;
-      nextTick(() => {
-        state.percent = getComputedPercent(newVal);
-        state.innerValue = getValue(state.percent, start.value, end.value);
-      });
+      state.percent = getComputedPercent(newVal);
+      state.innerValue = getValue(state.percent, start.value, end.value);
     }
   );
 

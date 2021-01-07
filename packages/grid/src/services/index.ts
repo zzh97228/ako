@@ -1,5 +1,8 @@
 import { convertToNumber, convertToUnit, StyleService } from '@lagabu/shared';
 import vue, { App } from 'vue';
+/**
+ * @public
+ */
 export const enum FlexEnum {
   xs = 'xs',
   sm = 'sm',
@@ -7,22 +10,38 @@ export const enum FlexEnum {
   lg = 'lg',
   xl = 'xl',
 }
+/**
+ * @public
+ */
 export const defaultColumns = 12;
+/**
+ * @public
+ */
 export type GridOptions = {
   columns?: string | number;
   gutters?: { [prop: string]: string | number } & {
     [T in FlexEnum]?: string | number;
   };
 };
+/**
+ * @public
+ */
 export type GridType = {
   columns: number;
   gutters: {
     [T in FlexEnum]: string;
   };
 };
+/**
+ * @public
+ */
 export type GridProps = {
   grid?: GridOptions;
 };
+
+/**
+ * @public Grid Style Service
+ */
 export class GridService extends StyleService {
   columns: number;
   gutters: Record<string, string | number>;

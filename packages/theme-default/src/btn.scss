@@ -1,21 +1,35 @@
 @use './variables/index' as v;
 @use 'sass:map';
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
 .btn {
   $normal-padding: map.get(v.$vertical-padding, 'md');
   $large-padding: map.get(v.$vertical-padding, 'lg');
   $small-padding: map.get(v.$vertical-padding, 'sm');
   $justify-padding: v.$justify-padding;
+  $min-height: v.$inline-font-size * v.$inline-line-height + v.$border-size * 2 + $normal-padding * 2;
+  $min-width: $min-height;
   display: inline-block;
+  vertical-align: middle;
   outline: none;
   cursor: pointer;
   border: v.$border-size solid transparent;
-  border-radius: 2px;
+  border-radius: 4px;
+  min-height: $min-height;
+  min-width: $min-width;
   padding: $normal-padding $justify-padding;
   font-size: v.$inline-font-size;
   overflow: hidden;
   text-decoration: none;
   position: relative;
-  margin: 0 4px;
   color: var(--grey-0, white);
   background: transparent;
   &:link {
@@ -24,6 +38,27 @@
   &__content {
     line-height: v.$inline-line-height;
     text-overflow: ellipsis;
+    vertical-align: middle;
+  }
+
+  &__loading {
+    letter-spacing: 2px;
+    vertical-align: middle;
+  }
+
+  &__spinner {
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    border: 2px solid transparent;
+    border-top-color: currentColor;
+    display: inline-block;
+    animation: spin 1s infinite ease;
+    vertical-align: middle;
+
+    & + .btn__loading {
+      margin-left: 4px;
+    }
   }
 
   &--small {
@@ -35,9 +70,10 @@
     padding: $large-padding $justify-padding;
   }
 
-  &--round {
-    border-radius: 50%;
+  &--round,
+  &--icon {
     padding: $normal-padding;
+    overflow: hidden;
     &.btn--large {
       padding: $large-padding;
     }
@@ -45,6 +81,10 @@
     &.btn--small {
       padding: $small-padding;
     }
+  }
+
+  &--round {
+    border-radius: 50%;
   }
 
   &--flat,
@@ -81,6 +121,7 @@
 
   &--block {
     display: block;
+    width: 100%;
   }
 
   &--disabled {

@@ -11,6 +11,12 @@
   --columns: #{v.$grid-columns};
 }
 
+@mixin make-order($i) {
+  .col--order-#{$i} {
+    order: $i !important;
+  }
+}
+
 @mixin make-col($i, $break-name: '') {
   .col-#{$i}#{$break-name} {
     flex: 0 0 calc(#{$i} / var(--columns) * 100%);
@@ -21,6 +27,19 @@
 @mixin make-cols($break-name: '') {
   @for $i from 0 to v.$grid-columns {
     @include make-col($i + 1, $break-name);
+  }
+}
+
+@mixin make-orders() {
+  @for $i from 0 to v.$grid-columns {
+    @include make-order($i + 1);
+  }
+  $last-order: v.$grid-columns + 1;
+  .col--order-first {
+    order: -1 !important;
+  }
+  .col--order-last {
+    order: $last-order !important;
   }
 }
 

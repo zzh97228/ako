@@ -1,7 +1,23 @@
-$elevation-map: (
-  'xs': 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075),
-  'sm': 0 0.25rem 0.5rem rgba(0, 0, 0, 0.1),
-  'md': 0 0.625rem 0.75rem rgba(0, 0, 0, 0.125),
-  'lg': 0 0.5rem 1rem rgba(0, 0, 0, 0.15),
-  'xl': 0 1rem 3rem rgba(0, 0, 0, 0.175),
+$elevation-1-map: (
+  'xs': 0px 2px 1px -1px rgba(0, 0, 0, 0.18),
+  'sm': 0px 3px 2px -2px rgba(0, 0, 0, 0.18),
+  'md': 0px 1px 2px -2px rgba(0, 0, 0, 0.16),
+  'lg': 0px 3px 6px -4px rgba(0, 0, 0.12),
+  'xl': 0px 6px 16px -8px rgba(0, 0, 0, 0.08),
+);
+
+$elevation-2-map: (
+  'xs': 0px 1px 1px 0px rgba(0, 0, 0, 0.14),
+  'sm': 0px 3px 4px 0px rgba(0, 0, 0, 0.14),
+  'md': 0px 3px 6px 0px rgba(0, 0, 0, 0.12),
+  'lg': 0px 6px 16px 0px rgba(0, 0, 0, 0.08),
+  'xl': 0px 9px 28px 0px rgba(0, 0, 0, 0.05),
+);
+
+$elevation-3-map: (
+  'xs': 0px 1px 3px 0px rgba(0, 0, 0, 0.12),
+  'sm': 0px 3px 8px 2px rgba(0, 0, 0, 0.12),
+  'md': 0px 5px 12px 4px rgba(0, 0, 0, 0.09),
+  'lg': 0px 9px 28px 8px rgba(0, 0, 0, 0.05),
+  'xl': 0px 12px 48px 16px rgba(0, 0, 0, 0.03),
 );

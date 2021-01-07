@@ -19,6 +19,7 @@ describe('btn.ts', () => {
         large: true,
         block: true,
         round: true,
+        icon: true
       },
     });
 
@@ -31,6 +32,7 @@ describe('btn.ts', () => {
     expect(wrapper.classes()).toContain('btn--large');
     expect(wrapper.classes()).toContain('btn--block');
     expect(wrapper.classes()).toContain('btn--round');
+    expect(wrapper.classes()).toContain('btn--icon');
     expect(wrapper.html()).toMatchSnapshot();
   });
 

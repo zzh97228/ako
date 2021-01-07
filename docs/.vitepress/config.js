@@ -8,8 +8,9 @@ function getFilesTemplate(dirName) {
       text: dirName.substr(0, 1).toUpperCase() + dirName.substr(1),
       children: files.sort().map((f) => {
         f = f.replace(/(\.md)/g, '');
+        const rawStr = f;
         f = f.substr(0, 1).toUpperCase() + f.substr(1);
-        return { text: f, link: `/${dirName}/${f.toLowerCase()}` };
+        return { text: f, link: `/${dirName}/${rawStr}` };
       }),
     },
   ];
@@ -31,6 +32,7 @@ function getAlias() {
 }
 
 module.exports = {
+  lang: 'zh-cn',
   title: 'Acco',
   description: 'Documentation of acco',
   base: process.env.NODE_ENV === 'production' ? '/acco/' : '/',

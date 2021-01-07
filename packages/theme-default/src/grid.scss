@@ -1,4 +1,35 @@
 @import './mixins/grid';
+
+.divider {
+  $padding-size: 1rem;
+  &__wrapper {
+    display: block;
+    margin: 0;
+    padding: $padding-size 0;
+    max-width: 100%;
+    background: transparent;
+  }
+
+  width: 100%;
+  position: relative;
+  border-top: 1px solid var(--grey-3, grey);
+
+  &--vertical {
+    padding: 0 ($padding-size / 2);
+    max-height: 100%;
+    min-height: 14px;
+    vertical-align: middle;
+    display: inline-block;
+
+    & .divider {
+      width: auto;
+      height: 100%;
+      border-top: 0;
+      border-left: 1px solid var(--grey-4, grey);
+    }
+  }
+}
+
 .row {
   display: flex;
   flex-wrap: nowrap;
@@ -37,4 +68,5 @@
 }
 
 @include make-cols();
+@include make-orders();
 @include make-breakpoints-cols();

@@ -58,4 +58,33 @@ describe('column.ts', () => {
     expect(wrapper.attributes('style')).toContain('padding-bottom: 4px');
     expect(wrapper.html()).toMatchSnapshot();
   });
+
+  it('should render class when set order prop', async () => {
+    const wrapper = mountFunc({
+      props: {
+        order: 1,
+      },
+    });
+
+    expect(wrapper.classes()).toContain('col--order-1');
+    await wrapper.setProps({
+      order: '-1',
+    });
+    expect(wrapper.classes()).toContain('col--order-first');
+
+    await wrapper.setProps({
+      order: 'first',
+    });
+    expect(wrapper.classes()).toContain('col--order-first');
+
+    await wrapper.setProps({
+      order: 'last',
+    });
+    expect(wrapper.classes()).not.toContain('col--order-last');
+
+    await wrapper.setProps({
+      order: void 0,
+    });
+    expect(wrapper.classes()).not.toContain('col--order');
+  });
 });

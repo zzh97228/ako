@@ -1,5 +1,5 @@
-import vue from 'vue';
-import { computed, defineComponent, h, mergeProps } from 'vue';
+import { useSize, sizeProps } from '@lagabu/shared';
+import vue, { computed, defineComponent, h, mergeProps } from 'vue';
 import { useGridProvider, gridProps } from '../composables';
 const BASE_PARAMS = ['center', 'start', 'end'];
 export const JUSTIFY_PARAMS = [...BASE_PARAMS, 'space-around', 'space-between'];
@@ -8,6 +8,7 @@ export default defineComponent({
   name: 'row',
   props: {
     ...gridProps,
+    ...sizeProps,
     columnReverse: Boolean,
     justify: {
       type: String,
@@ -26,6 +27,7 @@ export default defineComponent({
   },
   setup(props, { slots }) {
     const grid = useGridProvider(props);
+    const { sizeStyle } = useSize(props);
     const classes = computed(() => {
       return {
         row: true,
@@ -41,10 +43,11 @@ export default defineComponent({
         mergeProps(
           {
             class: classes.value,
+            style: sizeStyle.value,
           },
           {
             class: grid.class.value,
-            style: grid.style.value
+            style: grid.style.value,
           }
         ),
         slots.default && slots.default()

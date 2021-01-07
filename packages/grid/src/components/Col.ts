@@ -1,4 +1,5 @@
-import vue, { defineComponent, h, PropType } from 'vue';
+import { convertToNumber, isNumber, isString } from '@lagabu/shared';
+import vue, { computed, defineComponent, h, mergeProps, PropType } from 'vue';
 import { useGridConsumer, FLEX_KEYS } from '../composables';
 import { FlexEnum } from '../services';
 
@@ -15,11 +16,25 @@ export default defineComponent({
     }, {} as GridBreakpointsProps),
     shrink: Boolean,
     grow: Boolean,
+    order: [String, Number],
   },
-  setup() {
+  setup(props) {
     const grid = useGridConsumer();
+
+    const orderClasses = computed(() => {
+      let orderNumber: number | string;
+      if (isString(props.order) && ['first', 'last'].includes(props.order.toLowerCase())) {
+        orderNumber = props.order;
+      } else if ((orderNumber = convertToNumber(props.order)) < 0) {
+        orderNumber = 'first';
+      }
+      return {
+        [`col--order-${orderNumber}`]: orderNumber === 'first' || (isNumber(orderNumber) && !isNaN(orderNumber)),
+      };
+    });
     return {
       styles: grid.style,
+      orderClasses,
     };
   },
   methods: {},
@@ -42,17 +57,25 @@ export default defineComponent({
         'col--shrink': this.shrink,
         'col--grow': this.grow,
         [`col-${this.cols}`]: !!this.cols,
-        ...this.breakpointsClasses,
       };
     },
   },
   render() {
     return h(
       'div',
-      {
-        class: this.classes,
-        style: this.styles,
-      },
+      mergeProps(
+        {
+          class: this.classes,
+          style: this.styles,
+        },
+        {
+          class: this.orderClasses,
+        },
+        {
+          class: this.breakpointsClasses,
+        }
+      ),
+
       this.$slots.default && this.$slots.default()
     );
   },

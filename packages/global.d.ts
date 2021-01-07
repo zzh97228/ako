@@ -8,5 +8,7 @@ declare global {
 }
 
 declare module '@vue/runtime-core' {
-  export interface ComponentCustomProperties {}
+  export interface ComponentCustomProperties {
+    // set custom global prop
+  }
 }

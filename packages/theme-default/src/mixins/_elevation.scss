@@ -1,12 +1,14 @@
+@use 'sass:map';
 @use '../variables/elevation' as e;
+
 @mixin make-elevation-vars {
-  @each $key, $val in e.$elevation-map {
-    --elevation-#{$key}: #{$val};
+  @each $key, $val in e.$elevation-1-map {
+    --elevation-#{$key}: #{$val}, #{map.get(e.$elevation-2-map, $key)}, #{map.get(e.$elevation-3-map, $key)};
   }
 }
 
 @mixin make-elevation-classes {
-  @each $key, $val in e.$elevation-map {
+  @each $key, $val in e.$elevation-1-map {
     .elevation-#{$key} {
       box-shadow: var(--elevation-#{$key});
     }

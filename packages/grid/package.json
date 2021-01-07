@@ -14,10 +14,10 @@
     "access": "public"
   },
   "dependencies": {
-    "vue": "^3.0.2",
+    "vue": "next",
     "@lagabu/shared": "latest"
   },
   "peerDependencies": {
-    "vue": "^3.0.2"
+    "vue": "next"
   }
 }

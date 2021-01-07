@@ -1,4 +1,4 @@
-import vue, { toRef, VNodeArrayChildren } from 'vue';
+import vue, { VNodeArrayChildren } from 'vue';
 import {
   Ripple,
   useColor,
@@ -7,8 +7,9 @@ import {
   genColorProp,
   genToggleProps,
   useToggle,
+  isString,
 } from '@lagabu/shared';
-import { useGroupConsumer, namespace } from '../composables';
+import { useGroupConsumer } from '../composables';
 import { computed, defineComponent, h, mergeProps, withDirectives } from 'vue';
 export default defineComponent({
   name: 'btn',
@@ -26,7 +27,8 @@ export default defineComponent({
     round: Boolean,
     disabled: Boolean,
     link: Boolean,
-    loading: Boolean, // TODO loading style
+    icon: Boolean,
+    loading: [Boolean, String],
     ...genColorProp(),
     ...genElevationProp(),
     ...genToggleProps('btn--active'),
@@ -48,8 +50,9 @@ export default defineComponent({
         'btn--outlined': props.outlined,
         'btn--block': props.block,
         'btn--round': props.round,
-        'btn--disabled': props.disabled,
+        'btn--disabled': notAllowed.value,
         'btn--link': props.link,
+        'btn--icon': props.icon,
       };
     });
     return {
@@ -71,31 +74,37 @@ export default defineComponent({
     };
   },
   methods: {
-    genLoadingSlot(children?: VNodeArrayChildren) {
+    genSpin() {
+      return h('div', {
+        class: 'btn__spinner',
+      });
+    },
+    genLoading() {
       return h(
-        'div',
+        'span',
         {
           class: 'btn__loading',
         },
-        children
+        isString(this.loading) && this.loading ? this.loading : 'loading...'
       );
     },
-    genBtnContent() {
+    genLoadingSlot() {
+      const vnodeArr: VNodeArrayChildren = [this.genSpin()];
+      if (!this.icon) {
+        vnodeArr.push(this.genLoading());
+      }
+      return vnodeArr;
+    },
+    genBtnContent(children: VNodeArrayChildren | undefined) {
       return h(
         'div',
         {
           class: 'btn__content',
         },
-        this.$slots.default && this.$slots.default()
+        children ? children : this.$slots.default && this.$slots.default()
       );
     },
     genBtn() {
-      const children: VNodeArrayChildren = [];
-      if (this.loading) {
-        children.push(this.genLoadingSlot(this.$slots.loading && this.$slots.loading()));
-      } else {
-        children.push(this.genBtnContent());
-      }
       return h(
         this.tag,
         mergeProps(
@@ -115,11 +124,19 @@ export default defineComponent({
             class: this.toggleClasses,
           }
         ),
-        children
+        this.genBtnContent(this.loading ? this.genLoadingSlot() : void 0)
       );
     },
   },
   render() {
-    return withDirectives(this.genBtn(), [[Ripple]]);
+    return withDirectives(this.genBtn(), [
+      [
+        Ripple,
+        {
+          disabled: this.notAllowed,
+        },
+        this.tile ? 'tile' : '',
+      ],
+    ]);
   },
 });
