@@ -1,0 +1,1 @@
+import{l as t,f as e}from"./framework.cef570b0.js";const r='{"title":"","description":"","frontmatter":{},"relativePath":"components/slider.md","lastUpdated":1610008968119}',o={};o.render=function(r,o,a,n,d,i){return t(),e("div")};export default o;export{r as __pageData};
