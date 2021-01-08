@@ -43,6 +43,7 @@ export default defineComponent({
     const classes = computed(() => {
       return {
         btn: true,
+        // 'theme--light': true,
         'btn--small': props.small,
         'btn--large': props.large,
         'btn--tile': props.tile,
@@ -109,6 +110,7 @@ export default defineComponent({
         this.tag,
         mergeProps(
           {
+            type: 'button',
             class: this.classes,
             onClick: this.onClick,
           },
@@ -133,7 +135,7 @@ export default defineComponent({
       [
         Ripple,
         {
-          disabled: this.notAllowed,
+          disabled: this.notAllowed || !this.flat,
         },
         this.tile ? 'tile' : '',
       ],

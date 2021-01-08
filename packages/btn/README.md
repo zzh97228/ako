@@ -1,5 +1,7 @@
 # `<btn>`
 
+**btn** is a simple component to provide feedback when trigger events.
+
 ## Props
 
 | Name        | Type                | Default     | Description                               |

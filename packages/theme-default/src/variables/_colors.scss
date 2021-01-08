@@ -1,31 +1,55 @@
-// @copyright  https://github.com/ant-design/ant-design-colors
-// hsv step
-$h-step: 2;
-$s-step: 16;
-$s-step-2: 5;
-$v-step: 5;
-$v-step-2: 15;
-// color count
-$light-color-count: 5;
-$dark-color-count: 4;
+@use 'sass:map';
 
-$blue-base: #1890ff;
-$red-base: #f5222d;
-$green-base: #52c41a;
-$yellow-base: #fadb14;
-
-$basic-colors: (
-  'red': $red-base,
-  'blue': $blue-base,
-  'yellow': $yellow-base,
-  'green': $green-base,
+$red-colors: (
+  'red-0': rgb(248, 198, 181),
+  'red-1': rgb(241, 143, 96),
+  'red-2': rgb(237, 109, 70),
+  'red-3': rgb(234, 85, 20),
+  'red-4': rgb(233, 72, 41),
+  'red-5': rgb(230, 0, 18),
+  'red-6': rgb(209, 41, 32),
+  'red-7': rgb(184, 26, 53),
+  'red-8': rgb(171, 29, 34),
+  'red-9': rgb(131, 35, 39),
 );
 
-$theme-colors: (
-  'primary': $blue-base,
-  'success': $green-base,
-  'warning': $yellow-base,
-  'error': $red-base,
+$yellow-colors: (
+  'yellow-0': rgb(255, 251, 199),
+  'yellow-1': rgb(255, 247, 153),
+  'yellow-2': rgb(255, 238, 111),
+  'yellow-3': rgb(255, 224, 102),
+  'yellow-4': rgb(254, 220, 94),
+  'yellow-5': rgb(250, 219, 20),
+  'yellow-6': rgb(242, 200, 103),
+  'yellow-7': rgb(214, 197, 96),
+  'yellow-8': rgb(192, 173, 94),
+  'yellow-9': rgb(139, 112, 66),
+);
+
+$blue-colors: (
+  'blue-0': rgb(212, 229, 239),
+  'blue-1': rgb(188, 212, 231),
+  'blue-2': rgb(136, 171, 218),
+  'blue-3': rgb(73, 148, 196),
+  'blue-4': rgb(50, 113, 174),
+  'blue-5': rgb(46, 89, 167),
+  'blue-6': rgb(18, 80, 123),
+  'blue-7': rgb(0, 61, 116),
+  'blue-8': rgb(0, 52, 96),
+  'blue-9': rgb(26, 40, 71),
+);
+
+$green-colors: (
+  'green-0': rgb(237, 241, 187),
+  'green-1': rgb(227, 235, 152),
+  'green-2': rgb(192, 214, 149),
+  'green-3': rgb(190, 222, 90),
+  'green-4': rgb(195, 217, 78),
+  'green-5': rgb(183, 211, 50),
+  'green-6': rgb(158, 188, 25),
+  'green-7': rgb(119, 150, 73),
+  'green-8': rgb(93, 131, 81),
+  'green-9': rgb(63, 80, 59),
 );
 
 $grey-colors: (
@@ -42,4 +66,10 @@ $grey-colors: (
   'grey-10': #1f1f1f,
   'grey-11': #141414,
   'grey-12': #000000,
+);
+$theme-colors: (
+  'primary-color': map.get($blue-colors, 'blue-3'),
+  'success-color': map.get($green-colors, 'green-5'),
+  'warning-color': map.get($yellow-colors, 'yellow-5'),
+  'error-color': map.get($red-colors, 'red-5'),
 );

@@ -6,6 +6,8 @@ export default defineComponent({
   props: {
     ...genModelProps([String, Number, Object, Boolean]),
     ...genValidationProps(),
+    labelCol: [Number, String],
+    inputCol: [Number, String],
   },
   setup(props, context) {
     const modelOptions = useModel(props, context);
@@ -17,6 +19,15 @@ export default defineComponent({
     };
   },
   methods: {
+    genLabel() {
+      return h(
+        'div',
+        {
+          class: 'field__label',
+        },
+        this.$slots.label && this.$slots.label()
+      );
+    },
     genContent() {
       return h(
         'div',

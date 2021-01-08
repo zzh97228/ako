@@ -86,13 +86,19 @@ export class ColorService extends StyleService {
   genColorClasses(key: string, isTheme = false) {
     const addon = isTheme ? '-color' : '',
       val = 'var(--' + key + addon + ')';
-    return `body .${key}${addon} {
+    return `.${key}${addon} {
       background-color: ${val};
       border-color: ${val};
     }
-    body .${key}${addon}--text {
+    .${key}${addon}--text {
       color: ${val};
       caret-color: ${val};
+    }
+    .${key}${addon}--text:hover,
+    .${key}${addon}--text:active,
+    .${key}${addon}--text:focus,
+    .${key}${addon}--text[class*="--active"] {
+      color: ${val} !important;
     }\n
     `;
   }

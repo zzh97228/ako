@@ -1,16 +1,5 @@
-import vue, { defineComponent, h, reactive, ref, VNodeArrayChildren } from 'vue';
-import { useModel, genModelProps, useFieldConsumer } from '@lagabu/shared';
-
-function createAddonSlot(className: string) {
-  return (children?: VNodeArrayChildren) =>
-    h(
-      'div',
-      {
-        class: className,
-      },
-      children
-    );
-}
+import vue, { computed, defineComponent, h, mergeProps, reactive, ref, VNodeArrayChildren } from 'vue';
+import { useModel, genModelProps, useFieldConsumer, genColorProp, useColor } from '@lagabu/shared';
 
 export default defineComponent({
   name: 'TextInput',
@@ -20,15 +9,20 @@ export default defineComponent({
     flat: Boolean,
     placeholder: String,
     disabled: Boolean,
+    prefixDivider: Boolean,
+    suffixDivider: Boolean,
     ...genModelProps([String, Number]),
+    ...genColorProp(),
   },
   setup(props, context) {
     const { emit } = context;
+    const { class: colorClasses, style: colorStyles } = useColor(props, true);
     const { model, lazyState, setInnerState } = useModel(props, context);
     useFieldConsumer({ model, lazyState, setInnerState });
     const inputRef = ref<null | HTMLInputElement>(null);
     const state = reactive({
       isComposing: false,
+      isFocusing: false,
     });
     const onInput = (e: InputEvent) => {
       if (state.isComposing) return;
@@ -51,6 +45,12 @@ export default defineComponent({
         onCompositionend: () => {
           state.isComposing = false;
         },
+        onFocus: () => {
+          state.isFocusing = true;
+        },
+        onBlur: () => {
+          state.isFocusing = false;
+        },
         onChange: (e: InputEvent) => {
           if (props.disabled) {
             e.preventDefault();
@@ -69,27 +69,50 @@ export default defineComponent({
         },
       });
 
+    function createAddonSlot(className: string, prefix: boolean) {
+      return (children?: VNodeArrayChildren) =>
+        h(
+          'div',
+          {
+            class: {
+              [className]: true,
+              'text-input--divider': prefix ? props.prefixDivider : props.suffixDivider,
+            },
+          },
+          children
+        );
+    }
+
     return {
       genInput,
-      genInputPrefix: createAddonSlot('text-input__prefix'),
-      genInputSuffix: createAddonSlot('text-input__suffix'),
+      genInputPrefix: createAddonSlot('text-input__prefix', true),
+      genInputSuffix: createAddonSlot('text-input__suffix', false),
       inputRef,
       state,
       model,
       lazyState,
+      colorClasses,
+      colorStyles,
     };
   },
   render() {
     return h(
       'div',
-      {
-        class: {
-          'text-input__wrapper': true,
-          'text-input--flat': this.flat,
-          'text-input--small': this.small,
-          'text-input--large': this.large,
+      mergeProps(
+        {
+          class: {
+            'text-input__wrapper': true,
+            'text-input--flat': this.flat,
+            'text-input--small': this.small,
+            'text-input--large': this.large,
+            'text-input--focusing': this.state.isFocusing,
+          },
         },
-      },
+        {
+          class: this.colorClasses,
+          style: this.colorStyles,
+        }
+      ),
       [
         this.$slots.prefix && this.genInputPrefix(this.$slots.prefix()),
         this.genInput(),

@@ -15,8 +15,10 @@ jobs:
         with:
           persist-credentials: false
 
-      - name: Install
-        run: yarn install
+      - name: Install & Test:Cov & Upload:Cov
+        run: yarn install && yarn test --coverage && yarn codecov -t $TOKEN
+        with:
+          TOKEN: ${{ secrets.CODECOV_TOKEN }}
 
       - name: Build docs
         run: yarn doc:build

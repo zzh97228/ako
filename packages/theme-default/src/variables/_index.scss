@@ -1,11 +1,15 @@
 @use 'sass:map';
 @import './colors';
 @import './elevation';
+$font-color: var(--grey-10, black);
+$border-color: var(--grey-5, grey);
+
 $border-size: 1px;
-$border-radius: 4px;
+$border-radius: 2px;
 $inline-line-height: 1.5;
-$inline-font-size: 14px;
-$larger-font-size: 16px;
+$smaller-font-size: 0.875rem;
+$inline-font-size: 1rem;
+$larger-font-size: 1.25rem;
 $grid-columns: 12;
 $breakpoints: (
   'xs': 0px,
@@ -29,13 +33,5 @@ $vertical-padding: (
   lg: 9px,
 );
 
-@function make-max-height($key: 'sm') {
-  @return map.get($vertical-padding, 'sm') * 2 + $border-size * 2 + $inline-line-height * $inline-font-size;
-}
-
-$max-height-map: (
-  sm: make-max-height(('sm')),
-  md: make-max-height(('md')),
-  lg: make-max-height(('lg')),
-);
 $justify-padding: 11px;
+$half-justify-padding: 5px;

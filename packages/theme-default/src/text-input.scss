@@ -1,35 +1,67 @@
 @use 'sass:map';
 @use './variables/index' as v;
-@mixin make-small-or-large-content($key: 'sm') {
-  .text-input__prefix,
-  .text-input__suffix {
-    padding: map.get(v.$vertical-padding, $key);
+
+@mixin make-prefix-suffix($key: 'sm') {
+  &__prefix,
+  &__suffix {
+    display: inline-flex;
+    align-items: center;
   }
-  .text-input__content {
-    padding: map.get(v.$vertical-padding, $key) v.$justify-padding;
+
+  &__prefix {
+    border-right: 1px solid transparent;
+  }
+
+  &__suffix {
+    border-left: 1px solid transparent;
   }
 }
+
+@mixin make-small-or-large-content($key: 'sm') {
+  &.text-input {
+    @include make-prefix-suffix($key);
+  }
+  .text-input__content {
+    padding-top: map.get(v.$vertical-padding, $key);
+    padding-bottom: map.get(v.$vertical-padding, $key);
+  }
+}
+$half-normal-justify: v.$half-justify-padding;
 .text-input {
-  // TODO text-input style
   &__content {
-    display: inline-block;
+    flex: 1;
     outline: none;
     border: 0;
-    padding: map.get(v.$vertical-padding, 'md') v.$justify-padding;
-    font-size: 1rem;
+    font-size: v.$inline-font-size;
     line-height: v.$inline-line-height;
   }
   &__wrapper {
-    display: block;
+    display: flex;
     position: relative;
-    border: v.$border-size solid currentColor;
+    border: v.$border-size solid v.$border-color;
     border-radius: v.$border-radius;
+    outline: none;
+    will-change: border-color;
+    transition: border-color 300ms ease-in-out;
+
+    &:active,
+    &:hover,
+    &.text-input--focusing {
+      border-color: currentColor;
+    }
   }
+
+  @include make-prefix-suffix('md');
 
   &__prefix,
   &__suffix {
-    display: inline-block;
-    padding: map.get(v.$vertical-padding, 'md');
+    &.text-input--divider {
+      border-color: inherit;
+    }
+  }
+
+  &__content {
+    padding: map.get(v.$vertical-padding, 'md') v.$justify-padding;
   }
 
   &--flat {

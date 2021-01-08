@@ -2,7 +2,7 @@ import { computed, ComputedRef, ExtractPropTypes, isRef } from 'vue';
 import { isCssColor } from '../utils/helpers';
 import { ThemeList } from '../services/color';
 
-export function genColorProp(colorStr: string | null = 'primary') {
+export function genColorProp(colorStr?: string | undefined) {
   return {
     color: {
       type: String,
@@ -28,8 +28,8 @@ export function useColor(
     if (!isCssColor(props.color)) return {};
     const isText = isRef(isTextColor) ? isTextColor.value : !!isTextColor;
     return {
-      [`${isText ? 'color' : 'background-color'}`]: props.color,
-      [`${isText ? 'caret-color' : 'border-color'}`]: props.color,
+      [`${isText ? 'color' : 'background-color'}`]: props.color + ' !important',
+      [`${isText ? 'caret-color' : 'border-color'}`]: props.color+ ' !important',
     };
   });
 

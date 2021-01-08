@@ -1,12 +1,32 @@
+@use './variables/index' as v;
+
 .card {
-  $card-inner-padding: 8px;
-  $border-radius: 4px;
+  $card-inner-padding: 14px;
   display: block;
-  padding: $card-inner-padding;
   border: 1px solid transparent;
-  border-radius: $border-radius;
+  border-radius: v.$border-radius;
+  overflow: hidden;
+  will-change: border-color;
+  transition: all 300ms ease-in-out;
+
   &--outlined {
-    border-color: currentColor;
+    border-color: v.$border-color;
+    &:hover,
+    &:active {
+      border-color: currentColor;
+    }
+  }
+
+  &:not(.card--outlined) {
+    .card-title,
+    .card-subtitle {
+      color: var(--grey-0, white);
+    }
+    @each $key, $val in v.$theme-colors {
+      &.#{$key} {
+        color: var(--grey-0, white) !important;
+      }
+    }
   }
 
   &--tile {
@@ -25,33 +45,61 @@
   }
 
   &__image {
-    margin-top: -$card-inner-padding;
-    margin-left: -$card-inner-padding;
-    margin-right: -$card-inner-padding;
-    border-top-left-radius: $border-radius;
-    border-top-right-radius: $border-radius;
+    overflow: hidden;
+    border-top-left-radius: inherit;
+    border-top-right-radius: inherit;
   }
 
   &-title,
   &-subtitle,
   &-content,
   &-actions {
+    word-break: break-all;
+    overflow-wrap: break-word;
     display: block;
-    line-height: 1.5;
+    line-height: v.$inline-line-height;
+    padding-left: $card-inner-padding;
+    padding-right: $card-inner-padding;
   }
 
-  $subtitle-padding: 4px;
+  $subtitle-padding: 6px;
   $title-padding: 8px;
+
+  &-subtitle,
+  &-content,
+  &-actions {
+    padding-top: $subtitle-padding;
+    padding-bottom: $subtitle-padding;
+  }
+
   &-subtitle {
-    padding: $subtitle-padding 0;
+    color: var(--grey-6, black);
+    font-size: v.$smaller-font-size;
+
+    & + .card-content,
+    & + .card-actions {
+      padding-top: 0;
+    }
+  }
+
+  &-content {
+    & + .card-actions {
+      padding-top: 0;
+    }
   }
 
   &-title {
-    font-size: 1.5rem;
-    padding: $title-padding 0;
+    color: var(--grey-8, black);
+    font-size: v.$larger-font-size;
+    font-weight: 500;
+    padding-top: $title-padding;
+    padding-bottom: $title-padding;
 
-    & + .btn--subtitle {
-      margin-top: -$subtitle-padding;
+    & + .card-subtitle,
+    & + .card-actions,
+    & + .card-content {
+      padding-top: 0;
+      margin-top: -$title-padding;
     }
   }
 }

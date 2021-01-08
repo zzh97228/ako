@@ -15,25 +15,43 @@
   $large-padding: map.get(v.$vertical-padding, 'lg');
   $small-padding: map.get(v.$vertical-padding, 'sm');
   $justify-padding: v.$justify-padding;
-  $min-height: v.$inline-font-size * v.$inline-line-height + v.$border-size * 2 + $normal-padding * 2;
-  $min-width: $min-height;
+  $min-height: calc(#{v.$inline-font-size} * #{v.$inline-line-height} + #{v.$border-size * 2} + #{$normal-padding * 2});
+  $smaller-min-height: calc(
+    #{v.$inline-font-size} * #{v.$inline-line-height} + #{v.$border-size * 2} + #{$small-padding * 2}
+  );
+
   display: inline-block;
   vertical-align: middle;
   outline: none;
   cursor: pointer;
+  letter-spacing: 1px;
   border: v.$border-size solid transparent;
-  border-radius: 4px;
-  min-height: $min-height;
-  min-width: $min-width;
+  border-radius: v.$border-radius;
   padding: $normal-padding $justify-padding;
   font-size: v.$inline-font-size;
+  min-height: $min-height;
+  min-width: $min-height;
   overflow: hidden;
+  color: v.$font-color !important;
   text-decoration: none;
   position: relative;
-  color: var(--grey-0, white);
   background: transparent;
+  will-change: box-shadow, opacity, background-color;
+  transition: all 300ms ease-in-out;
+  &:active,
+  &:focus,
+  &--avtive {
+    box-shadow: none !important;
+  }
   &:link {
     color: currentColor;
+  }
+  &:not(.btn--outlined) {
+    @each $key, $val in v.$theme-colors {
+      &.#{$key} {
+        color: var(--grey-0, white) !important;
+      }
+    }
   }
   &__content {
     line-height: v.$inline-line-height;
@@ -47,13 +65,13 @@
   }
 
   &__spinner {
-    width: 14px;
-    height: 14px;
+    width: 1em;
+    height: 1em;
     border-radius: 50%;
     border: 2px solid transparent;
     border-top-color: currentColor;
     display: inline-block;
-    animation: spin 1s infinite ease;
+    animation: spin 1s infinite ease-in-out;
     vertical-align: middle;
 
     & + .btn__loading {
@@ -63,6 +81,7 @@
 
   &--small {
     padding: $small-padding $justify-padding;
+    min-height: $smaller-min-height;
   }
 
   &--large {
@@ -116,7 +135,12 @@
     border-radius: 0;
   }
   &--outlined {
-    border-color: currentColor;
+    border-color: v.$border-color;
+    &:hover,
+    &:active,
+    &:focus {
+      border-color: currentColor;
+    }
   }
 
   &--block {
@@ -125,7 +149,7 @@
   }
 
   &--disabled {
-    background-color: var(--grey-3, grey);
+    background-color: var(--grey-3, grey) !important;
     cursor: not-allowed;
   }
 }

@@ -1,151 +1,62 @@
-@use '../variables/colors' as c;
-@use 'sass:color';
-@use 'sass:math';
-@use 'sass:list';
-@use 'sass:map';
+@use '../variables/colors' as v;
 
-@function generate-hue($h, $i, $light: false) {
-  $h-val: if(light, (math.round($h) - c.$h-step * $i), (math.round($h) + c.$h-step * $i));
-  @if math.round($h) >= 60 and math.round($h) <= 240 {
-    $h-val: if(light, (math.round($h) + c.$h-step * $i), (math.round($h) - c.$h-step * $i));
-  }
-
-  @if $h-val < 0 {
-    $h-val: $h-val + 360;
-  }
-
-  @if $h >= 360 {
-    $h-val: $h-val - 360;
-  }
-
-  @return $h-val / 1deg;
-}
-
-@function generate-saturation($h, $s, $i, $light: false) {
-  @if $h == 0 and $s == 0 {
-    @return $s;
-  }
-
-  $s-val: if($light, $s - c.$s-step * $i, if($i == c.$dark-color-count, $s + c.$s-step, $s + c.$s-step-2 * $i));
-  @if $s-val > 100% {
-    $s-val: 100%;
-  }
-  @if $light and $i == c.$light-color-count and $s-val > 10% {
-    $s-val: 10%;
-  }
-
-  @if $s-val < 6% {
-    $s-val: 6%;
-  }
-
-  @return $s-val / 100%;
-}
-
-@function generate-value($v, $i, $light: false) {
-  $value: if($light, $v + c.$v-step * $i, $v - c.$v-step-2 * $i);
-
-  $value: math.clamp(0%, $value, 100%);
-  @return $value / 100%;
-}
-
-@function hsv-hex($h, $s, $v) {
-  $l: $v - ($v * $s / 2);
-  $sprime: if($l == 1 or $l == 0, 0, ($v - $l) / math.min($l, 1 - $l));
-  @return hsl($h, $sprime * 100%, $l * 100%);
-}
-
-@function make-color-list($c: '') {
-  $new-list: ();
-  $raw-h: color.hue($c);
-  $max: math.percentage(math.max(color.red($c), color.green($c), color.blue($c)) / 255);
-  $min: math.percentage(math.min(color.red($c), color.green($c), color.blue($c)) / 255);
-  $raw-s: math.percentage(($max - $min) / $max);
-  $raw-v: $max;
-  @for $idx from c.$light-color-count to 0 {
-    $temp-color: $c;
-    $h: generate-hue($raw-h, $idx, true);
-    $s: generate-saturation($raw-h, $raw-s, $idx, true);
-    $v: generate-value($raw-v, $idx, true);
-    $temp-color: hsv-hex($h, $s, $v);
-    $new-list: list.append($new-list, $temp-color);
-  }
-  $new-list: list.append($new-list, $c);
-  @for $idx from 0 to c.$dark-color-count {
-    $temp-color: $c;
-    $h: generate-hue($raw-h, $idx + 1, false);
-    $s: generate-saturation($raw-h, $raw-s, $idx, true);
-    $v: generate-value($raw-v, $idx + 1, false);
-    $temp-color: hsv-hex($h, $s, $v);
-    $new-list: list.append($new-list, $temp-color);
-  }
-
-  @return $new-list;
-}
-
-@mixin make-basic-colors-wrapper($colors: c.$basic-colors) {
-  @each $key, $val in $colors {
-    $curr: make-color-list($val);
-    @for $idx from 0 to list.length($curr) {
-      @content ($key, list.nth($curr, $idx + 1), $idx);
-    }
-  }
-}
-
-@mixin make-basic-color-vars {
-  @include make-basic-colors-wrapper(c.$basic-colors) using ($key, $val, $idx) {
-    --#{$key}-#{$idx}: #{$val};
-  }
-}
-
-@mixin make-theme-color-vars {
-  @each $key, $val in c.$theme-colors {
-    --#{$key}-color: #{$val};
-  }
-}
-
-@mixin make-text-classes($name: '') {
-  body .#{$name}--text {
-    color: var(--#{$name});
-    caret-color: var(--#{$name});
-  }
-}
-
-@mixin make-tool-classes($name: '') {
-  body .#{$name} {
-    background-color: var(--#{$name});
-    border-color: var(--#{$name});
-  }
-  @include make-text-classes($name);
-}
-
-@mixin make-basic-color-classes {
-  @include make-basic-colors-wrapper(c.$basic-colors) using ($key, $val, $idx) {
-    $name: $key + '-' + $idx;
-    @include make-tool-classes($name);
-  }
-}
-
-@mixin make-theme-color-classes {
-  @each $key, $val in c.$theme-colors {
-    $name: $key + '-color';
-    @include make-tool-classes($name);
-  }
-}
-
-@mixin make-gray-colors-wrapper {
-  @each $key, $val in c.$grey-colors {
-    @content ($key, $val);
-  }
-}
-
-@mixin make-grey-vars {
-  @include make-gray-colors-wrapper() using ($key, $val) {
+@mixin make-vars-template($color-map) {
+  @each $key, $val in $color-map {
     --#{$key}: #{$val};
   }
 }
 
-@mixin make-grey-colors {
-  @include make-gray-colors-wrapper() using ($key, $val) {
+@mixin make-basic-color-vars {
+  @include make-vars-template(v.$red-colors);
+  @include make-vars-template(v.$yellow-colors);
+  @include make-vars-template(v.$blue-colors);
+  @include make-vars-template(v.$green-colors);
+  @include make-vars-template(v.$grey-colors);
+}
+
+@mixin make-theme-color-vars {
+  @include make-vars-template(v.$theme-colors);
+}
+
+@mixin make-background-classes($name: '') {
+  .#{$name} {
+    background-color: var(--#{$name});
+    border-color: var(--#{$name});
+  }
+}
+
+@mixin make-text-classes($name: '') {
+  .#{$name}--text {
+    color: var(--#{$name});
+    caret-color: var(--#{$name});
+    &:hover,
+    &:active,
+    &:focus,
+    &[class*='--active'] {
+      color: var(--#{$name}) !important;
+    }
+  }
+}
+
+@mixin make-tool-classes($name: '') {
+  @include make-background-classes($name);
+  @include make-text-classes($name);
+}
+
+@mixin make-classes-template($color-map) {
+  @each $key, $val in $color-map {
     @include make-tool-classes($key);
   }
+}
+
+@mixin make-basic-color-classes {
+  @include make-classes-template(v.$red-colors);
+  @include make-classes-template(v.$yellow-colors);
+  @include make-classes-template(v.$blue-colors);
+  @include make-classes-template(v.$green-colors);
+  @include make-classes-template(v.$grey-colors);
+}
+
+@mixin make-theme-color-classes {
+  @include make-classes-template(v.$theme-colors);
 }
