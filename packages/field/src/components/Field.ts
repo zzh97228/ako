@@ -1,5 +1,5 @@
-import { genModelProps, useModel, useFieldProvider, useValidation, genValidationProps } from '@lagabu/shared';
-import { computed, defineComponent, h } from 'vue';
+import { genModelProps, useModel, useFieldProvider, useValidation, genValidationProps, isString } from '@lagabu/shared';
+import vue, { defineComponent, h, VNodeArrayChildren, vShow, withDirectives } from 'vue';
 
 export default defineComponent({
   name: 'field',
@@ -11,8 +11,8 @@ export default defineComponent({
   },
   setup(props, context) {
     const modelOptions = useModel(props, context);
-    useFieldProvider(modelOptions);
-    const { errors, hasError } = useValidation(props, context, modelOptions.lazyState);
+    const { isFocusing, hasFocus } = useFieldProvider(modelOptions);
+    const { errors, hasError } = useValidation(props, context, modelOptions.lazyState, hasFocus, isFocusing);
     return {
       errors,
       hasError,
@@ -37,10 +37,30 @@ export default defineComponent({
         this.$slots.default && this.$slots.default()
       );
     },
+    genAddonContent(addonChidlren?: VNodeArrayChildren) {
+      return h(
+        'div',
+        {
+          class: 'field__addon',
+        },
+        addonChidlren ||
+          this.errors
+            .filter((e) => isString(e.error))
+            .sort((a, b) => a.index - b.index)
+            .map((e, idx) => {
+              return h(
+                'div',
+                {
+                  class: 'field__addon-item',
+                  key: 'error-' + idx,
+                },
+                String(e.error)
+              );
+            })
+      );
+    },
     genAddon() {
-      return h('div', {
-        class: 'field__addon',
-      });
+      return withDirectives(this.genAddonContent(this.$slots.addon && this.$slots.addon()), [[vShow, this.hasError]]);
     },
   },
   render() {
@@ -49,7 +69,7 @@ export default defineComponent({
       {
         class: 'field__wrapper',
       },
-      [this.genContent(), this.genAddon()]
+      [this.genLabel(), this.genContent()]
     );
   },
 });

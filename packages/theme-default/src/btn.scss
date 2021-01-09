@@ -31,15 +31,37 @@
   font-size: v.$inline-font-size;
   min-height: $min-height;
   min-width: $min-height;
-  overflow: hidden;
+  font-weight: 400;
+  user-select: none;
   color: v.$font-color !important;
   text-decoration: none;
   position: relative;
   background: transparent;
   will-change: box-shadow, opacity, background-color;
-  transition: all 300ms ease-in-out;
+  transition: all 150ms ease-in-out;
+  &::after {
+    content: '';
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border-radius: inherit;
+    opacity: 0;
+    transition: inherit;
+  }
+  &:not(.btn--link):not(.btn--outlined) {
+    &::after {
+      background: currentColor;
+    }
+
+    &:hover::after {
+      opacity: 0.08;
+    }
+  }
+
   &:active,
-  &:focus,
   &--avtive {
     box-shadow: none !important;
   }
@@ -121,11 +143,13 @@
       bottom: 0;
       left: 0;
       right: 0;
+      top: auto;
       height: 2px;
       background-color: currentColor;
       opacity: 0;
       transition: opacity 300ms ease;
     }
+    &:hover::after,
     &.btn--active::after {
       opacity: 1;
     }
@@ -140,6 +164,14 @@
     &:active,
     &:focus {
       border-color: currentColor;
+    }
+
+    &:focus {
+      &::after {
+        background: transparent;
+        box-shadow: 0 0 0 4px currentColor !important;
+        opacity: 0.2;
+      }
     }
   }
 

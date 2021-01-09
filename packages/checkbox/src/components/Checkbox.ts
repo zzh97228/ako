@@ -7,9 +7,11 @@ import {
   setActive,
   genColorProp,
   useColor,
+  ClickOutside,
+  useFieldConsumer,
 } from '@lagabu/shared';
-import vue, { computed, defineComponent, h, isReadonly, onBeforeUnmount, Ref, toRef, watch } from 'vue';
-import { useGroupConsumer, namespace } from '../composables';
+import vue, { computed, defineComponent, h, isReadonly, onBeforeUnmount, ref, toRef, watch, withDirectives } from 'vue';
+import { useGroupConsumer, namespace, useCheckboxGroupConsumer } from '../composables';
 
 export default defineComponent({
   name: 'checkbox',
@@ -19,6 +21,7 @@ export default defineComponent({
     modelValue: Boolean,
     indetermined: Boolean,
     radio: Boolean,
+    switch: Boolean,
     disabled: Boolean,
     toggleable: {
       type: Boolean,
@@ -27,7 +30,8 @@ export default defineComponent({
   },
   setup(props, context) {
     const { isActive, toggle } = useToggle(props, context);
-    const { class: colorClasses, style: colorStyle } = useColor(props);
+    const { class: colorClasses, style: colorStyle } = useColor(props, true);
+    const inputRef = ref<null | HTMLInputElement>(null);
     const { lazyState, model, setInnerState } = useModel(
       props,
       context,
@@ -44,6 +48,18 @@ export default defineComponent({
     }
 
     const group = useGroupConsumer(props, isActive);
+    const anotherGroup = useCheckboxGroupConsumer();
+    let onBlurFunc: (e?: Event) => any | undefined, onFocusFunc: (e?: Event) => any | undefined;
+
+    if (!anotherGroup) {
+      const fieldResult = useFieldConsumer({ lazyState, model, setInnerState });
+      onBlurFunc = fieldResult.onBlur;
+      onFocusFunc = fieldResult.onFocus;
+    } else {
+      onBlurFunc = anotherGroup.onBlur;
+      onFocusFunc = anotherGroup.onFocus;
+    }
+
     function onClick(e: MouseEvent) {
       if (props.disabled) {
         e.preventDefault();
@@ -51,6 +67,41 @@ export default defineComponent({
         return;
       }
       toggle(group[namespace] ? group.onToggle : void 0);
+    }
+    function onPointerdown(e: PointerEvent) {
+      if (props.disabled) {
+        e.preventDefault();
+        e.stopImmediatePropagation();
+        return;
+      }
+      if (inputRef.value) {
+        inputRef.value.focus();
+      }
+    }
+
+    function genInput() {
+      let type = 'checkbox';
+      if (props.disabled) {
+        type = 'disabled';
+      } else if (props.radio) {
+        type = 'radio';
+      } else if (props.switch) {
+        type = 'switch';
+      }
+      return h('input', {
+        type,
+        ref: inputRef,
+        style: {
+          display: 'none',
+        },
+        value: lazyState.value,
+        onFocus: (e: Event) => {
+          onFocusFunc && onFocusFunc.call(null, e);
+        },
+        onBlur: (e: Event) => {
+          onBlurFunc && onBlurFunc.call(null, e);
+        },
+      });
     }
 
     const isActiveStop = watch(isActive, (newVal, oldVal) => {
@@ -69,6 +120,7 @@ export default defineComponent({
 
     const classes = computed(() => {
       return {
+        'theme--light': true,
         checkbox: true,
         ...colorClasses.value,
         [`${props.activeClass}`]: isActive.value,
@@ -91,14 +143,21 @@ export default defineComponent({
       classes,
       styles,
       onClick,
+      genInput,
+      inputRef,
+      onPointerdown,
     };
   },
   methods: {
     genCheckbox() {
-      return h('div', {
-        class: this.classes,
-        style: this.styles,
-      });
+      return h(
+        'div',
+        {
+          class: this.classes,
+          style: this.styles,
+        },
+        this.genInput()
+      );
     },
     genActivator() {
       return h(
@@ -109,6 +168,7 @@ export default defineComponent({
         this.$slots.activator
           ? this.$slots.activator({
               classes: this.classes,
+              genInput: this.genInput,
             })
           : this.genCheckbox()
       );
@@ -124,13 +184,17 @@ export default defineComponent({
     },
   },
   render() {
-    return h(
-      'div',
-      {
-        class: 'checkbox__wrapper',
-        onClick: this.onClick,
-      },
-      [this.genActivator(), this.genLabel()]
+    return withDirectives(
+      h(
+        'div',
+        {
+          class: 'checkbox__wrapper',
+          onClick: this.onClick,
+          onPointerdown: this.onPointerdown,
+        },
+        [this.genActivator(), this.genLabel()]
+      ),
+      [[ClickOutside, { callback: () => this.inputRef && this.inputRef.blur() }]]
     );
   },
 });

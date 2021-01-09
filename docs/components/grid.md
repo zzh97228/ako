@@ -15,3 +15,7 @@
 ## Col
 
 <ac-col></ac-col>
+
+## Divider
+
+<ac-divider></ac-divider>

@@ -1,5 +1,6 @@
-import vue, { defineComponent, h } from 'vue';
-import { useGroupProvider, genGroupProps } from '../composables';
+import { useFieldConsumer } from '@lagabu/shared';
+import vue, { defineComponent, h, provide } from 'vue';
+import { useGroupProvider, genGroupProps, CheckboxSymbol, useCheckboxGroupProvider } from '../composables';
 
 export default defineComponent({
   name: 'checkbox-group',
@@ -7,7 +8,9 @@ export default defineComponent({
     ...genGroupProps(),
   },
   setup(props, context) {
-    const { lazyState } = useGroupProvider(props, context);
+    const { lazyState, model, setInnerState } = useGroupProvider(props, context);
+    const { onBlur, onFocus } = useFieldConsumer({ lazyState: lazyState as any, model, setInnerState });
+    useCheckboxGroupProvider({ onBlur, onFocus });
     return {
       lazyState,
     };

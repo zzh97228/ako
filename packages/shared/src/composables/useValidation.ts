@@ -1,4 +1,15 @@
-import { ExtractPropTypes, nextTick, onBeforeUnmount, PropType, reactive, ref, SetupContext, watch } from 'vue';
+import {
+  ExtractPropTypes,
+  nextTick,
+  onBeforeUnmount,
+  PropType,
+  reactive,
+  Ref,
+  ref,
+  SetupContext,
+  watch,
+  WatchStopHandle,
+} from 'vue';
 import { deepEqual } from '../utils/helpers';
 import { ModelReturn } from './useModel';
 
@@ -9,13 +20,16 @@ export function genValidationProps() {
       default: () => [],
     },
     validateImmediate: Boolean,
+    validateOnBlur: Boolean,
   };
 }
 type ValidationProps = ExtractPropTypes<ReturnType<typeof genValidationProps>>;
 export function useValidation<T extends any>(
   props: ValidationProps,
   context: SetupContext,
-  lazyState: ModelReturn<T>['lazyState']
+  lazyState: ModelReturn<T>['lazyState'],
+  hasFocus?: Ref<boolean>,
+  isFocusing?: Ref<boolean>
 ) {
   const hasError = ref(false);
   const errors: Array<{
@@ -27,12 +41,16 @@ export function useValidation<T extends any>(
     errors.splice(0, errors.length);
   }
 
-  function validate(val: any) {
+  function validate(val?: any) {
+    if (props.validateOnBlur && hasFocus && isFocusing) {
+      if (!hasFocus.value || isFocusing.value) return;
+    }
     const rules = props.rules;
+    const value = val || lazyState.value;
     clearErrors();
     let child: string | boolean | undefined;
     for (let i = 0; i < rules.length; i++) {
-      if ((child = rules[i].call(null, val))) {
+      if ((child = rules[i].call(null, value))) {
         errors.push({
           index: i,
           error: child,
@@ -48,7 +66,7 @@ export function useValidation<T extends any>(
     }
   }
 
-  const stopHandler = watch([() => lazyState.value, () => props.rules], (newVals, oldVals) => {
+  const stopWatchStateAndRule = watch([() => lazyState.value, () => props.rules], (newVals, oldVals) => {
     const newState = newVals[0],
       newRules = newVals[1];
     const oldState = oldVals ? oldVals[0] : void 0,
@@ -57,15 +75,24 @@ export function useValidation<T extends any>(
       validate(newState);
     }
   });
+  // watch isFocusing when validate-on-blur set true
+  let stopWatchFocus: WatchStopHandle | undefined;
+  if (isFocusing) {
+    stopWatchFocus = watch(isFocusing, (newVal, oldVal) => {
+      if (!props.validateOnBlur || newVal === oldVal || !hasFocus?.value || newVal) return;
+      validate();
+    });
+  }
 
   nextTick(() => {
     if (props.validateImmediate) {
-      validate(lazyState.value);
+      validate();
     }
   });
 
   onBeforeUnmount(() => {
-    stopHandler();
+    stopWatchStateAndRule();
+    stopWatchFocus && stopWatchFocus();
   });
 
   return {

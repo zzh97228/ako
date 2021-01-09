@@ -4,6 +4,7 @@ declare global {
   interface HTMLElement {
     _ripple?: RippleRecord;
     _intersect?: any;
+    _clickOutside?: any;
   }
 }
 

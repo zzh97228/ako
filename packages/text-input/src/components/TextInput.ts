@@ -1,4 +1,4 @@
-import vue, { computed, defineComponent, h, mergeProps, reactive, ref, VNodeArrayChildren } from 'vue';
+import vue, { computed, defineComponent, h, mergeProps, reactive, ref, toRef, VNodeArrayChildren } from 'vue';
 import { useModel, genModelProps, useFieldConsumer, genColorProp, useColor } from '@lagabu/shared';
 
 export default defineComponent({
@@ -18,11 +18,10 @@ export default defineComponent({
     const { emit } = context;
     const { class: colorClasses, style: colorStyles } = useColor(props, true);
     const { model, lazyState, setInnerState } = useModel(props, context);
-    useFieldConsumer({ model, lazyState, setInnerState });
+    const { onBlur, onFocus, state: fieldState, hasError } = useFieldConsumer({ model, lazyState, setInnerState });
     const inputRef = ref<null | HTMLInputElement>(null);
     const state = reactive({
       isComposing: false,
-      isFocusing: false,
     });
     const onInput = (e: InputEvent) => {
       if (state.isComposing) return;
@@ -45,12 +44,8 @@ export default defineComponent({
         onCompositionend: () => {
           state.isComposing = false;
         },
-        onFocus: () => {
-          state.isFocusing = true;
-        },
-        onBlur: () => {
-          state.isFocusing = false;
-        },
+        onFocus: onFocus,
+        onBlur: onBlur,
         onChange: (e: InputEvent) => {
           if (props.disabled) {
             e.preventDefault();
@@ -88,11 +83,10 @@ export default defineComponent({
       genInputPrefix: createAddonSlot('text-input__prefix', true),
       genInputSuffix: createAddonSlot('text-input__suffix', false),
       inputRef,
-      state,
-      model,
-      lazyState,
+      isFocusing: toRef(fieldState, 'isFocusing'),
       colorClasses,
       colorStyles,
+      hasError,
     };
   },
   render() {
@@ -105,7 +99,8 @@ export default defineComponent({
             'text-input--flat': this.flat,
             'text-input--small': this.small,
             'text-input--large': this.large,
-            'text-input--focusing': this.state.isFocusing,
+            'text-input--focusing': this.isFocusing,
+            'text-input--error': this.hasError,
           },
         },
         {

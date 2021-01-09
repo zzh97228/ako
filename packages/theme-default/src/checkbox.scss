@@ -1,0 +1,61 @@
+@use './variables/index' as v;
+.checkbox {
+  $inner-width: v.$inline-font-size;
+  display: inline-block;
+  width: $inner-width;
+  height: $inner-width;
+  border: 1px solid v.$border-color;
+  border-radius: v.$border-radius;
+  position: relative;
+  background: transparent !important;
+
+  &::after {
+    position: absolute;
+    content: '';
+    top: 50%;
+    left: 22%;
+    height: calc(3 * #{$inner-width} / 5);
+    width: calc(#{$inner-width} / 3);
+    right: 0;
+    bottom: 0;
+    opacity: 0;
+    border: 2px solid white;
+    border-top: 0;
+    border-left: 0;
+    transform: rotate(45deg) scale(0) translate(-50%, -50%);
+    transition: all 150ms ease-in-out;
+    will-change: scale, opacity;
+  }
+
+  &__wrapper {
+    display: inline-block;
+    cursor: pointer;
+    vertical-align: middle;
+    user-select: none;
+  }
+
+  &__activator {
+    display: inline-block;
+    vertical-align: text-bottom;
+  }
+
+  &__label {
+    display: inline-block;
+    line-height: v.$inline-line-height;
+    font-size: v.$inline-font-size;
+    padding: 0 v.$justify-padding;
+    font-weight: 400;
+  }
+
+  &--active {
+    border-color: currentColor;
+    background: currentColor !important;
+    &::after {
+      opacity: 1;
+      transform: rotate(45deg) scale(1) translate(-50%, -50%);
+    }
+  }
+
+  &--indetermined {
+  }
+}
