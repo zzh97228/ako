@@ -12,7 +12,7 @@ export default defineComponent({
     prefixDivider: Boolean,
     suffixDivider: Boolean,
     ...genModelProps([String, Number]),
-    ...genColorProp(),
+    ...genColorProp('primary'),
   },
   setup(props, context) {
     const { emit } = context;

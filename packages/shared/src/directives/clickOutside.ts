@@ -67,11 +67,13 @@ const mounted: DirectiveHook = (el: HTMLElement, binding: ClickoutsideBinding) =
         break;
       }
     }
+
     // after update dom then call clickOutside func
-    isClickOutside &&
+    if (isClickOutside) {
       setTimeout(() => {
         cb && cb.call(null, e);
       }, 0);
+    }
   }
 
   document.documentElement.addEventListener('click', onClick, true);

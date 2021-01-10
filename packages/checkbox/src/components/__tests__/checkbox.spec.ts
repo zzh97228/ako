@@ -46,4 +46,25 @@ describe('checkbox.ts', () => {
     expect(checkbox.classes()).not.toContain('checkbox--indetermined');
     expect(checkbox.classes()).toContain('checkbox--active');
   });
+
+  it('should not render label when not set default slots', () => {
+    const wrapper = mountFunc();
+    const label = wrapper.find('.checkbox__label');
+    expect(label.exists()).toBeFalsy();
+  });
+
+  it('should have switch class or radio class when set switch/radio prop', async () => {
+    const wrapper = mountFunc({
+      props: {
+        switch: true,
+      },
+    });
+    const checkbox = wrapper.find('.checkbox');
+    expect(checkbox.exists()).toBeTruthy();
+    expect(checkbox.classes()).toContain('checkbox--switch');
+    await wrapper.setProps({
+      radio: true,
+    });
+    expect(checkbox.classes()).toContain('checkbox--radio');
+  });
 });

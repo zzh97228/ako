@@ -1,6 +1,6 @@
 @use './variables/index' as v;
 .checkbox {
-  $inner-width: v.$inline-font-size;
+  $inner-width: 1em;
   display: inline-block;
   width: $inner-width;
   height: $inner-width;
@@ -8,6 +8,8 @@
   border-radius: v.$border-radius;
   position: relative;
   background: transparent !important;
+  transition: all 150ms ease-in-out;
+  will-change: background-color;
 
   &::after {
     position: absolute;
@@ -23,8 +25,8 @@
     border-top: 0;
     border-left: 0;
     transform: rotate(45deg) scale(0) translate(-50%, -50%);
-    transition: all 150ms ease-in-out;
-    will-change: scale, opacity;
+    transition: inherit;
+    will-change: scale, opacity, left;
   }
 
   &__wrapper {
@@ -32,19 +34,29 @@
     cursor: pointer;
     vertical-align: middle;
     user-select: none;
+
+    &:not(.checkbox--disabled) {
+      &:hover,
+      &.checkbox--focusing {
+        .checkbox {
+          border-color: currentColor;
+        }
+      }
+    }
   }
 
   &__activator {
     display: inline-block;
-    vertical-align: text-bottom;
+    vertical-align: middle;
   }
 
   &__label {
     display: inline-block;
-    line-height: v.$inline-line-height;
+    line-height: 1;
     font-size: v.$inline-font-size;
     padding: 0 v.$justify-padding;
     font-weight: 400;
+    vertical-align: middle;
   }
 
   &--active {
@@ -57,5 +69,77 @@
   }
 
   &--indetermined {
+    background: currentColor !important;
+    &::after {
+      height: 0;
+      width: calc(#{$inner-width} / 2);
+      opacity: 1;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+  }
+
+  &--switch {
+    $switch-width: calc(#{$inner-width} - #{$inner-width} * 0.325);
+    width: calc(#{$inner-width} * 2);
+    border-radius: $inner-width;
+    border-color: transparent !important;
+    background: var(--grey-6, grey) !important;
+
+    &::after {
+      width: $switch-width;
+      height: $switch-width;
+      top: 50%;
+      left: calc(#{$inner-width} / 2);
+      background: white;
+      opacity: 1;
+      transform: translate(-50%, -50%);
+      border-radius: 50%;
+      border: 0;
+    }
+
+    &.checkbox--active {
+      background: currentColor !important;
+      &::after {
+        left: calc(#{$inner-width} * 2 - #{$inner-width} / 2);
+      }
+    }
+  }
+  &--radio {
+    $radio-width: calc(#{$inner-width} / 2);
+    border-radius: 50%;
+    width: $inner-width;
+    height: $inner-width;
+    &.checkbox--active {
+      background: transparent !important;
+      &::after {
+        width: $radio-width;
+        height: $radio-width;
+        border: 0;
+        background: currentColor;
+        opacity: 1;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        border-radius: 50%;
+      }
+    }
+  }
+
+  &--tile {
+    &,
+    &::after {
+      border-radius: 0 !important;
+    }
+  }
+
+  &--disabled {
+    cursor: not-allowed;
+    .checkbox__label {
+      color: v.$border-color;
+    }
+    .checkbox {
+      background: v.$disabled-color !important;
+    }
   }
 }

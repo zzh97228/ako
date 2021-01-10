@@ -3,10 +3,10 @@
 @include make-basic-color-classes();
 @include make-theme-color-classes();
 
-body .theme--light {
+.theme--light {
   color: var(--grey-12);
 }
 
-body .theme--dark {
+.theme--dark {
   color: var(--grey-0);
 }

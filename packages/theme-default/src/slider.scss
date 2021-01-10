@@ -1,0 +1,96 @@
+@use './variables/index' as v;
+.slider {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border-radius: v.$inline-font-size;
+  $pointer-width: calc(#{v.$inline-font-size} * 0.625);
+  cursor: pointer;
+  position: relative;
+
+  &:not(.slider--disabled) {
+    &::after {
+      position: absolute;
+      content: '';
+      top: 0;
+      left: 0;
+      bottom: 0;
+      right: 0;
+      border-radius: inherit;
+      opacity: 0;
+      background: currentColor;
+      transition: all 150ms ease-in-out;
+      will-change: background-color;
+    }
+
+    &:hover::after {
+      opacity: 0.05;
+    }
+  }
+
+  &--reverse {
+    .slider__pointer {
+      transform: translate(50%, -50%);
+    }
+  }
+
+  $wrapper-height: calc(#{v.$inline-font-size} / 4);
+  &__wrapper {
+    display: block;
+    margin: v.$inline-font-size 0;
+    height: $wrapper-height;
+    background: v.$disabled-color;
+    position: relative;
+  }
+  &__background {
+    display: block;
+    background: currentColor;
+    height: 100%;
+    border-radius: v.$inline-font-size;
+  }
+  &__pointer {
+    width: $pointer-width;
+    height: $pointer-width;
+    border-radius: 50%;
+    background: white;
+    border: 1px solid currentColor;
+    top: 50%;
+    z-index: 1;
+    transform: translate(-50%, -50%);
+  }
+
+  &--vertical {
+    margin: 0 v.$inline-font-size;
+    width: $wrapper-height;
+    .slider__pointer {
+      left: 50%;
+      transform: translate(-50%, 50%);
+    }
+    .slider--reverse .slider__pointer {
+      transform: translate(-50%, -50%);
+    }
+    .slider__background {
+      height: auto;
+      width: 100%;
+    }
+  }
+
+  &--tile {
+    &,
+    .slider::after,
+    .slider__background,
+    .slider__pointer {
+      border-radius: 0 !important;
+    }
+  }
+
+  &--disabled {
+    cursor: not-allowed;
+    .slider__pointer {
+      border-color: v.$disabled-color !important;
+    }
+    .slider__background {
+      background: v.$disabled-color !important;
+    }
+  }
+}

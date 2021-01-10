@@ -1,4 +1,4 @@
-import { genPercentProps, usePercent, useSize, sizeProps, clamp } from '@lagabu/shared';
+import { genPercentProps, usePercent, useSize, sizeProps, hasDocument, genColorProp, useColor } from '@lagabu/shared';
 import vue, { computed, defineComponent, h, reactive, ref } from 'vue';
 
 export default defineComponent({
@@ -6,12 +6,15 @@ export default defineComponent({
   props: {
     ...genPercentProps(),
     ...sizeProps,
+    ...genColorProp('primary'),
     vertical: Boolean,
     reverse: Boolean,
+    tile: Boolean,
   },
   setup(props, context) {
     const { percent } = usePercent(props, context),
       { sizeStyle } = useSize(props),
+      { class: colorClasses, style: colorStyles } = useColor(props, true),
       pointerRef = ref<null | HTMLElement>(null),
       sliderRef = ref<null | HTMLElement>(null),
       state = reactive({
@@ -52,7 +55,7 @@ export default defineComponent({
       const { width, height, x: x1, y: y1 } = sliderELm.getBoundingClientRect(),
         x = e.clientX,
         y = e.clientY;
-      let v = props.vertical ? y - y1 : x - x1;
+      let v = props.vertical ? height - (y - y1) : x - x1;
       if (props.reverse) {
         v = props.vertical ? height - v : width - v;
       }
@@ -61,6 +64,9 @@ export default defineComponent({
     }
 
     function onPointerdown(e: PointerEvent) {
+      if (!hasDocument()) return;
+      document.documentElement.addEventListener('pointermove', onPointermove, false);
+      document.documentElement.addEventListener('pointerup', onPointerup, false);
       let slider: HTMLElement | null;
       if (props.disabled || !(slider = sliderRef.value)) {
         return;
@@ -73,7 +79,7 @@ export default defineComponent({
       if (props.disabled || !state.isPointing || state.frameId) {
         return;
       }
-      state.frameId = requestAnimationFrame(() => {
+      state.frameId = setTimeout(() => {
         let slider: HTMLElement | null;
         if (!(slider = sliderRef.value)) return;
         const p = getPercent(slider, e);
@@ -81,10 +87,12 @@ export default defineComponent({
           percent.value = p;
         }
         state.frameId = 0;
-      });
+      }, 0);
     }
-    function onPointerup() {
-      if (props.disabled || state.prevPercent === percent.value) return;
+    function onPointerup(e: Event) {
+      if (!hasDocument() || props.disabled) return;
+      document.documentElement.removeEventListener('pointermove', onPointermove, false);
+      document.documentElement.removeEventListener('pointerup', onPointerup, false);
       state.isPointing = false;
     }
 
@@ -97,6 +105,8 @@ export default defineComponent({
       sliderRef,
       backStyle,
       pointerStyle,
+      colorClasses,
+      colorStyles,
     };
   },
   methods: {
@@ -104,8 +114,16 @@ export default defineComponent({
       return h(
         'div',
         {
-          class: 'slider',
+          class: {
+            slider: true,
+            'slider--reverse': this.reverse,
+            'slider--tile': this.tile,
+            'slider--disabled': this.disabled,
+            ...this.colorClasses,
+          },
+          style: this.colorStyles,
           ref: 'sliderRef',
+          onMousedown: this.onPointerdown,
         },
         [this.genPointer(), this.genBackground()]
       );
@@ -114,9 +132,6 @@ export default defineComponent({
       return h('div', {
         class: 'slider__background',
         style: this.backStyle,
-        onPointerdown: this.onPointerdown,
-        onPointermove: this.onPointermove,
-        onPointerup: this.onPointerup,
       });
     },
     genPointer() {
@@ -131,7 +146,10 @@ export default defineComponent({
     return h(
       'div',
       {
-        class: 'slider__wrapper',
+        class: {
+          ['slider__wrapper']: true,
+          'slider--vertical': this.vertical,
+        },
         style: this.sizeStyle,
       },
       this.genSlider()
