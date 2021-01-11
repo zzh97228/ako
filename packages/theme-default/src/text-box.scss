@@ -1,26 +1,42 @@
+@use './variables/index' as v;
 .text-box {
-  // TODO text-box style
+  display: block;
   width: 100%;
-  height: 100%;
+  height: auto;
+  min-height: 32px;
+  min-width: 0;
   resize: vertical;
+  border-radius: v.$border-radius;
+  border: 1px solid v.$border-color;
+  will-change: border-color;
+  transition: all 150ms ease-in-out;
+  outline: 0;
+  overflow: auto;
+  padding: v.$half-justify-padding v.$justify-padding;
+
+  &:hover,
+  &:focus,
+  &:active {
+    border-color: currentColor;
+  }
 
   &__wrapper {
-    display: block;
-  }
+    display: flex;
+    height: 64px;
+    flex-direction: column;
 
-  &__content {
-    display: block;
-  }
-
-  &__count {
-    display: inline-flex;
-    &--wrapper {
-      display: flex;
+    &::after {
+      content: attr(data-text-count);
+      display: block;
+      text-align: right;
+      line-height: 1.5;
+      font-size: v.$smaller-font-size;
+      opacity: 0.8;
     }
   }
 
   &--disabled {
     cursor: not-allowed;
-    background-color: var(--grey-3, grey);
+    background-color: v.$disabled-color;
   }
 }

@@ -13,6 +13,7 @@ import vue, {
   ExtractPropTypes,
   inject,
   InjectionKey,
+  nextTick,
   onBeforeUnmount,
   onMounted,
   provide,

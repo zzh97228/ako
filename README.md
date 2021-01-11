@@ -20,8 +20,15 @@
 ## Components
 
 - [Btn](packages/btn/README.md)
+- [Card](packages/card/README.md)
+- [Checkbox](packages/checkbox/README.md)
 - [Grid](packages/grid/README.md)
+- [Slider](packages/slider/README.md)
 
 ## Directives
 
 - [Ripple](packages/shared/README.md)
+
+## License
+
+[MIT](LICENSE)

@@ -1,10 +1,11 @@
-import { convertToNumber, isBool } from '@lagabu/shared';
 import vue, { defineComponent, h, onBeforeUnmount, onMounted, PropType, toRef } from 'vue';
 import { carouselProps, useCarouselProvider } from '../composables';
 
 export default defineComponent({
   name: 'carousel',
-  props: carouselProps,
+  props: {
+    ...carouselProps,
+  },
   setup(props, context) {
     const { clickNext, clickPrev, transitionHeight } = useCarouselProvider(props, context);
     return {
@@ -39,6 +40,9 @@ export default defineComponent({
         'div',
         {
           class: 'carousel',
+          style: {
+            height: this.transitionHeight,
+          },
         },
         this.$slots.default && this.$slots.default()
       );
@@ -49,9 +53,6 @@ export default defineComponent({
       'div',
       {
         class: 'carousel__wrapper',
-        style: {
-          height: this.transitionHeight,
-        },
       },
       [this.genPrevActivator(), this.genContent(), this.genNextActivator()]
     );

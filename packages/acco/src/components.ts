@@ -1,6 +1,7 @@
 import { Row, Col, Container, Divider } from '@lagabu/grid';
 import { Btn } from '@lagabu/btn';
 import { TextInput } from '@lagabu/text-input';
+import { TextBox } from '@lagabu/text-box';
 import { Carousel, CarouselItem } from '@lagabu/carousel';
 import { Card, CardTitle, CardSubtitle, CardActions, CardContent } from '@lagabu/card';
 import { Checkbox, CheckboxGroup } from '@lagabu/checkbox';
@@ -22,4 +23,5 @@ export {
   CheckboxGroup,
   Slider,
   TextInput,
+  TextBox,
 };

@@ -1,0 +1,117 @@
+@use './variables/index' as v;
+.carousel {
+  display: block;
+  position: relative;
+
+  &-item {
+    display: block;
+    position: relative;
+    width: 100%;
+
+    &--active {
+      overflow: hidden;
+    }
+  }
+
+  &__wrapper {
+    display: block;
+    width: 100%;
+    position: relative;
+    user-select: none;
+    overflow: hidden;
+    &:hover {
+      .carousel__activator {
+        &-prev,
+        &-next {
+          opacity: 1;
+        }
+      }
+    }
+  }
+
+  &__activator {
+    $activator-width: 24px;
+    &-prev,
+    &-next {
+      position: absolute;
+      top: 50%;
+      width: $activator-width;
+      height: $activator-width;
+      transform: translate(0, -50%);
+      border-radius: 50%;
+      border: 1px solid currentColor;
+      background: transparent;
+      cursor: pointer;
+      z-index: 1;
+      opacity: 0;
+      transition: opacity 150ms ease-in-out;
+
+      &::after {
+        position: absolute;
+        content: '';
+        top: 50%;
+        width: v.$justify-padding;
+        height: v.$justify-padding;
+        border: 1px solid currentColor;
+        border-left: 0;
+        border-top: 0;
+        transform-origin: center center;
+      }
+
+      &::before {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        content: '';
+        background: currentColor;
+        opacity: 0;
+        border-radius: 50%;
+        transition: all 150ms ease-in-out;
+      }
+
+      &:hover::before {
+        opacity: 0.1;
+      }
+    }
+
+    &-prev {
+      left: v.$justify-padding;
+      &::after {
+        left: 58%;
+        transform: translate(-50%, -50%) scale(0.625) rotate(135deg);
+      }
+    }
+    &-next {
+      right: v.$justify-padding;
+      &::after {
+        right: 8%;
+        transform: translate(-50%, -50%) scale(0.625) rotate(-45deg);
+      }
+    }
+  }
+
+  &-transition {
+    &--reverse-enter-active,
+    &--reverse-leave-active,
+    &-enter-active,
+    &-leave-active {
+      display: block !important;
+      transition: transform 300ms ease-in-out;
+      position: absolute !important;
+      top: 0;
+      width: 100%;
+    }
+
+    &--reverse-leave-to,
+    &-enter-from {
+      transform: translateX(100%);
+    }
+
+    &--reverse-enter-from,
+    &-leave-to {
+      transform: translateX(-100%);
+    }
+  }
+}

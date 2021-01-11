@@ -1,16 +1,21 @@
-import { genToggleProps, useToggle } from '@lagabu/shared';
+import { genToggleProps, useToggle, useSize, sizeProps } from '@lagabu/shared';
 import { defineComponent, h, KeepAlive, mergeProps, ref, Transition, vShow, withDirectives } from 'vue';
 import { useCarouselConsumer } from '../composables';
 
 export default defineComponent({
   name: 'carousel-item',
-  props: genToggleProps('carousel-item--active'),
+  props: {
+    ...genToggleProps('carousel-item--active'),
+    ...sizeProps,
+  },
   setup(props, context) {
     const { isActive } = useToggle(props, context);
+    const { sizeStyle } = useSize(props);
     const { setParentHeight, transitionName, transitionCount } = useCarouselConsumer(isActive);
     const inTransition = ref(false);
     return {
       isActive,
+      sizeStyle,
       transitionName,
       transitionCount,
       setParentHeight,
@@ -26,8 +31,9 @@ export default defineComponent({
             'carousel-item': true,
             [this.activeClass]: Boolean(this.isActive),
           },
+          style: this.sizeStyle,
         },
-        this.isActive && this.$slots.default && this.$slots.default()
+        this.$slots.default && this.$slots.default()
       );
     },
     onAfter() {
@@ -65,7 +71,6 @@ export default defineComponent({
         Transition,
         {
           name: this.transitionName,
-          duration: 300,
           onBeforeEnter: this.onBefore,
           onEnter: this.onEnter,
           onAfterEnter: this.onAfter,

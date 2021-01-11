@@ -1,2 +1,2 @@
-export * from './install';
-export * from './components';
+export { TextBoxPlugin } from './install';
+export { TextBox } from './components';

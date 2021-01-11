@@ -9,7 +9,6 @@ describe('TexyBox.ts', () => {
   it('should render TextBox with basic props', () => {
     const options = {
       autofocus: true,
-      minlength: 12,
       maxlength: 20,
       placeholder: 'hello world',
       spellcheck: false,
@@ -26,7 +25,6 @@ describe('TexyBox.ts', () => {
     expect(textarea.exists()).toBeTruthy();
     expect(textarea.classes()).toContain('text-box');
     expect(textarea.attributes('autofocus')).not.toBeUndefined();
-    expect(textarea.attributes('minlength')).toBe(String(options.minlength));
     expect(textarea.attributes('maxlength')).toBe(String(options.maxlength));
     expect(textarea.attributes('placeholder')).toBe(options.placeholder);
     expect(textarea.attributes('spellcheck')).not.toBeUndefined();
@@ -36,7 +34,7 @@ describe('TexyBox.ts', () => {
     expect(wrapper.html()).toMatchSnapshot();
   });
 
-  it('should render text-box__count element when set `showCount` prop', async () => {
+  it('should render count attributes when set `showCount` prop', async () => {
     const word = 'hello world';
     const wrapper = mountFunc({
       props: {
@@ -44,14 +42,11 @@ describe('TexyBox.ts', () => {
         modelValue: word,
       },
     });
-    const textCount = wrapper.find('.text-box__count--wrapper');
-    expect(textCount.exists()).toBeTruthy();
-    expect(textCount.text()).toBe(String(word.length));
+    expect(wrapper.attributes('data-text-count')).toEqual('11');
     await wrapper.setProps({
-      maxlength: 20,
+      maxlength: 12,
     });
-    expect(textCount.text()).toBe(`${word.length}/${20}`);
-    expect(wrapper.html()).toMatchSnapshot();
+    expect(wrapper.attributes('data-text-count')).toEqual('11 / 12');
   });
 
   it('should not set value when `disabled` prop set', async () => {

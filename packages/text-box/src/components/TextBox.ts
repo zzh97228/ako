@@ -1,11 +1,10 @@
-import vue, { computed, defineComponent, h, reactive, VNodeArrayChildren } from 'vue';
-import { genModelProps, useModel, useFieldConsumer, convertToNumber } from '@lagabu/shared';
+import vue, { computed, ComputedRef, defineComponent, h, reactive, VNodeArrayChildren } from 'vue';
+import { genModelProps, useModel, useFieldConsumer, genColorProp, useColor, sizeProps, useSize } from '@lagabu/shared';
 
 export default defineComponent({
   name: 'TextBox',
   props: {
     autofocus: Boolean,
-    minlength: [String, Number],
     maxlength: [String, Number],
     showCount: Boolean,
     disabled: Boolean,
@@ -16,15 +15,18 @@ export default defineComponent({
     rows: [String, Number],
     cols: [String, Number],
     ...genModelProps(String),
+    ...genColorProp('primary'),
+    ...sizeProps,
   },
   setup(props, context) {
     const state = reactive({
       isComposing: false,
     });
     const notAllowed = computed(() => props.disabled || props.readonly);
-
+    const { class: colorClasses, style: colorStyles } = useColor(props, true);
+    const { sizeStyle } = useSize(props);
     const { model, lazyState, setInnerState } = useModel(props, context, notAllowed);
-    useFieldConsumer({
+    const { onBlur, onFocus } = useFieldConsumer({
       model,
       lazyState,
       setInnerState,
@@ -40,20 +42,33 @@ export default defineComponent({
       context.emit('input', lazyState.value);
     };
 
-    const genTextarea = () => {
+    const computedWordCount: ComputedRef<string> = computed(() => {
+      if (!props.showCount) return '';
+      const l = lazyState.value?.length || 0;
+      return '' + l + (props.maxlength ? ` / ${props.maxlength}` : '');
+    });
+
+    function genTextarea() {
       return h('textarea', {
-        class: 'text-box',
+        class: {
+          'text-box': true,
+          ...colorClasses.value,
+        },
+        style: {
+          ...colorStyles.value,
+        },
         placeholder: props.placeholder,
         disabled: props.disabled,
         readonly: props.readonly,
         autofocus: props.autofocus,
         autocomplete: props.autocomplete ? 'on' : 'off',
         spellcheck: props.spellcheck,
-        minlength: props.minlength,
         maxlength: props.maxlength,
         rows: props.rows || 10,
         cols: props.cols || 20,
         onInput,
+        onFocus,
+        onBlur,
         onCompositionstart: () => {
           state.isComposing = true;
         },
@@ -61,55 +76,15 @@ export default defineComponent({
           state.isComposing = false;
         },
       });
-    };
+    }
+
     return {
       model,
       lazyState,
-      state,
+      sizeStyle,
       genTextarea,
+      computedWordCount,
     };
-  },
-  methods: {
-    genCountText(count: number) {
-      const children: VNodeArrayChildren = [h('span', String(count))];
-      if (this.maxlength) {
-        children.push(h('span', '/'));
-        children.push(h('span', this.maxlength));
-      }
-      return h(
-        'span',
-        {
-          class: 'text-box__count',
-        },
-        children
-      );
-    },
-    genCountTextWrapper() {
-      if (!this.showCount) return;
-      let children: VNodeArrayChildren = [];
-      const wordLength = this.lazyState.value?.length || 0;
-      if (this.$slots.count) {
-        children = [this.$slots.count(wordLength)];
-      } else {
-        children.push(this.genCountText(wordLength));
-      }
-      return h(
-        'div',
-        {
-          class: 'text-box__count--wrapper',
-        },
-        children
-      );
-    },
-    genBoxContent() {
-      return h(
-        'div',
-        {
-          class: 'text-box__content',
-        },
-        [this.genTextarea(), this.genCountTextWrapper()]
-      );
-    },
   },
   render() {
     return h(
@@ -119,8 +94,10 @@ export default defineComponent({
           'text-box__wrapper': true,
           'text-box--disabled': this.disabled,
         },
+        style: this.sizeStyle,
+        ['data-text-count']: this.computedWordCount,
       },
-      [this.genBoxContent()]
+      this.genTextarea()
     );
   },
 });
