@@ -17,7 +17,7 @@ jobs:
 
       - name: Install & Test:Cov & Upload:Cov
         run: yarn install && yarn test --coverage && yarn codecov -t $TOKEN
-        with:
+        env:
           TOKEN: ${{ secrets.CODECOV_TOKEN }}
 
       - name: Build docs

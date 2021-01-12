@@ -1,7 +1,7 @@
 @use 'sass:map';
 @import './colors';
 @import './elevation';
-$font-color: var(--grey-10, black);
+$font-color: var(--grey-8, black);
 $border-color: var(--grey-5, grey);
 $disabled-color: var(--grey-3, grey);
 $default-background-color: var(--grey-8, black);

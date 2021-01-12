@@ -47,4 +47,14 @@ describe('ListSubgroup.ts', () => {
     await activator.trigger('click');
     expect(wrapper.classes()).toContain('list-subgroup--disabled');
   });
+
+  it('should have active class when set `showOnAppear` prop in subgroup component', () => {
+    const wrapper = mountFunc({
+      props: {
+        showOnAppear: true,
+      },
+    });
+
+    expect(wrapper.classes()).toContain('list-subgroup--active');
+  });
 });

@@ -1,5 +1,61 @@
+@use './variables/index' as v;
 .list {
+  list-style-type: none;
+  padding: 0 v.$justify-padding;
+
+  &-subgroup {
+    display: block;
+    &__activator {
+      padding-right: v.$justify-padding * 2;
+      position: relative;
+      cursor: pointer;
+      &::after {
+        content: '';
+        position: absolute;
+        right: v.$justify-padding;
+        top: 50%;
+        width: 8px;
+        height: 8px;
+        border: 2px solid currentColor;
+        border-top-color: transparent;
+        border-left-color: transparent;
+        transition: transform 150ms ease-in-out;
+        transform: translate(50%, -50%) rotate(45deg);
+      }
+    }
+    &__content {
+      list-style-type: none;
+      padding: 0 v.$justify-padding;
+    }
+
+    &--active {
+      .list-subgroup__activator {
+        &::after {
+          transform: translate(50%, -50%) rotate(-135deg);
+        }
+      }
+    }
+  }
   &-item {
-   
+    cursor: pointer;
+    color: v.$font-color !important;
+    transition: all 150ms ease-in-out;
+
+    &__content {
+      display: block;
+    }
+    &__prefix,
+    &__suffix {
+      display: inline-block;
+    }
+
+    &:hover,
+    &--active {
+      color: currentColor !important;
+    }
+
+    &--disabled {
+      cursor: not-allowed;
+    }
   }
 }

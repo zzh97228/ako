@@ -5,6 +5,7 @@ export default defineComponent({
   name: 'list-subgroup',
   props: {
     disabled: Boolean,
+    showOnAppear: Boolean,
     ...genToggleProps('list-subgroup--active', true),
     ...genColorProp('primary'),
   },
@@ -14,6 +15,10 @@ export default defineComponent({
     const transitionProps = useExpandTransition();
     const { class: colorClasses, style: colorStyles } = useColor(props, true);
     const { toggle, class: toggleClasses, isActive } = useToggle(props, context, notAllowed);
+
+    if (props.showOnAppear && !notAllowed.value) {
+      isActive.value = true;
+    }
 
     function onClickActivator(e: Event) {
       if (props.disabled) {
@@ -52,13 +57,9 @@ export default defineComponent({
     }
 
     function genTransition() {
-      return h(
-        Transition,
-        transitionProps,
-        {
-          default: () => genContent(),
-        }
-      );
+      return h(Transition, transitionProps, {
+        default: () => genContent(),
+      });
     }
 
     return () =>
