@@ -1,0 +1,18 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`TexyBox.ts should render TextBox with basic props 1`] = `
+<div class="text-box__wrapper"
+     data-text-count
+>
+  <textarea class="text-box primary-color--text"
+            placeholder="hello world"
+            autofocus
+            autocomplete="on"
+            spellcheck="false"
+            maxlength="20"
+            rows="20"
+            cols="50"
+  >
+  </textarea>
+</div>
+`;

@@ -2,27 +2,37 @@
 
 exports[`BtnToggleGroup.ts should toggle multiple btn 1`] = `
 <div class="btn-toggle-group">
-  <button class="btn primary-color elevation-xs btn--active">
+  <button type="button"
+          class="btn elevation-xs btn--active"
+  >
     <div class="btn__content">
       button-1
     </div>
   </button>
-  <button class="btn primary-color elevation-xs btn--active">
+  <button type="button"
+          class="btn elevation-xs btn--active"
+  >
     <div class="btn__content">
       button-2
     </div>
   </button>
-  <button class="btn primary-color elevation-xs">
+  <button type="button"
+          class="btn elevation-xs"
+  >
     <div class="btn__content">
       button-3
     </div>
   </button>
-  <button class="btn primary-color elevation-xs">
+  <button type="button"
+          class="btn elevation-xs"
+  >
     <div class="btn__content">
       button-4
     </div>
   </button>
-  <button class="btn primary-color elevation-xs">
+  <button type="button"
+          class="btn elevation-xs"
+  >
     <div class="btn__content">
       button-5
     </div>
@@ -32,27 +42,37 @@ exports[`BtnToggleGroup.ts should toggle multiple btn 1`] = `
 
 exports[`BtnToggleGroup.ts should toggle single btn 1`] = `
 <div class="btn-toggle-group">
-  <button class="btn primary-color elevation-xs">
+  <button type="button"
+          class="btn elevation-xs"
+  >
     <div class="btn__content">
       button-1
     </div>
   </button>
-  <button class="btn primary-color elevation-xs btn--active">
+  <button type="button"
+          class="btn elevation-xs btn--active"
+  >
     <div class="btn__content">
       button-2
     </div>
   </button>
-  <button class="btn primary-color elevation-xs">
+  <button type="button"
+          class="btn elevation-xs"
+  >
     <div class="btn__content">
       button-3
     </div>
   </button>
-  <button class="btn primary-color elevation-xs">
+  <button type="button"
+          class="btn elevation-xs"
+  >
     <div class="btn__content">
       button-4
     </div>
   </button>
-  <button class="btn primary-color elevation-xs">
+  <button type="button"
+          class="btn elevation-xs"
+  >
     <div class="btn__content">
       button-5
     </div>

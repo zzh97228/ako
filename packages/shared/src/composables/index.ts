@@ -7,3 +7,4 @@ export * from './useToggle';
 export * from './useToggleGroup';
 export * from './usePercent';
 export * from './useValidation';
+export * from './useExpandTransition';

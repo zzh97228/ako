@@ -6,11 +6,19 @@ export default defineComponent({
   props: {
     ...sizeProps,
     ...genColorProp('primary'),
+    disabled: Boolean,
   },
   setup(props, context) {
     const { slots } = context;
     const { sizeStyle } = useSize(props);
     const { class: colorClasses, style: colorStyles } = useColor(props, true);
+    function onClick(e: Event) {
+      if (props.disabled) {
+        e.preventDefault();
+        e.stopImmediatePropagation();
+        return;
+      }
+    }
     return () =>
       h(
         'ul',
@@ -18,6 +26,7 @@ export default defineComponent({
           {
             class: 'list',
             style: sizeStyle.value,
+            onClick,
           },
           {
             class: colorClasses.value,

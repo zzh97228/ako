@@ -1,7 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`card.ts should render card 1`] = `
-<div class="card card--outlined primary-color--text elevation-xs"
+<div class="card card--outlined elevation-xs"
      style="width: 100%; height: 100%;"
 >
   <div class="card__content">

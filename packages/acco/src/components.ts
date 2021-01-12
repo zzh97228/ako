@@ -6,6 +6,8 @@ import { Carousel, CarouselItem } from '@lagabu/carousel';
 import { Card, CardTitle, CardSubtitle, CardActions, CardContent } from '@lagabu/card';
 import { Checkbox, CheckboxGroup } from '@lagabu/checkbox';
 import { Slider } from '@lagabu/slider';
+import { List, ListItem, ListSubgroup } from '@lagabu/list';
+
 export {
   Row,
   Col,
@@ -24,4 +26,7 @@ export {
   Slider,
   TextInput,
   TextBox,
+  List,
+  ListItem,
+  ListSubgroup,
 };
