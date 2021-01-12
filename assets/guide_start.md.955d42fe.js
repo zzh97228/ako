@@ -1,0 +1,1 @@
+import{l as t,f as e}from"./framework.cef570b0.js";const r='{"title":"","description":"","frontmatter":{},"relativePath":"directives/ripple.md","lastUpdated":1610460352637}',i={};i.render=function(r,i,a,o,d,f){return t(),e("div")};export default i;export{r as __pageData};
