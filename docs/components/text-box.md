@@ -1,4 +1,4 @@
-# TextBox
+# text-box
 
 <ac-text-box></ac-text-box>
 

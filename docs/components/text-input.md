@@ -1,4 +1,4 @@
-# TextInput
+# text-input
 
 <ac-text-input color="primary" suffix-divider>
   <template v-slot:prefix>

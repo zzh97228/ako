@@ -1,4 +1,4 @@
-# Card
+# card
 
 <ac-card color="primary" flat width="256px">
   <template v-slot:image>

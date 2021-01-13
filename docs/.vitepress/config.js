@@ -37,10 +37,11 @@ module.exports = {
   alias: getAlias(),
   themeConfig: {
     repo: 'zzh97228/acco',
+    docsDir: 'docs',
     nav: [
-      { text: 'Guide', link: '/guide/index' },
-      { text: 'Components', link: '/components/btn' },
-      { text: 'Directives', link: '/directives/ripple' },
+      { text: 'Guide', link: '/guide/index', activeMatch: '^/guide/' },
+      { text: 'Components', link: '/components/btn', activeMatch: '^/components/' },
+      { text: 'Directives', link: '/directives/ripple', activeMatch: '^/directives/' },
     ],
     sidebar: {
       '/components/': getComponents(),
