@@ -8,9 +8,7 @@ function getFilesTemplate(dirName) {
       text: dirName.substr(0, 1).toUpperCase() + dirName.substr(1),
       children: files.sort().map((f) => {
         f = f.replace(/(\.md)/g, '');
-        const rawStr = f;
-        f = f.substr(0, 1).toUpperCase() + f.substr(1);
-        return { text: f, link: `/${dirName}/${rawStr}` };
+        return { text: f, link: `/${dirName}/${f}` };
       }),
     },
   ];
@@ -41,7 +39,7 @@ module.exports = {
     repo: 'zzh97228/acco',
     nav: [
       { text: 'Guide', link: '/guide/index' },
-      { text: 'Components', link: '/components/grid' },
+      { text: 'Components', link: '/components/btn' },
       { text: 'Directives', link: '/directives/ripple' },
     ],
     sidebar: {
