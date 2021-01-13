@@ -1,5 +1,13 @@
-import { genColorProp, useColor } from '@lagabu/shared';
-import vue, { defineComponent, h, ref } from 'vue';
+import { genColorProp, hasWindow, useColor } from '@lagabu/shared';
+import vue, { defineComponent, h, reactive, Ref, ref } from 'vue';
+
+type ElementOrNull = Ref<null | HTMLElement>;
+function calculatePosition(activatorRef: ElementOrNull, contentRef: ElementOrNull) {
+  let aElm: HTMLElement | null, cElm: HTMLElement | null;
+  if (!(aElm = activatorRef.value) || !(cElm = contentRef.value)) return;
+  const { left, top } = aElm.getBoundingClientRect();
+  const [] = [document.documentElement.scrollTop, document.documentElement.scrollLeft];
+}
 
 export default defineComponent({
   name: 'dropdown',
@@ -10,6 +18,8 @@ export default defineComponent({
   setup(props, context) {
     const { class: colorClasses, style: colorStyles } = useColor(props);
     const activatorRef = ref<null | HTMLElement>(null);
+    const contentRef = ref<null | HTMLElement>(null);
+
     function onClickActivator(e: MouseEvent) {
       if (props.disabled) {
         e.preventDefault();
