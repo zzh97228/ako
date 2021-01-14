@@ -53,6 +53,7 @@ module.exports = {
             { text: 'What is Acco?', link: '/guide/index' },
             { text: 'Getting Start', link: '/guide/start' },
             { text: 'Colors', link: '/guide/colors' },
+            { text: 'Elevation', link: '/guide/elevation' },
           ],
         },
       ],
