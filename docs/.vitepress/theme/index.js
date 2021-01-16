@@ -1,12 +1,11 @@
-import theme from 'vitepress/dist/client/theme-default/index';
+import DefaultTheme from 'vitepress/dist/client/theme-default';
 import Acco from '@lagabu/acco';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import '@lagabu/theme-default';
 import './style.scss';
 
 export default {
-  Layout: theme.Layout,
-  NotFound: theme.NotFound,
+  ...DefaultTheme,
   enhanceApp({ app }) {
     app.use(Acco, {
       color: {
