@@ -7,6 +7,7 @@ import { Card, CardTitle, CardSubtitle, CardActions, CardContent } from '@lagabu
 import { Checkbox, CheckboxGroup } from '@lagabu/checkbox';
 import { Slider } from '@lagabu/slider';
 import { List, ListItem, ListSubgroup } from '@lagabu/list';
+import { Dropdown } from '@lagabu/dropdown';
 
 export {
   Row,
@@ -29,4 +30,5 @@ export {
   List,
   ListItem,
   ListSubgroup,
+  Dropdown,
 };

@@ -2,6 +2,7 @@
 .list {
   list-style-type: none;
   padding: 0 v.$justify-padding;
+  margin: 0;
 
   &-subgroup {
     display: block;

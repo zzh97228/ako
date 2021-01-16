@@ -10,4 +10,16 @@ describe('List.ts', () => {
     expect(wrapper.element.tagName).toEqual('UL');
     expect(wrapper.classes()).toContain('list');
   });
+  it('should change size and elevation', () => {
+    const wrapper = mountFunc({
+      props: {
+        elevation: 'xs',
+        height: '100px',
+        width: '100px',
+      },
+    });
+    expect(wrapper.classes()).toContain('elevation-xs');
+    expect(wrapper.attributes('style')).toContain('width: 100px');
+    expect(wrapper.attributes('style')).toContain('height: 100px');
+  });
 });

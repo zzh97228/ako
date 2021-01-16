@@ -1,4 +1,4 @@
-import { sizeProps, genColorProp, useSize, useColor } from '@lagabu/shared';
+import { sizeProps, genColorProp, useSize, useColor, genElevationProp, useElevation } from '@lagabu/shared';
 import { defineComponent, h, mergeProps } from 'vue';
 
 export default defineComponent({
@@ -6,11 +6,13 @@ export default defineComponent({
   props: {
     ...sizeProps,
     ...genColorProp('primary'),
+    ...genElevationProp(),
     disabled: Boolean,
   },
   setup(props, context) {
     const { slots } = context;
     const { sizeStyle } = useSize(props);
+    const { class: elevationClasses, style: elevationsStyles } = useElevation(props);
     const { class: colorClasses, style: colorStyles } = useColor(props, true);
     function onClick(e: Event) {
       if (props.disabled) {
@@ -31,6 +33,10 @@ export default defineComponent({
           {
             class: colorClasses.value,
             style: colorStyles.value,
+          },
+          {
+            class: elevationClasses.value,
+            style: elevationsStyles.value,
           }
         ),
         slots.default && slots.default()
