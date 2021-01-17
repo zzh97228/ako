@@ -1,6 +1,14 @@
-import { genModelProps, useModel, useFieldProvider, useValidation, genValidationProps, isString } from '@lagabu/shared';
-import vue, { defineComponent, h, VNodeArrayChildren, vShow, withDirectives } from 'vue';
-
+import {
+  genModelProps,
+  useModel,
+  useFieldProvider,
+  useValidation,
+  genValidationProps,
+  isString,
+  convertToNumber,
+  useExpandTransition,
+} from '@lagabu/shared';
+import vue, { defineComponent, h, Transition, VNodeArrayChildren, vShow, withDirectives } from 'vue';
 export default defineComponent({
   name: 'field',
   props: {
@@ -11,11 +19,17 @@ export default defineComponent({
   },
   setup(props, context) {
     const modelOptions = useModel(props, context);
-    const { isFocusing, hasFocus } = useFieldProvider(modelOptions);
+    const transitionProps = useExpandTransition();
+    const { isFocusing, hasFocus, bindHasError } = useFieldProvider(modelOptions);
     const { errors, hasError } = useValidation(props, context, modelOptions.lazyState, hasFocus, isFocusing);
+
+    // bind validation error
+    bindHasError(hasError);
+
     return {
       errors,
       hasError,
+      transitionProps,
     };
   },
   methods: {
@@ -23,7 +37,10 @@ export default defineComponent({
       return h(
         'div',
         {
-          class: 'field__label',
+          class: {
+            field__label: true,
+            [`field__label-col-${this.labelCol}`]: convertToNumber(this.labelCol),
+          },
         },
         this.$slots.label && this.$slots.label()
       );
@@ -32,9 +49,12 @@ export default defineComponent({
       return h(
         'div',
         {
-          class: 'field__content',
+          class: {
+            field__content: true,
+            [`field__content-col-${this.inputCol}`]: convertToNumber(this.inputCol),
+          },
         },
-        this.$slots.default && this.$slots.default()
+        [this.$slots.default && this.$slots.default(), this.genAddon()]
       );
     },
     genAddonContent(addonChidlren?: VNodeArrayChildren) {
@@ -60,7 +80,10 @@ export default defineComponent({
       );
     },
     genAddon() {
-      return withDirectives(this.genAddonContent(this.$slots.addon && this.$slots.addon()), [[vShow, this.hasError]]);
+      return h(Transition, this.transitionProps, {
+        default: () =>
+          withDirectives(this.genAddonContent(this.$slots.addon && this.$slots.addon()), [[vShow, this.hasError]]),
+      });
     },
   },
   render() {

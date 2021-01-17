@@ -1,0 +1,46 @@
+@use 'sass:map';
+@use './variables/index' as v;
+
+@mixin make-field-col() {
+  @for $i from 0 to v.$grid-columns {
+    &-col-#{$i} {
+      flex: 0 0 calc(#{$i} / var(--columns) * 100%);
+      max-width: calc(#{$i} / var(--columns) * 100%);
+    }
+  }
+}
+
+.field {
+  &__wrapper {
+    display: flex;
+    flex: 1 1 auto;
+    flex-wrap: wrap;
+  }
+
+  &__label {
+    display: inline-block;
+    flex: 0 1 auto;
+  }
+
+  &__content {
+    display: flex;
+    flex: 1 0 auto;
+    flex-direction: column;
+  }
+
+  &__addon {
+    display: block;
+
+    &-item {
+      display: block;
+      transition: color 150ms ease-in-out;
+      color: var(--error-color, red);
+      font-size: v.$smaller-font-size;
+      padding: map.get(v.$vertical-padding, 'md') v.$justify-padding;
+    }
+  }
+  &__label,
+  &__content {
+    @include make-field-col();
+  }
+}

@@ -77,6 +77,7 @@ export function useFieldProvider<T extends unknown>(modelOptions: ModelReturn<T>
   function bindHasError(hasError: Ref<boolean>) {
     bindHasErrorStop = watch(hasError, (newVal, oldVal) => {
       if (newVal === oldVal) return;
+      console.log(newVal);
       fieldState.hasError = Boolean(newVal);
     });
   }

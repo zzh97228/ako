@@ -8,6 +8,7 @@ import { Checkbox, CheckboxGroup } from '@lagabu/checkbox';
 import { Slider } from '@lagabu/slider';
 import { List, ListItem, ListSubgroup } from '@lagabu/list';
 import { Dropdown } from '@lagabu/dropdown';
+import { Field } from '@lagabu/field';
 
 export {
   Row,
@@ -31,4 +32,5 @@ export {
   ListItem,
   ListSubgroup,
   Dropdown,
+  Field,
 };

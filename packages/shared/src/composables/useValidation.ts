@@ -98,5 +98,6 @@ export function useValidation<T extends any>(
   return {
     errors,
     hasError,
+    validate,
   };
 }

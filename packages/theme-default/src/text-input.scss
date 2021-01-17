@@ -28,6 +28,8 @@
 }
 $half-normal-justify: v.$half-justify-padding;
 .text-input {
+  transition: all 150ms ease-in-out;
+
   &__content {
     flex: 1;
     outline: none;
@@ -74,5 +76,12 @@ $half-normal-justify: v.$half-justify-padding;
 
   &--large {
     @include make-small-or-large-content('lg');
+  }
+
+  &--error {
+    &,
+    &:hover {
+      color: var(--error-color, red) !important;
+    }
   }
 }
