@@ -5,7 +5,7 @@ import { usePercent, genPercentProps } from '../usePercent';
 const compo = defineComponent({
   props: genPercentProps(),
   setup(props, context) {
-    const { model, percent, start, end } = usePercent(props, context);
+    const { model, percent, start, end } = usePercent(props);
     return {
       model,
       percent,

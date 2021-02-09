@@ -43,13 +43,12 @@ export default defineComponent({
       default: true,
     },
   },
-  setup(props, context) {
-    const { isActive, toggle } = useToggle(props, context);
+  setup(props) {
+    const { isActive, toggle } = useToggle(props);
     const hasFocus = ref(false);
     const { class: colorClasses, style: colorStyle } = useColor(props, true);
     const { lazyState, model, setInnerState } = useModel(
       props,
-      context,
       toRef(props, 'disabled'),
       (innerState, newVal, oldVal) => {
         if (deepEqual(newVal, oldVal) || deepEqual(newVal, lazyState.value)) return;

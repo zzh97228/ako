@@ -10,7 +10,7 @@ describe('useToggleGroup', () => {
       name: 'item',
       props: genToggleProps('active'),
       setup(props, context) {
-        const { isActive, toggle, class: toggleClasses } = useToggle(props, context);
+        const { isActive, toggle, class: toggleClasses } = useToggle(props);
         const { onToggle, notAllowed } = useGroupConsumer(props, isActive);
         return {
           isActive,
@@ -173,5 +173,4 @@ describe('useToggleGroup', () => {
     await wrapper.vm.$nextTick();
     expect(wrapper.vm.lazyState.value).toBeUndefined();
   });
-
 });

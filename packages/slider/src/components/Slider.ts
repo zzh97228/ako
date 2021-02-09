@@ -12,7 +12,7 @@ export default defineComponent({
     tile: Boolean,
   },
   setup(props, context) {
-    const { percent } = usePercent(props, context),
+    const { percent } = usePercent(props),
       { sizeStyle } = useSize(props),
       { class: colorClasses, style: colorStyles } = useColor(props, true),
       pointerRef = ref<null | HTMLElement>(null),

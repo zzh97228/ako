@@ -17,7 +17,7 @@ describe('useModel.ts', () => {
       },
       setup(props, context) {
         const notAllowed = ref(props.disabled);
-        const { model, lazyState, setInnerState } = useModel(props, context, notAllowed, undefined, props.testFunc);
+        const { model, lazyState, setInnerState } = useModel(props, notAllowed, undefined, props.testFunc);
         return {
           model,
           lazyState,

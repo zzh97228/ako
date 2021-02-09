@@ -12,6 +12,7 @@ import {
   Ref,
   SetupContext,
   toRef,
+  useContext,
   watch,
 } from 'vue';
 import { isBool, isFunction, isUndefined } from '../utils/helpers';
@@ -39,7 +40,8 @@ export function setActive(isActive: Ref<boolean | undefined>, value: any, cb?: (
 }
 
 export type TogglePropsType = ExtractPropTypes<ReturnType<typeof genToggleProps>>;
-export function useToggle(props: TogglePropsType, ctx: SetupContext, disabled?: boolean | Ref<boolean>) {
+export function useToggle(props: TogglePropsType, disabled?: boolean | Ref<boolean>) {
+  const ctx = useContext();
   const state = reactive({
     innerActive: props.active as boolean | undefined,
     shouldCustomize: isUndefined(props.active),

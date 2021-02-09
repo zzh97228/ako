@@ -12,7 +12,7 @@ export default defineComponent({
     const { slots } = context;
     const notAllowed = toRef(props, 'disabled');
     const { class: colorClasses, style: colorStyles } = useColor(props, true);
-    const { class: toggleClasses, toggle, isActive } = useToggle(props, context, notAllowed);
+    const { class: toggleClasses, toggle, isActive } = useToggle(props, notAllowed);
     function onClick(e: Event) {
       if (props.disabled) {
         e.preventDefault();

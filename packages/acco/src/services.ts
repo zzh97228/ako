@@ -1,4 +1,4 @@
 import { ColorService } from '@lagabu/shared';
 import { GridService } from '@lagabu/grid';
-
-export { ColorService, GridService };
+import { MessageService } from '@lagabu/message';
+export { ColorService, GridService, MessageService };

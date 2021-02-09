@@ -7,6 +7,7 @@ import {
   Ref,
   ref,
   SetupContext,
+  useContext,
   watch,
   WatchStopHandle,
 } from 'vue';
@@ -26,11 +27,11 @@ export function genValidationProps() {
 type ValidationProps = ExtractPropTypes<ReturnType<typeof genValidationProps>>;
 export function useValidation<T extends any>(
   props: ValidationProps,
-  context: SetupContext,
   lazyState: ModelReturn<T>['lazyState'],
   hasFocus?: Ref<boolean>,
   isFocusing?: Ref<boolean>
 ) {
+  const context = useContext();
   const hasError = ref(false);
   const errors: Array<{
     index: number;

@@ -10,8 +10,8 @@ const compo = defineComponent({
     ...genValidationProps(),
   },
   setup(props, context) {
-    const { lazyState, model } = useModel(props, context);
-    const { errors } = useValidation(props, context, lazyState);
+    const { lazyState, model } = useModel(props);
+    const { errors } = useValidation(props, lazyState);
     return {
       errors,
       lazyState,

@@ -114,7 +114,6 @@ export function makeToggleGroup(symbolName = 'ToggleGroup') {
       }
       const { lazyState, model, setInnerState } = useModel(
         props,
-        context,
         toRef(props, 'disabled'),
         (innerState, newVal, oldVal) => {
           if (deepEqual(newVal, oldVal) || deepEqual(newVal, innerState.value)) return;

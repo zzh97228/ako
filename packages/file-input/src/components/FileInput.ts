@@ -64,7 +64,7 @@ export default defineComponent({
   },
   setup(props, context) {
     const inputRef = ref<null | HTMLInputElement>(null);
-    const { lazyState, model, setInnerState } = useModel(props, context);
+    const { lazyState, model, setInnerState } = useModel(props);
 
     function isSizeValidate(file: File): boolean {
       if (!props.maxSize) return true;

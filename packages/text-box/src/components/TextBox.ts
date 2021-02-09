@@ -25,7 +25,7 @@ export default defineComponent({
     const notAllowed = computed(() => props.disabled || props.readonly);
     const { class: colorClasses, style: colorStyles } = useColor(props, true);
     const { sizeStyle } = useSize(props);
-    const { model, lazyState, setInnerState } = useModel(props, context, notAllowed);
+    const { model, lazyState, setInnerState } = useModel(props, notAllowed);
     const { onBlur, onFocus } = useFieldConsumer({
       model,
       lazyState,

@@ -18,10 +18,10 @@ export default defineComponent({
     inputCol: [Number, String],
   },
   setup(props, context) {
-    const modelOptions = useModel(props, context);
+    const modelOptions = useModel(props);
     const transitionProps = useExpandTransition();
     const { isFocusing, hasFocus, bindHasError } = useFieldProvider(modelOptions);
-    const { errors, hasError } = useValidation(props, context, modelOptions.lazyState, hasFocus, isFocusing);
+    const { errors, hasError } = useValidation(props, modelOptions.lazyState, hasFocus, isFocusing);
 
     // bind validation error
     bindHasError(hasError);

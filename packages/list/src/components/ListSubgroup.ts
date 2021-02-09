@@ -14,7 +14,7 @@ export default defineComponent({
     const notAllowed = toRef(props, 'disabled');
     const transitionProps = useExpandTransition();
     const { class: colorClasses, style: colorStyles } = useColor(props, true);
-    const { toggle, class: toggleClasses, isActive } = useToggle(props, context, notAllowed);
+    const { toggle, class: toggleClasses, isActive } = useToggle(props, notAllowed);
 
     if (props.showOnAppear && !notAllowed.value) {
       isActive.value = true;

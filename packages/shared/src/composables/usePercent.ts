@@ -2,11 +2,11 @@ import {
   computed,
   customRef,
   ExtractPropTypes,
-  nextTick,
   onBeforeUnmount,
   reactive,
   SetupContext,
   toRef,
+  useContext,
   watch,
 } from 'vue';
 import { convertToNumber, isNumber, isString } from '../utils/helpers';
@@ -71,7 +71,8 @@ function roundPercent(percent: number, p: number | string | undefined) {
   return (Math.round((percent * 100) / p) * p) / 100;
 }
 
-export function usePercent(props: ExtractPropTypes<PercentProps>, context: SetupContext) {
+export function usePercent(props: ExtractPropTypes<PercentProps>) {
+  const context = useContext();
   const notAllowed = toRef(props, 'disabled'),
     start = computed(() => normalizeValue(props.start)),
     end = computed(() => normalizeValue(props.end));

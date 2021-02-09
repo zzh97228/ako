@@ -17,7 +17,7 @@ export default defineComponent({
   setup(props, context) {
     const { emit } = context;
     const { class: colorClasses, style: colorStyles } = useColor(props, true);
-    const { model, lazyState, setInnerState } = useModel(props, context);
+    const { model, lazyState, setInnerState } = useModel(props);
     const { onBlur, onFocus, state: fieldState, hasError } = useFieldConsumer({ model, lazyState, setInnerState });
     const inputRef = ref<null | HTMLInputElement>(null);
     const state = reactive({

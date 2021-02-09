@@ -11,7 +11,7 @@ describe('useToggle.ts', () => {
             ...genToggleProps('active'),
           },
           setup(props, context) {
-            const { isActive, class: toggleClasses, toggle } = useToggle(props, context);
+            const { isActive, class: toggleClasses, toggle } = useToggle(props);
             return {
               isActive,
               toggleClasses,

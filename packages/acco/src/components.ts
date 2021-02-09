@@ -9,6 +9,7 @@ import { Slider } from '@lagabu/slider';
 import { List, ListItem, ListSubgroup } from '@lagabu/list';
 import { Dropdown } from '@lagabu/dropdown';
 import { Field } from '@lagabu/field';
+import { Message } from '@lagabu/message';
 
 export {
   Row,
@@ -33,4 +34,5 @@ export {
   ListSubgroup,
   Dropdown,
   Field,
+  Message,
 };

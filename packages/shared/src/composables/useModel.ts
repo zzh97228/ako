@@ -9,6 +9,7 @@ import vue, {
   Ref,
   SetupContext,
   UnwrapRef,
+  useContext,
   watch,
   WatchStopHandle,
 } from 'vue';
@@ -50,11 +51,11 @@ export type ModelReturn<T extends unknown> = {
 
 export function useModel<T extends unknown>(
   props: ModelPropType<T>,
-  context: SetupContext,
   disabled?: boolean | Ref<boolean>,
   modelCb?: ModelCallback<T>,
   beforeUnmountCb?: (...args: any) => any
 ) {
+  const context = useContext();
   const innerState = reactive({
     value: props.modelValue,
   }) as InnerState<T>;

@@ -76,7 +76,7 @@ export function useCarouselProvider(props: ExtractPropTypes<typeof carouselProps
     return val;
   }
 
-  const { model, lazyState, setInnerState } = useModel(props, context, notAllowed, (innerState, newVal, oldVal) => {
+  const { model, lazyState, setInnerState } = useModel(props, notAllowed, (innerState, newVal, oldVal) => {
     newVal = normalizeValue(newVal);
     newVal = clamp(setLoopValue(newVal), 0, clamp(items.length - 1, 0));
     if (deepEqual(newVal, oldVal) || deepEqual(newVal, innerState.value) || props.disabled) return;

@@ -37,7 +37,7 @@ export default defineComponent({
     const isTextColor = computed(() => props.outlined || props.link);
     const color = useColor(props, isTextColor);
     const elevation = useElevation(props);
-    const { isActive, class: toggleClasses, toggle } = useToggle(props, context);
+    const { isActive, class: toggleClasses, toggle } = useToggle(props);
     const group = useGroupConsumer(props, isActive);
     const notAllowed = computed(() => props.loading || props.disabled);
     const classes = computed(() => {

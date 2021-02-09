@@ -12,7 +12,7 @@ describe('useField.ts', () => {
         ...genModelProps([String]),
       },
       setup(props, context) {
-        const modelOptions = useModel(props, context);
+        const modelOptions = useModel(props);
         useFieldProvider(modelOptions);
         return modelOptions;
       },
@@ -26,7 +26,7 @@ describe('useField.ts', () => {
         ...genModelProps([String]),
       },
       setup(props, context) {
-        const modelOptions = useModel(props, context);
+        const modelOptions = useModel(props);
         useFieldConsumer(modelOptions);
         return modelOptions;
       },

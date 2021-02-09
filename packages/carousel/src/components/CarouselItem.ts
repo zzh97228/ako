@@ -8,8 +8,8 @@ export default defineComponent({
     ...genToggleProps('carousel-item--active'),
     ...sizeProps,
   },
-  setup(props, context) {
-    const { isActive } = useToggle(props, context);
+  setup(props) {
+    const { isActive } = useToggle(props);
     const { sizeStyle } = useSize(props);
     const { setParentHeight, transitionName, transitionCount } = useCarouselConsumer(isActive);
     const inTransition = ref(false);
