@@ -1,9 +1,16 @@
 {
   "name": "@lagabu/theme-default",
-  "version": "0.1.0-alpha.0",
   "main": "index.js",
-  "files": ["dist", "lib", "index.js","README.md"],
-  "peerDependencies": {
-    "sass": "latest"
-  }
+  "files": [
+    "dist",
+    "lib",
+    "index.js",
+    "README.md"
+  ],
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org",
+    "tag": "alpha"
+  },
+  "version": "1.0.0-alpha.0"
 }
