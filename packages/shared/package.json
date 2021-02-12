@@ -1,6 +1,6 @@
 {
   "name": "@lagabu/shared",
-  "version": "1.0.0-alpha.0",
+  "version": "1.0.0-alpha.1",
   "main": "dist/shared.umd.bundle.js",
   "module": "dist/shared.esm.bundle.js",
   "types": "dist/shared.d.ts",
@@ -15,9 +15,9 @@
     "tag": "alpha"
   },
   "dependencies": {
-    "vue": "next"
+    "vue": "^3"
   },
   "peerDependencies": {
-    "vue": "next"
+    "vue": "^3"
   }
 }

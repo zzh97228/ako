@@ -1,6 +1,6 @@
 {
   "name": "@lagabu/dropdown",
-  "version": "1.0.0-alpha.0",
+  "version": "1.0.0-alpha.1",
   "main": "dist/dropdown.umd.bundle.js",
   "module": "dist/dropdown.esm.bundle.js",
   "types": "dist/dropdown.d.ts",
@@ -14,11 +14,11 @@
     "tag": "alpha"
   },
   "dependencies": {
-    "vue": "next",
+    "vue": "^3",
     "@lagabu/shared": "alpha"
   },
   "peerDependencies": {
-    "vue": "next"
+    "vue": "^3"
   }
 
 }

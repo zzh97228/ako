@@ -1,6 +1,6 @@
 {
   "name": "@lagabu/text-input",
-  "version": "1.0.0-alpha.0",
+  "version": "1.0.0-alpha.1",
   "types": "dist/text-input.d.ts",
   "main": "dist/text-input.umd.bundle.js",
   "module": "dist/text-input.esm.bundle.js",
@@ -15,9 +15,9 @@
   },
   "dependencies": {
     "@lagabu/shared": "alpha",
-    "vue": "next"
+    "vue": "^3"
   },
   "peerDependencies": {
-    "vue": "next"
+    "vue": "^3"
   }
 }

@@ -1,6 +1,6 @@
 {
   "name": "@lagabu/ako",
-  "version": "1.0.0-alpha.0",
+  "version": "1.0.0-alpha.1",
   "main": "dist/ako.umd.bundle.js",
   "module": "dist/ako.esm.bundle.js",
   "types": "dist/ako.d.ts",
@@ -14,7 +14,7 @@
     "tag": "alpha"
   },
   "dependencies": {
-    "vue": "next",
+    "vue": "^3",
     "@lagabu/shared": "alpha",
     "@lagabu/grid": "alpha",
     "@lagabu/btn": "alpha",
@@ -30,6 +30,6 @@
     "@lagabu/field": "alpha"
   },
   "peerDependencies": {
-    "vue": "next"
+    "vue": "^3"
   }
 }

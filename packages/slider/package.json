@@ -1,6 +1,6 @@
 {
   "name": "@lagabu/slider",
-  "version": "1.0.0-alpha.0",
+  "version": "1.0.0-alpha.1",
   "main": "dist/slider.umd.bundle.js",
   "module": "dist/slider.esm.bundle.js",
   "types": "dist/slider.d.ts",
@@ -15,9 +15,9 @@
   },
   "dependencies": {
     "@lagabu/shared": "alpha",
-    "vue": "next"
+    "vue": "^3"
   },
   "peerDependencies": {
-    "vue": "next"
+    "vue": "^3"
   }
 }

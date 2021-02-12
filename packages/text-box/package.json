@@ -1,6 +1,6 @@
 {
   "name": "@lagabu/text-box",
-  "version": "1.0.0-alpha.0",
+  "version": "1.0.0-alpha.1",
   "main": "dist/text-box.umd.bundle.js",
   "module": "dist/text-box.esm.bundle.js",
   "types": "dist/text-box.d.bundle.js",
@@ -15,9 +15,9 @@
   },
   "dependencies": {
     "@lagabu/shared": "alpha",
-    "vue": "next"
+    "vue": "^3"
   },
   "peerDependencies": {
-    "vue": "next"
+    "vue": "^3"
   }
 }

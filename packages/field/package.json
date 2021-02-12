@@ -1,8 +1,8 @@
 {
   "name": "@lagabu/field",
-  "version": "1.0.0-alpha.0",
+  "version": "1.0.0-alpha.1",
   "types": "dist/field.d.ts",
-  "module": "dist/field.es.bundle.js",
+  "module": "dist/field.esm.bundle.js",
   "main": "dist/field.umd.bundle.js",
   "files": [
     "dist",
@@ -15,9 +15,9 @@
   },
   "dependencies": {
     "@lagabu/shared": "alpha",
-    "vue": "next"
+    "vue": "^3"
   },
   "peerDependencies": {
-    "vue": "next"
+    "vue": "^3"
   }
 }

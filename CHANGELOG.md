@@ -1,4 +1,4 @@
 
-# [1.0.0-alpha.0](https://github.com/zzh97228/ako)
+# [1.0.0-alpha.1](https://github.com/zzh97228/ako)
 
 Publish basic components.

@@ -1,6 +1,6 @@
 {
   "name": "@lagabu/grid",
-  "version": "1.0.0-alpha.0",
+  "version": "1.0.0-alpha.1",
   "main": "dist/grid.umd.bundle.js",
   "module": "dist/grid.esm.bundle.js",
   "types": "dist/grid.d.ts",
@@ -14,10 +14,10 @@
     "tag": "alpha"
   },
   "dependencies": {
-    "vue": "next",
+    "vue": "^3",
     "@lagabu/shared": "alpha"
   },
   "peerDependencies": {
-    "vue": "next"
+    "vue": "^3"
   }
 }

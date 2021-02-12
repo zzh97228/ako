@@ -42,6 +42,6 @@
     "vue-router": "^4"
   },
   "peerDependencies": {
-    "vue": "next"
+    "vue": "^3"
   }
 }
