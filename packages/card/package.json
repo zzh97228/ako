@@ -1,16 +1,17 @@
 {
   "name": "@lagabu/card",
+  "types": "dist/card.d.ts",
   "main": "dist/card.umd.bundle.js",
-  "types": "dist/index.d.ts",
   "module": "dist/card.esm.bundle.js",
-  "version": "0.1.0-alpha.0",
   "files": [
     "dist",
-    "README.md",
-    "dist/index.d.ts",
-    "tags.json",
-    "attributes.json"
+    "README.md"
   ],
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org",
+    "tag": "alpha"
+  },
   "dependencies": {
     "@lagabu/shared": "latest",
     "vue": "next"
@@ -18,8 +19,5 @@
   "peerDependencies": {
     "vue": "next"
   },
-  "vetur": {
-    "tags": "tags.json",
-    "attributes": "attributes.json"
-  }
+  "version": "1.0.0-alpha.0"
 }
