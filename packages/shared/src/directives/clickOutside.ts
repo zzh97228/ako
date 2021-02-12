@@ -1,5 +1,5 @@
-import { Directive, DirectiveBinding, DirectiveHook, isRef, Ref } from 'vue';
-import { hasDocument, hasWindow, isBool, isFunction, isObject, isString, isUndefined } from '../utils/helpers';
+import vue, { Directive, DirectiveBinding, DirectiveHook, isRef, Ref } from 'vue';
+import { hasDocument, isFunction, isObject, isString } from '../utils/helpers';
 type OutsideCallback = (e?: Event) => any;
 type ClickInclude = () => Array<any>;
 type ClickoutsideValue =

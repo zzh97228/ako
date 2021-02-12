@@ -1,14 +1,19 @@
 {
   "name": "@lagabu/shared",
-  "version": "0.1.0-alpha.0",
+  "version": "1.0.0-alpha.0",
   "main": "dist/shared.umd.bundle.js",
   "module": "dist/shared.esm.bundle.js",
-  "typed": "dist/shared.d.ts",
+  "types": "dist/shared.d.ts",
   "files": [
     "dist",
     "README.md",
     "dist/shared.d.ts"
   ],
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org",
+    "tag": "alpha"
+  },
   "dependencies": {
     "vue": "next"
   },

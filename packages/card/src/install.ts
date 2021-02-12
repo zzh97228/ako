@@ -1,7 +1,27 @@
 import { App } from 'vue';
-import { registerComponents } from '@lagabu/shared';
+import {
+  ColorProps,
+  ElevationProps,
+  registerComponents,
+  registerServices,
+  ElevationService,
+  ColorService,
+} from '@lagabu/shared';
 import { Card, CardTitle, CardContent, CardActions, CardSubtitle } from './components';
 
-export function CardPlugin(Vue: App, opts = {}) {
+/**
+ * @public card-plugin
+ * @param Vue - Vue Instance
+ * @param opts - ColorProps & ElevationProps
+ */
+export function CardPlugin(Vue: App, opts: { [props: string]: any & ColorProps & ElevationProps } = {}) {
   registerComponents(Vue, { Card, CardTitle, CardContent, CardActions, CardSubtitle });
+  registerServices(
+    Vue,
+    {
+      ElevationService,
+      ColorService,
+    },
+    opts
+  );
 }

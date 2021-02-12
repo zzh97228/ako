@@ -1,5 +1,6 @@
 {
   "name": "@lagabu/field",
+  "version": "1.0.0-alpha.0",
   "types": "dist/field.d.ts",
   "module": "dist/field.es.bundle.js",
   "main": "dist/field.umd.bundle.js",
@@ -7,8 +8,13 @@
     "dist",
     "README.md"
   ],
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org",
+    "tag": "alpha"
+  },
   "dependencies": {
-    "@lagabu/shared": "latest",
+    "@lagabu/shared": "alpha",
     "vue": "next"
   },
   "peerDependencies": {

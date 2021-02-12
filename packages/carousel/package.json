@@ -1,7 +1,23 @@
 {
   "name": "@lagabu/carousel",
+  "version": "1.0.0-alpha.0",
+  "types": "dist/carousel.d.ts",
+  "main": "dist/carousel.umd.bundle.js",
+  "module": "dist/carousel.esm.bundle.js",
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org",
+    "tag": "alpha"
+  },
   "dependencies": {
     "vue": "next",
-    "@lagabu/shared": "latest"
+    "@lagabu/shared": "alpha"
+  },
+  "peerDependencies": {
+    "vue": "next"
   }
 }

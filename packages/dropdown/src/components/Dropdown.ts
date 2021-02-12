@@ -7,6 +7,7 @@ import vue, {
   onMounted,
   reactive,
   readonly,
+  Ref,
   ref,
   Teleport,
   TeleportProps,
@@ -144,7 +145,7 @@ export default defineComponent({
       onClickActivator,
       activatorRef,
       contentRef,
-      isActive: readonly(isActive),
+      isActive: readonly(isActive) as Ref<boolean>,
       state: readonly(state),
       transitionProps,
       clickOutsideValue: {

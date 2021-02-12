@@ -4,7 +4,7 @@ import { GridService, GridProps } from './services';
 import { Col, Row, Container } from './components';
 
 /**
- * @public
+ * @public Grid plugin options
  */
 export type GridPluginOptions = { [props: string]: any; prefix?: string } & GridProps;
 /**

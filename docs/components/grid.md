@@ -2,20 +2,20 @@
 
 ## Container
 
-<ac-container>container</ac-container>
+<ako-container>container</ako-container>
 
 ## Row
 
-<ac-row>
-  <ac-col v-for="i in 4" :cols="3" :key="'col-'+i">
+<ako-row>
+  <ako-col v-for="i in 4" :cols="3" :key="'col-'+i">
     {{ i }}
-  </ac-col>
-</ac-row>
+  </ako-col>
+</ako-row>
 
 ## Col
 
-<ac-col></ac-col>
+<ako-col></ako-col>
 
 ## Divider
 
-<ac-divider></ac-divider>
+<ako-divider></ako-divider>

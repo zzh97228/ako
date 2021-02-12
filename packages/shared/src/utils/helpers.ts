@@ -1,14 +1,23 @@
-import { App, Component, Directive, FunctionalComponent, h } from 'vue';
+import vue, { App, Component, Directive, FunctionalComponent, h } from 'vue';
 import { BaseService } from '../services';
-
+/**
+ * @public isString
+ * @param str
+ */
 export function isString(str: any): str is string {
   return typeof str === 'string';
 }
-
+/**
+ * @public isBool
+ * @param str
+ */
 export function isBool(str: any): str is boolean {
   return typeof str === 'boolean';
 }
-
+/**
+ * @public typeof str
+ * @param str
+ */
 export function isUndefined(str: any): str is undefined {
   return typeof str === 'undefined';
 }

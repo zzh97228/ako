@@ -1,21 +1,21 @@
 {
   "name": "@lagabu/grid",
-  "version": "0.1.0-alpha.0",
+  "version": "1.0.0-alpha.0",
   "main": "dist/grid.umd.bundle.js",
   "module": "dist/grid.esm.bundle.js",
   "types": "dist/grid.d.ts",
   "files": [
     "dist",
-    "README.md",
-    "dist/grid.d.ts"
+    "README.md"
   ],
   "publishConfig": {
     "registry": "https://registry.npmjs.org",
-    "access": "public"
+    "access": "public",
+    "tag": "alpha"
   },
   "dependencies": {
     "vue": "next",
-    "@lagabu/shared": "latest"
+    "@lagabu/shared": "alpha"
   },
   "peerDependencies": {
     "vue": "next"

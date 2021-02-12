@@ -14,5 +14,6 @@ declare global {
 declare module '@vue/runtime-core' {
   export interface ComponentCustomProperties {
     // set custom global prop
+    $ako: any;
   }
 }

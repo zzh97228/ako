@@ -1,6 +1,6 @@
 # Dropdown
 
-<ac-dropdown><template v-slot:activator="{ isActive }"><ac-btn :active="isActive">dropdown</ac-btn></template><ac-list elevation="xs"><ac-list-item>item1</ac-list-item></ac-list></ac-dropdown>
+<ako-dropdown><template v-slot:activator="{ isActive }"><ako-btn :active="isActive">dropdown</ako-btn></template><ako-list elevation="xs"><ako-list-item>item1</ako-list-item></ako-list></ako-dropdown>
 
 
-<ac-card height="2000px"></ac-card>
+<ako-card height="2000px"></ako-card>

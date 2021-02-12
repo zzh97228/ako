@@ -1,4 +1,3 @@
-import vue from 'vue';
 import { StyleService } from './base';
 export const enum ThemeEnum {
   primary = 'primary',

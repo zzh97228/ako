@@ -13,7 +13,6 @@ import vue, {
   ExtractPropTypes,
   inject,
   InjectionKey,
-  nextTick,
   onBeforeUnmount,
   onMounted,
   provide,
@@ -22,7 +21,9 @@ import vue, {
   SetupContext,
   toRef,
 } from 'vue';
-
+/**
+ * @public
+ */
 export const CarouselSymbol: InjectionKey<{
   register: (...args: any[]) => any;
   unregister: (...args: any[]) => any;
@@ -33,6 +34,9 @@ export const CarouselSymbol: InjectionKey<{
   inCarousel: boolean;
 }> = Symbol('Carousel');
 const defaultTimeout = 3000;
+/**
+ * @public
+ */
 export const carouselProps = {
   modelValue: [String, Number],
   disabled: Boolean,
@@ -53,8 +57,11 @@ function normalizeValue(str: any): number {
 function isValidIndex(idx: number, itemsLength: number) {
   return idx >= 0 && idx < itemsLength;
 }
-
-export function useCarouselProvider(props: ExtractPropTypes<typeof carouselProps>, context: SetupContext) {
+/**
+ * @public carousel provider
+ * @param props - carousel props
+ */
+export function useCarouselProvider(props: ExtractPropTypes<typeof carouselProps>) {
   const notAllowed = toRef(props, 'disabled');
   const transitionNextName = 'carousel-transition',
     transitionPrevName = 'carousel-transition--reverse',
@@ -205,6 +212,10 @@ export function useCarouselProvider(props: ExtractPropTypes<typeof carouselProps
   };
 }
 let _cuid = 0;
+/**
+ * @public carousel consumer
+ * @param isActive - Ref<boolean>
+ */
 export function useCarouselConsumer(isActive: Ref<boolean | undefined>) {
   const _id = _cuid++;
   const provider = inject(CarouselSymbol, {

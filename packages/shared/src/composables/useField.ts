@@ -29,7 +29,13 @@ export const FieldSymbol: InjectionKey<{
   unregister: (uid: number) => any;
 }> = Symbol('Field');
 
-export function useFieldProvider<T extends unknown>(modelOptions: ModelReturn<T>) {
+export function useFieldProvider<T extends unknown>(
+  modelOptions: ModelReturn<T>
+): {
+  isFocusing: Ref<boolean>;
+  hasFocus: Ref<boolean>;
+  bindHasError: (hasError: Ref<boolean>) => void;
+} {
   const { lazyState, setInnerState, model } = modelOptions;
   const fieldState = reactive({
     isFocusing: false,
@@ -70,14 +76,13 @@ export function useFieldProvider<T extends unknown>(modelOptions: ModelReturn<T>
     });
 
     return {
-      hasError: readonly(toRef(fieldState, 'hasError')),
+      hasError: readonly(toRef(fieldState, 'hasError')) as Ref<boolean>,
     };
   }
 
   function bindHasError(hasError: Ref<boolean>) {
     bindHasErrorStop = watch(hasError, (newVal, oldVal) => {
       if (newVal === oldVal) return;
-      console.log(newVal);
       fieldState.hasError = Boolean(newVal);
     });
   }

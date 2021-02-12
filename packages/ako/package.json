@@ -1,0 +1,35 @@
+{
+  "name": "@lagabu/ako",
+  "version": "1.0.0-alpha.0",
+  "main": "dist/ako.umd.bundle.js",
+  "module": "dist/ako.esm.bundle.js",
+  "types": "dist/ako.d.ts",
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org",
+    "tag": "alpha"
+  },
+  "dependencies": {
+    "vue": "next",
+    "@lagabu/shared": "alpha",
+    "@lagabu/grid": "alpha",
+    "@lagabu/btn": "alpha",
+    "@lagabu/card": "alpha",
+    "@lagabu/carousel": "alpha",
+    "@lagabu/theme-default": "alpha",
+    "@lagabu/text-input": "alpha",
+    "@lagabu/text-box": "alpha",
+    "@lagabu/checkbox": "alpha",
+    "@lagabu/slider": "alpha",
+    "@lagabu/list": "alpha",
+    "@lagabu/dropdown": "alpha",
+    "@lagabu/field": "alpha"
+  },
+  "peerDependencies": {
+    "vue": "next"
+  }
+}

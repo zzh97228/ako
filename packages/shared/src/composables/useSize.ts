@@ -1,4 +1,4 @@
-import { computed, ComputedRef, ExtractPropTypes, PropType } from 'vue';
+import vue, { computed, ComputedRef, ExtractPropTypes } from 'vue';
 import { convertToUnit } from '../utils/helpers';
 
 export const sizeProps = {

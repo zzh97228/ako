@@ -1,14 +1,4 @@
-import {
-  computed,
-  customRef,
-  ExtractPropTypes,
-  onBeforeUnmount,
-  reactive,
-  SetupContext,
-  toRef,
-  useContext,
-  watch,
-} from 'vue';
+import vue, { computed, customRef, ExtractPropTypes, onBeforeUnmount, reactive, toRef, useContext, watch } from 'vue';
 import { convertToNumber, isNumber, isString } from '../utils/helpers';
 import { clamp } from '../utils/math';
 import { genModelProps } from './useModel';

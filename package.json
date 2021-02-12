@@ -1,14 +1,14 @@
 {
-  "name": "acco",
+  "name": "ako",
   "private": true,
   "scripts": {
     "clean": "node ./scripts/clean.js",
     "test": "jest",
     "test:cov": "jest --coverage",
     "build": "cross-env node ./scripts/build.js",
+    "build:doc": "cross-env NODE_ENV=production node ./scripts/docs.js",
     "dev": "vite --config vite.config.js",
-    "doc:dev": "cross-env node ./scripts/docs.js",
-    "doc:build": "cross-env NODE_ENV=production node ./scripts/docs.js"
+    "dev:doc": "cross-env node ./scripts/docs.js"
   },
   "devDependencies": {
     "@microsoft/api-extractor": "^7.12.0",

@@ -1,6 +1,6 @@
 # Message
 
-<ac-btn @click="onClickBtn">button</ac-btn>
+<ako-btn @click="onClickBtn">button</ako-btn>
 
 <script>
 export default {

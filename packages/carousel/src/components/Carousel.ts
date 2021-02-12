@@ -3,11 +3,9 @@ import { carouselProps, useCarouselProvider } from '../composables';
 
 export default defineComponent({
   name: 'carousel',
-  props: {
-    ...carouselProps,
-  },
-  setup(props, context) {
-    const { clickNext, clickPrev, transitionHeight } = useCarouselProvider(props, context);
+  props: carouselProps,
+  setup(props) {
+    const { clickNext, clickPrev, transitionHeight } = useCarouselProvider(props);
     return {
       clickPrev,
       clickNext,

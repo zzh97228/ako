@@ -41,12 +41,12 @@ function getAlias() {
 }
 
 module.exports = {
-  title: 'Acco',
-  description: 'Documentation of acco',
+  title: 'Ako',
+  description: 'Documentation of ako',
   alias: getAlias(),
-  base: process.env.NODE_ENV === 'production' ? '/acco/' : '/',
+  base: process.env.NODE_ENV === 'production' ? '/ako/' : '/',
   themeConfig: {
-    repo: 'zzh97228/acco',
+    repo: 'zzh97228/ako',
     nav: [
       { text: 'Guide', link: '/guide/introduction', activeMatch: '^/guide/' },
       { text: 'Components', link: '/components/btn', activeMatch: '^/components/' },
@@ -56,7 +56,7 @@ module.exports = {
       {
         text: 'Introduction',
         children: [
-          { text: 'What is Acco?', link: '/guide/introduction' },
+          { text: 'What is ako?', link: '/guide/introduction' },
           { text: 'Getting Start', link: '/guide/start' },
           { text: 'Colors', link: '/guide/colors' },
           { text: 'Elevation', link: '/guide/elevation' },

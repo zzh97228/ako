@@ -1,5 +1,5 @@
 import { genToggleProps, useToggle, useSize, sizeProps } from '@lagabu/shared';
-import { defineComponent, h, KeepAlive, mergeProps, ref, Transition, vShow, withDirectives } from 'vue';
+import vue, { defineComponent, h, ref, Transition, vShow, withDirectives } from 'vue';
 import { useCarouselConsumer } from '../composables';
 
 export default defineComponent({

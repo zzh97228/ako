@@ -1,6 +1,6 @@
 # Field
 
-<ac-field v-model="word" label-col="6" input-col="6" :rules="rules"><ac-text-input></ac-text-input></ac-field>
+<ako-field v-model="word" label-col="6" input-col="6" :rules="rules"><ako-text-input></ako-text-input></ako-field>
 
 <p>{{ word }}</p>
 

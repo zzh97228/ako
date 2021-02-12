@@ -1,4 +1,4 @@
-import {
+import vue, {
   ExtractPropTypes,
   nextTick,
   onBeforeUnmount,
@@ -6,7 +6,6 @@ import {
   reactive,
   Ref,
   ref,
-  SetupContext,
   useContext,
   watch,
   WatchStopHandle,

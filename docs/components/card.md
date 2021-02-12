@@ -1,11 +1,11 @@
 # card
 
-<ac-card color="primary" flat width="256px">
+<ako-card color="primary" flat width="256px">
   <template v-slot:image>
-    <ac-row class="primary-color" height="144px"></ac-row>
+    <ako-row class="primary-color" height="144px"></ako-row>
   </template>
-  <ac-card-title>Hello</ac-card-title>
-  <ac-card-subtitle>World!</ac-card-subtitle>
-  <ac-card-content>hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh</ac-card-content>
-  <ac-card-actions><ac-btn color="primary" flat block>button</ac-btn></ac-card-actions>
-</ac-card>
+  <ako-card-title>Hello</ako-card-title>
+  <ako-card-subtitle>World!</ako-card-subtitle>
+  <ako-card-content>hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh</ako-card-content>
+  <ako-card-actions><ako-btn color="primary" flat block>button</ako-btn></ako-card-actions>
+</ako-card>

@@ -2,7 +2,7 @@
 
 :tada:
 
-<ac-row gutter="md"><ac-col><ac-btn>button</ac-btn></ac-col><ac-col><ac-btn link color="primary">button</ac-btn></ac-col><ac-col><ac-btn outlined color="primary">button</ac-btn></ac-col><ac-col><ac-btn flat color="primary">button</ac-btn></ac-col></ac-row>
+<ako-row gutter="md"><ako-col><ako-btn>button</ako-btn></ako-col><ako-col><ako-btn link color="primary">button</ako-btn></ako-col><ako-col><ako-btn outlined color="primary">button</ako-btn></ako-col><ako-col><ako-btn flat color="primary">button</ako-btn></ako-col></ako-row>
 
 ### Props
 
@@ -32,4 +32,4 @@
 
 ---
 
-<ac-row column gutter="xs"><ac-col><ac-btn small loading="Loading..."></ac-btn><ac-btn loading="Loading..."></ac-btn><ac-btn large loading="Loading..."></ac-btn></ac-col><ac-col><ac-btn icon loading>赞</ac-btn></ac-col></ac-row>
+<ako-row column gutter="xs"><ako-col><ako-btn small loading="Loading..."></ako-btn><ako-btn loading="Loading..."></ako-btn><ako-btn large loading="Loading..."></ako-btn></ako-col><ako-col><ako-btn icon loading>赞</ako-btn></ako-col></ako-row>

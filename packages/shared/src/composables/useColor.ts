@@ -1,4 +1,4 @@
-import { computed, ComputedRef, ExtractPropTypes, isRef } from 'vue';
+import vue, { computed, ComputedRef, ExtractPropTypes, isRef } from 'vue';
 import { isCssColor } from '../utils/helpers';
 import { ThemeList } from '../services/color';
 

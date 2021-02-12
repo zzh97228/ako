@@ -1,7 +1,23 @@
 {
   "name": "@lagabu/checkbox",
+  "version": "1.0.0-alpha.0",
+  "main": "dist/checkbox.umd.bundle.js",
+  "module": "dist/checkbox.esm.bundle.js",
+  "types": "dist/checkbox.d.ts",
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org",
+    "tag": "alpha"
+  },
   "dependencies": {
     "vue": "next",
-    "@lagabu/shared": "latest"
+    "@lagabu/shared": "alpha"
+  },
+  "peerDependencies": {
+    "vue": "next"
   }
 }

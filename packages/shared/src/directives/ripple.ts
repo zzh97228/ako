@@ -1,5 +1,5 @@
-import { computed, Directive, DirectiveBinding, DirectiveHook, isRef, ref, Ref } from 'vue';
-import { convertToNumber, convertToUnit, isBool, isNumber, isObject, isString } from '../utils/helpers';
+import vue, { Directive, DirectiveBinding, DirectiveHook, isRef, ref, Ref } from 'vue';
+import { convertToNumber, convertToUnit, isObject } from '../utils/helpers';
 
 export type RippleRecord = {
   event?: (...args: any[]) => any;

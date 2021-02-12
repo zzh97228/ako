@@ -1,5 +1,5 @@
 import DefaultTheme from 'vitepress/dist/client/theme-default';
-import Acco from '@lagabu/acco';
+import Ako from '@lagabu/ako';
 import 'bootstrap-icons/font/bootstrap-icons.css';
 import '@lagabu/theme-default';
 import './style.scss';
@@ -7,7 +7,7 @@ import './style.scss';
 export default {
   ...DefaultTheme,
   enhanceApp({ app }) {
-    app.use(Acco, {
+    app.use(Ako, {
       color: {
         theme: {
           primary: 'rgb(237, 109, 61)',

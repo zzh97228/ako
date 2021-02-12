@@ -1,4 +1,4 @@
-import { convertToUnit, isNumber, isUndefined, upperFirst } from '../utils/helpers';
+import { convertToUnit, isUndefined, upperFirst } from '../utils/helpers';
 
 function setStyleProperty(el: Element, key: string, value: string) {
   (el as HTMLElement).style.setProperty(key, value);

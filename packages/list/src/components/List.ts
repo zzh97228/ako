@@ -1,5 +1,5 @@
 import { sizeProps, genColorProp, useSize, useColor, genElevationProp, useElevation } from '@lagabu/shared';
-import { defineComponent, h, mergeProps } from 'vue';
+import vue, { defineComponent, h, mergeProps } from 'vue';
 
 export default defineComponent({
   name: 'list',

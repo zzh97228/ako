@@ -25,7 +25,7 @@ import '@lagabu/theme-default/dist/all.min.css';
 
 createApp()
   .use(GridPlugin, {
-    prefix: 'ac-', // custom component prefix
+    prefix: 'ako-', // custom component prefix
     grid: {
       columns: 12, // custom columns number
       gutters: {

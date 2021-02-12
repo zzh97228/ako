@@ -1,3 +1,3 @@
 # list
 
-<ac-list><ac-list-item>haha</ac-list-item><ac-list-subgroup><template v-slot:activator><ac-list-item>wowow</ac-list-item></template><ac-list-item>hehe</ac-list-item><ac-list-item>hwhwhw</ac-list-item></ac-list-subgroup><ac-list-item>world</ac-list-item></ac-list>
+<ako-list><ako-list-item>haha</ako-list-item><ako-list-subgroup><template v-slot:activator><ako-list-item>wowow</ako-list-item></template><ako-list-item>hehe</ako-list-item><ako-list-item>hwhwhw</ako-list-item></ako-list-subgroup><ako-list-item>world</ako-list-item></ako-list>

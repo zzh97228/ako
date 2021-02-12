@@ -1,14 +1,14 @@
 # slider
 
-<ac-slider></ac-slider>
+<ako-slider></ako-slider>
 
-<ac-slider reverse></ac-slider>
+<ako-slider reverse></ako-slider>
 
-<ac-slider height="128px" vertical></ac-slider>
+<ako-slider height="128px" vertical></ako-slider>
 
-<ac-slider height="128px" vertical reverse></ac-slider>
+<ako-slider height="128px" vertical reverse></ako-slider>
 
 
-<ac-slider tile></ac-slider>
+<ako-slider tile></ako-slider>
 
-<ac-slider disabled></ac-slider>
+<ako-slider disabled></ako-slider>

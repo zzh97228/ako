@@ -1,19 +1,19 @@
 # checkbox
 
-<ac-checkbox></ac-checkbox>
-<ac-checkbox color="primary">这是什么</ac-checkbox>
-<ac-checkbox :indetermined="true"></ac-checkbox>
-<ac-checkbox disabled>这又是啥</ac-checkbox>
-<ac-checkbox-group>
-<ac-checkbox radio></ac-checkbox>
-<ac-checkbox radio></ac-checkbox>
-<ac-checkbox radio></ac-checkbox>
-</ac-checkbox-group>
+<ako-checkbox></ako-checkbox>
+<ako-checkbox color="primary">这是什么</ako-checkbox>
+<ako-checkbox :indetermined="true"></ako-checkbox>
+<ako-checkbox disabled>这又是啥</ako-checkbox>
+<ako-checkbox-group>
+<ako-checkbox radio></ako-checkbox>
+<ako-checkbox radio></ako-checkbox>
+<ako-checkbox radio></ako-checkbox>
+</ako-checkbox-group>
 
-<ac-checkbox switch color="primary">awsl</ac-checkbox>
-<ac-checkbox switch color="primary" tile>aswl</ac-checkbox>
-<ac-checkbox switch color="primary" disabled>aswl</ac-checkbox>
+<ako-checkbox switch color="primary">awsl</ako-checkbox>
+<ako-checkbox switch color="primary" tile>aswl</ako-checkbox>
+<ako-checkbox switch color="primary" disabled>aswl</ako-checkbox>
 
 
-<ac-checkbox radio color="primary"></ac-checkbox>
-<ac-checkbox radio color="primary" disabled></ac-checkbox>
+<ako-checkbox radio color="primary"></ako-checkbox>
+<ako-checkbox radio color="primary" disabled></ako-checkbox>
